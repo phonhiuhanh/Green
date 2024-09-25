@@ -6,7 +6,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 @org.springframework.stereotype.Controller
 public class Controller {
     @GetMapping("/index")
-    public String index(Model model) {
-        return "admin/index";
+    public String hehe(Model model) {
+        return "giaodien/index";
     }
 }
