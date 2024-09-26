@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Green Login</title>
+    <link rel="stylesheet" href="css/style.css">
+    <script src="js/script.js" defer></script>
+</head>
+<body>
+    <div class="login-container">
+        <div class="logo">
+            <img src="img/logo.png" alt="Green Logo">
+        </div>
+        <h2>Đăng nhập</h2>
+        <form>
+            <div class="input-group">
+                <label for="phone">Số điện thoại *</label>
+                <input type="text" id="phone" name="phone" placeholder="Nhập số điện thoại">
+            </div>
+            <div class="input-group">
+                <label for="password">Mật khẩu *</label>
+                <input type="password" id="password" name="password" placeholder="Nhập mật khẩu">
+                <span class="show-password" onclick="togglePassword()"></span>
+            </div>
+            <button type="submit" class="btn-login">Đăng Nhập</button>
+            <a href="#" class="forgot-password">Quên mật khẩu?</a>
+            <div class="or">Hoặc</div>
+            <button type="button" class="btn-register">Đăng Ký</button>
+        </form>
+    </div>
+</body>
+</html>

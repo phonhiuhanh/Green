@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Trang Đơn Hàng</title>
+    <link rel="stylesheet" type="text/css" href="/assets-admin/css/style.css">
+</head>
+<body>
+<h1>Trang Đơn Hàng</h1>
+<p th:text="${message}"></p>
+
+<!-- Bảng thông tin đơn hàng -->
+<table id="tableDonHang" class="table table-striped">
+    <thead>
+    <tr>
+        <th>Mã Đơn Hàng</th>
+        <th>Tên Khách Hàng</th>
+        <th>Ngày Đặt Hàng</th>
+        <th>Trạng Thái</th>
+    </tr>
+    </thead>
+    <tbody>
+    <!-- Dữ liệu đơn hàng sẽ được thêm tại đây -->
+    </tbody>
+</table>
+</body>
+</html>

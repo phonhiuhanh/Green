@@ -77,7 +77,7 @@
         }
     });
 
-    $('.hero__categories__all').on('click', function(){
+    $('.hero__categories__all').on('click', function () {
         $('.hero__categories ul').slideToggle(400);
     });
 
@@ -116,7 +116,7 @@
                 items: 2,
             },
             992: {
-                items: 3,
+                items: 4,
             }
         }
     });
@@ -177,7 +177,7 @@
     proQty.prepend('<span class="dec qtybtn">-</span>'); // - sign
     proQty.append('<span class="inc qtybtn">+</span>'); // + sign
     proQty.on('click', '.qtybtn', function () {
-        var $button = $(this); 
+        var $button = $(this);
         var oldValue = $button.parent().find('input').val(); // $button.parent() = <div class="quantity"> // $button.parent().find('input') = <input type="text" value="1">
         if ($button.hasClass('inc')) {
             var newVal = parseFloat(oldValue) + 1;
