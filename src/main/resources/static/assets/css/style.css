@@ -24,13 +24,11 @@ body {
 }
 
 .logo {
-    text-align: center;
     margin-bottom: 30px;
 }
 
 .logo img {
-    width: 150px;
-    /* Tăng kích thước logo */
+    width: 100px;
 }
 
 h2 {

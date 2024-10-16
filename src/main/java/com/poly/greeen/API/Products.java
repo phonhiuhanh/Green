@@ -12,6 +12,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.util.List;
+import java.util.Optional;
+
 @RequestMapping("/sanpham")
 @Controller
 public class Products {
@@ -31,11 +33,16 @@ public class Products {
         redirectAttributes.addFlashAttribute("message", "Sản phẩm đã được xóa thành công!");
         return "redirect:/Admin/products";
     }
-
-//    @PostMapping("/create")
-//    public String createMotorbike(@ModelAttribute MotorbikeMainDto motorbikeMainDto) {
-//        Motorbike motorbike = motorbikeMainDto.toEntity();
-//        motorbikeRepository.save(motorbike);
-//        return "redirect:/Motorbikes";
-//    }
+    @GetMapping("/search")
+    public String getAllProducts(@RequestParam(value = "id", required = false) String id, Model model) {
+        List<Product> products;
+        if (id != null && !id.isEmpty()) {
+            products = productRepository.findByProductIDContaining(id);
+        } else {
+            products = productRepository.findAll();
+        }
+        model.addAttribute("products", products);
+        model.addAttribute("searchId", id);
+        return "/admin/products";
+    }
 }
