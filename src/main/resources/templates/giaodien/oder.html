@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="zxx">
 
 <head>
     <meta charset="UTF-8">
@@ -113,24 +113,30 @@
                     </div>
                     <ul class="category-menu">
                         <li class="has-submenu">
-                            <a href="#" class="category-toggle">THỊT, CÁ, HẢI SẢN</a>
-                            <ul class="submenu">
-                                <li><a th:href="@{/index/product}">Thịt heo</a></li>
-                                <li><a th:href="@{/index/product}">Thịt bò</a></li>
-                                <li><a th:href="@{/index/product}">Thịt gà, vịt, chim</a></li>
-                                <li><a th:href="@{/index/product}">Cá, hải sản</a></li>
+                            <a href="#meat-fish-menu1" class="category-toggle" data-bs-toggle="collapse" aria-expanded="false" aria-controls="meat-fish-menu1">
+                                THỊT, CÁ, HẢI SẢN
+                            </a>
+                            <ul id="meat-fish-menu1" class="collapse list-unstyled">
+                                <li><a href="#">Thịt heo</a></li>
+                                <li><a href="#">Thịt bò</a></li>
+                                <li><a href="#">Thịt gà, vịt, chim</a></li>
+                                <li><a href="#">Cá, hải sản</a></li>
                             </ul>
                         </li>
                         <li class="has-submenu">
-                            <a href="#" class="category-toggle">TRỨNG, SỮA</a>
-                            <ul class="submenu">
+                            <a href="#egg-milk1" class="category-toggle" data-bs-toggle="collapse" aria-expanded="false" aria-controls="egg-milk1">
+                                TRỨNG, SỮA
+                            </a>
+                            <ul id="egg-milk1" class="collapse list-unstyled">
                                 <li><a th:href="@{/index/product}">Trứng gà, vịt, cút</a></li>
                                 <li><a th:href="@{/index/product}">Sữa tươi</a></li>
                             </ul>
                         </li>
                         <li class="has-submenu">
-                            <a href="#" class="category-toggle">RAU, CỦ, NẤM, TRÁI CÂY</a>
-                            <ul class="submenu">
+                            <a href="#vegetable-fruit-menu1" class="category-toggle" data-bs-toggle="collapse" aria-expanded="false" aria-controls="vegetable-fruit-menu1">
+                                RAU, CỦ, NẤM, TRÁI CÂY
+                            </a>
+                            <ul id="vegetable-fruit-menu1" class="collapse list-unstyled">
                                 <li><a th:href="@{/index/product}">Rau lá</a></li>
                                 <li><a th:href="@{/index/product}">Củ, quả</a></li>
                                 <li><a th:href="@{/index/product}">Nấm các loại</a></li>
@@ -138,53 +144,67 @@
                             </ul>
                         </li>
                         <li class="has-submenu">
-                            <a href="#" class="category-toggle">DẦU ĂN, NƯỚC CHẤM</a>
-                            <ul class="submenu">
+                            <a href="#oil-sauce-menu1" class="category-toggle" data-bs-toggle="collapse" aria-expanded="false" aria-controls="oil-sauce-menu1">
+                                DẦU ĂN, NƯỚC CHẤM
+                            </a>
+                            <ul id="oil-sauce-menu1" class="collapse list-unstyled">
                                 <li><a th:href="@{/index/product}">Dầu ăn</a></li>
                                 <li><a th:href="@{/index/product}">Nước mắm</a></li>
                                 <li><a th:href="@{/index/product}">Gia vị các loại</a></li>
                             </ul>
                         </li>
                         <li class="has-submenu">
-                            <a href="#" class="category-toggle">GẠO, BỘT, ĐỒ KHÔ</a>
-                            <ul class="submenu">
+                            <a href="#rice-flour-dry-menu1" class="category-toggle" data-bs-toggle="collapse" aria-expanded="false" aria-controls="rice-flour-dry-menu1">
+                                GẠO, BỘT, ĐỒ KHÔ
+                            </a>
+                            <ul id="rice-flour-dry-menu1" class="collapse list-unstyled">
                                 <li><a th:href="@{/index/product}">Gạo</a></li>
                                 <li><a th:href="@{/index/product}">Bột mì</a></li>
                                 <li><a th:href="@{/index/product}">Đồ khô</a></li>
                             </ul>
                         </li>
                         <li class="has-submenu">
-                            <a href="#" class="category-toggle">BIA, NƯỚC GIẢI KHÁT</a>
-                            <ul class="submenu">
-                                <li><a th:href="@{/index/product}">Bia</a></li>
-                                <li><a th:href="@{/index/product}">Nước ngọt</a></li>
+                            <a href="#beer-drink-menu1" class="category-toggle" data-bs-toggle="collapse" aria-expanded="false" aria-controls="beer-drink-menu1">
+                                BIA, NƯỚC GIẢI KHÁT
+                            </a>
+                            <ul id="beer-drink-menu1" class="collapse list-unstyled">
+                                <li><a href="#">Bia</a></li>
+                                <li><a href="#">Nước ngọt</a></li>
                             </ul>
                         </li>
                         <li class="has-submenu">
-                            <a href="#" class="category-toggle">THỰC PHẨM ĐÔNG MÁT</a>
-                            <ul class="submenu">
-                                <li><a th:href="@{/index/product}">Cá viên chiên</a></li>
-                                <li><a th:href="@{/index/product}">Súc xích</a></li>
-                                <li><a th:href="@{/index/product}">Bò viên</a></li>
+                            <a href="#frozen-food-menu1" class="category-toggle" data-bs-toggle="collapse" aria-expanded="false" aria-controls="frozen-food-menu1">
+                                THỰC PHẨM ĐÔNG MÁT
+                            </a>
+                            <ul id="frozen-food-menu1" class="collapse list-unstyled">
+                                <li><a href="#">Cá viên chiên</a></li>
+                                <li><a href="#">Súc xích</a></li>
+                                <li><a href="#">Bò viên</a></li>
                             </ul>
                         </li>
                         <li class="has-submenu">
-                            <a href="#" class="category-toggle">BÁNH KẸO CÁC LOẠI</a>
-                            <ul class="submenu">
+                            <a href="#snacks-menu1" class="category-toggle" data-bs-toggle="collapse" aria-expanded="false" aria-controls="snacks-menu1">
+                                BÁNH KẸO CÁC LOẠI
+                            </a>
+                            <ul id="snacks-menu1" class="collapse list-unstyled">
                                 <li><a th:href="@{/index/product}">Bánh quy</a></li>
                                 <li><a th:href="@{/index/product}">Kẹo</a></li>
                             </ul>
                         </li>
                         <li class="has-submenu">
-                            <a href="#" class="category-toggle">CHĂM SÓC CÁ NHÂN</a>
-                            <ul class="submenu">
+                            <a href="#personal-care-menu1" class="category-toggle" data-bs-toggle="collapse" aria-expanded="false" aria-controls="personal-care-menu1">
+                                CHĂM SÓC CÁ NHÂN
+                            </a>
+                            <ul id="personal-care-menu1" class="collapse list-unstyled">
                                 <li><a th:href="@{/index/product}">BVS các loại</a></li>
                                 <li><a th:href="@{/index/product}">BCS các loại</a></li>
                             </ul>
                         </li>
                         <li class="has-submenu">
-                            <a href="#" class="category-toggle">VỆ SINH NHÀ CỬA</a>
-                            <ul class="submenu">
+                            <a href="#cleaning-menu1" class="category-toggle" data-bs-toggle="collapse" aria-expanded="false" aria-controls="cleaning-menu1">
+                                VỆ SINH NHÀ CỬA
+                            </a>
+                            <ul id="cleaning-menu1" class="collapse list-unstyled">
                                 <li><a th:href="@{/index/product}">Nước lau sàn</a></li>
                                 <li><a th:href="@{/index/product}">Nước rửa chén</a></li>
                                 <li><a th:href="@{/index/product}">Chổi lau nhà</a></li>
@@ -207,34 +227,189 @@
         </div>
     </div>
 </section>
-    <!-- Hero Section END -->
-    <section class="blog-details-hero set-bg" data-setbg="/assets/img/blog/details/details-hero.jpg">
+<!-- Hero Section END -->
+<section>
+<!-- Hero Section END -->
+
+    <!-- Breadcrumb Section -->
+    <section class="breadcrumb-section set-bg" data-setbg="/assets/img/breadcrumb.jpg">
         <div class="container">
             <div class="row">
-                <div class="col-lg-12">
-                    <div class="blog__details__hero__text">
-                        <h2>THỜI GIAN VÀNG SĂN SALE, SĂN NGAY HÔM NAY NHẬN NHỮNG ƯU ĐÃI HẤP DẪN</h2>
-                        <ul>
-                            <li>12H ĐẾN 13H</li>
-                            <li>18H ĐẾN 19H</li>
-                        </ul>
+                <div class="col-lg-12 text-center">
+                    <div class="breadcrumb__text">
+                        <h2>GIỎ HÀNG</h2>
+                        <div class="breadcrumb__option">
+                            <a th:href="@{/index/shop}">GREEN</a>
+                            <span>GIỎ HÀNG</span>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
     </section>
-    <!-- Product Section -->
-    <section class=" product spad">
+    <!-- Giao hàng -->
+    <div class="shipping__details">
         <div class="container">
-            <!-- sản phẩm giảm giá -->
+            <div class="row">
+                <div class="col-lg-6">
+                    <div class="shipping__from">
+                        <h5>Giao từ</h5>
+                        <p>Green 171 Hà Đặc 171 Hà Đặc, Khu Phố 01, P. Trung Mỹ Tây, Q. 12</p>
+                        <p>Nếu tồn kho có thay đổi, Green sẽ liên hệ trước khi giao hàng <a href="#"
+                                class="change-link">Đổi</a></p>
+                        <p>Liên hệ với chúng tôi: 19001980</p>
+                    </div>
+                </div>
+                <div class="col-lg-6">
+                    <div class="shipping__info">
+                        <h5>Giao đến</h5>
+                        <p>108 Lê Thị Nho, Phường Trung Mỹ Tây, Quận 12, TP. Hồ Chí Minh</p>
+                        <p>Anh Khoa - 0339954005</p>
+                        <p>Giao trước 15h hôm nay <a href="#" class="change-link">(Đổi giờ giao)</a></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- BÊN TRÁI -->
+    <section class="checkout spad">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-7">
+                    <div class="shoping__cart__table">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th class="shoping__product">SẢN PHẨM</th>
+                                    <th>GIÁ</th>
+                                    <th>SỐ LƯỢNG</th>
+                                    <th>TỔNG</th>
+                                    <th></th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td class="shoping__cart__item">
+                                        <a th:href="@{/index/details}"><img src="/assets/img/cart/cart-1.jpg" alt=""></a>
+                                        <h5>RAU CỦ QUẢ</h5>
+                                    </td>
+                                    <td class="shoping__cart__price">
+                                        55.00
+                                    </td>
+                                    <td class="shoping__cart__quantity">
+                                        <div class="quantity">
+                                            <div class="pro-qty">
+                                                <input type="text" value="2">
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td class="shoping__cart__total">
+                                        110.000
+                                    </td>
+                                    <td class="shoping__cart__item__close">
+                                        <span class="icon_close"></span>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="shoping__cart__item">
+                                        <img src="/assets/img/cart/cart-2.jpg" alt="">
+                                        <h5>COMBO RAU CỦ QUẢ</h5>
+                                    </td>
+                                    <td class="shoping__cart__price">
+                                        39.00
+                                    </td>
+                                    <td class="shoping__cart__quantity">
+                                        <div class="quantity">
+                                            <div class="pro-qty">
+                                                <input type="text" value="1">
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td class="shoping__cart__total">
+                                        39.99
+                                    </td>
+                                    <td class="shoping__cart__item__close">
+                                        <span class="icon_close"></span>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="shoping__cart__item">
+                                        <img src="/assets/img/cart/cart-3.jpg" alt="">
+                                        <h5>CHUỐI TÂY SIÊU TO</h5>
+                                    </td>
+                                    <td class="shoping__cart__price">
+                                        69.00
+                                    </td>
+                                    <td class="shoping__cart__quantity">
+                                        <div class="quantity">
+                                            <div class="pro-qty">
+                                                <input type="text" value="1">
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td class="shoping__cart__total">
+                                        69.99
+                                    </td>
+                                    <td class="shoping__cart__item__close">
+                                        <span class="icon_close"></span>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="shoping__cart__item">
+                                        <img src="/assets/img/cart/cart-1.jpg" alt="">
+                                        <h5>RAU CỦ QUẢ</h5>
+                                    </td>
+                                    <td class="shoping__cart__price">
+                                        55.00
+                                    </td>
+                                    <td class="shoping__cart__quantity">
+                                        <div class="quantity">
+                                            <div class="pro-qty">
+                                                <input type="text" value="2">
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td class="shoping__cart__total">
+                                        110.000
+                                    </td>
+                                    <td class="shoping__cart__item__close">
+                                        <span class="icon_close"></span>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <!-- Bên tay phải -->
+                <div class="col-lg-5">
+                    <div class="checkout__order">
+                        <h4>Đơn HÀNG CỦA BẠN</h4>
+                        <div class="checkout__order__products">CÁC SẢN PHẨM<span>TỔNG CỘNG</span></div>
+                        <ul>
+                            <li>RAU CỦ QUẢ <span>110.000</span></li>
+                            <li>COMBO RAU CỦ QUẢ <span>39.00</span></li>
+                            <li>CHUỐI TÂY SIÊU TO <span>69.00</span></li>
+                        </ul>
+                        <div class="checkout__order__subtotal">TỔNG CỘNG <span>218.000</span>
+                            <ul>
+                                <li>PHÍ GIAO HÀNG, PHỤ PHÍ <span>30.00</span></li>
+                            </ul>
+                        </div>
+                        <div class="checkout__order__total">PHẢI THANH TOÁN <span>500.000</span></div>
+                        <button type="submit" class="site-btn">ĐẶT HÀNG</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- sản phẩm giảm giá -->
+    <section>
+        <div class="container">
             <div class="col-lg-12 col-md-12">
                 <div class="product__discount">
                     <div class="section-title product__discount__title">
                         <div class="discount-buttons">
-                            <h2>Khuyến Mãi Sốc</h2>
-                            <button class="flash-sale-btn">
-                                Flash Sale <span id="flash-sale-timer">01:06:20</span>
-                            </button>
+                            <h2>ƯU ĐÃI CHO ĐƠN HÀNG NÀY</h2>
                         </div>
                     </div>
                     <div class="row">
@@ -338,134 +513,9 @@
                         </div>
                     </div>
                 </div>
-                <section class="breadcrumb-section set-bg" data-setbg="/assets/img/ca-hai-san-baner.jpg"
-                    style="height: 150px;">
-                </section>
-                <!-- sản phẩm -->
-                <div class="filter__item">
-                    <div class="category-title-wrapper">
-                        <div class="category-line"></div>
-                        <div class="category-title text-center">
-                            <h2>THỊT , CÁ , HẢI SẢN</h2>
-                        </div>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-lg-3 col-md-6 col-sm-6">
-                        <div class="product__item">
-                            <div class="product__item__pic set-bg" data-setbg="/assets/img/product/product-1.jpg"></div>
-                            <div class="product__item__text">
-                                <h6>Thịt cừu dai giòn siêu ngon</h6>
-                                <div class="price">
-                                    <span class="product-lo">22.000đ</span>
-                                </div>
-                                <a th:href="@{/index/details}" class="button-buy">MUA</a>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-lg-3 col-md-6 col-sm-6">
-                        <div class="product__item">
-                            <div class="product__item__pic set-bg" data-setbg="/assets/img/product/product-2.jpg"></div>
-                            <div class="product__item__text">
-                                <h6><a href="#">Tên sản phẩm 2</a></h6>
-                                <div class="price">
-                                    <span class="product-lo">22.000đ</span>
-                                </div>
-                                <a th:href="@{/index/details}" class="button-buy">MUA</a>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-lg-3 col-md-6 col-sm-6">
-                        <div class="product__item">
-                            <div class="product__item__pic set-bg" data-setbg="/assets/img/product/product-3.jpg"></div>
-                            <div class="product__item__text">
-                                <h6><a href="#">Tên sản phẩm 2</a></h6>
-                                <div class="price">
-                                    <span class="product-lo">22.000đ</span>
-                                </div>
-                                <a href="#" class="button-buy">MUA</a>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-lg-3 col-md-6 col-sm-6">
-                        <div class="product__item">
-                            <div class="product__item__pic set-bg" data-setbg="/assets/img/product/product-4.jpg"></div>
-                            <div class="product__item__text">
-                                <h6><a href="#">Tên sản phẩm 2</a></h6>
-                                <div class="price">
-                                    <span class="product-lo">22.000đ</span>
-                                </div>
-                                <a href="#" class="button-buy">MUA</a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <section class="breadcrumb-section set-bg" data-setbg="/assets/img/traicay.jpg" style="height: 150px;">
-            </section>
-            <!-- đây -->
-            <div class="filter__item">
-                <div class="category-title-wrapper">
-                    <div class="category-line"></div>
-                    <div class="category-title text-center">
-                        <h2>TRÁI CÂY CÁC LOẠI</h2>
-                    </div>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-lg-3 col-md-6 col-sm-6">
-                    <div class="product__item">
-                        <div class="product__item__pic set-bg" data-setbg="/assets/img/product/product-1.jpg"></div>
-                        <div class="product__item__text">
-                            <h6>Thịt cừu dai giòn siêu ngon</h6>
-                            <div class="price">
-                                <span class="product-lo">22.000đ</span>
-                            </div>
-                            <a href="#" class="button-buy">MUA</a>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-lg-3 col-md-6 col-sm-6">
-                    <div class="product__item">
-                        <div class="product__item__pic set-bg" data-setbg="/assets/img/product/product-2.jpg"></div>
-                        <div class="product__item__text">
-                            <h6><a href="#">Tên sản phẩm 2</a></h6>
-                            <div class="price">
-                                <span class="product-lo">22.000đ</span>
-                            </div>
-                            <a href="#" class="button-buy">MUA</a>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-lg-3 col-md-6 col-sm-6">
-                    <div class="product__item">
-                        <div class="product__item__pic set-bg" data-setbg="/assets/img/product/product-3.jpg"></div>
-                        <div class="product__item__text">
-                            <h6><a href="#">Tên sản phẩm 2</a></h6>
-                            <div class="price">
-                                <span class="product-lo">22.000đ</span>
-                            </div>
-                            <a href="#" class="button-buy">MUA</a>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-lg-3 col-md-6 col-sm-6">
-                    <div class="product__item">
-                        <div class="product__item__pic set-bg" data-setbg="/assets/img/product/product-4.jpg"></div>
-                        <div class="product__item__text">
-                            <h6><a href="#">Tên sản phẩm 2</a></h6>
-                            <div class="price">
-                                <span class="product-lo">22.000đ</span>
-                            </div>
-                            <a href="#" class="button-buy">MUA</a>
-                        </div>
-                    </div>
-                </div>
             </div>
         </div>
     </section>
-    <!-- Product Section End -->
-
     <!-- Footer Section -->
     <footer class="footer spad">
         <div class="container">
@@ -473,7 +523,7 @@
                 <div class="col-lg-3 col-md-6 col-sm-6">
                     <div class="footer__about">
                         <div class="footer__about__logo">
-                            <a href="./index.html"><img src="/assets/img/logo.png" alt=""></a>
+                            <a th:href="@{/index/shop}"><img src="/assets/img/logo.png" alt=""></a>
                         </div>
                         <ul>
                             <li>Địa chỉ: Trung Mỹ Tây Q12</li>
@@ -525,55 +575,6 @@
     <!-- Footer Section END -->
 
     <!-- JS Plugins -->
-    <script>
-        // Set the time for the countdown (2 hours in seconds)
-        let countdownTime = 2 * 60 * 60; // 2 hours = 7200 seconds
-
-        function startCountdown() {
-            const timerElement = document.getElementById('flash-sale-timer');
-
-            const interval = setInterval(() => {
-                let hours = Math.floor(countdownTime / 3600);
-                let minutes = Math.floor((countdownTime % 3600) / 60);
-                let seconds = countdownTime % 60;
-
-                // Format time with leading zeros
-                hours = hours < 10 ? '0' + hours : hours;
-                minutes = minutes < 10 ? '0' + minutes : minutes;
-                seconds = seconds < 10 ? '0' + seconds : seconds;
-
-                // Update the timer element
-                timerElement.innerHTML = `${hours}:${minutes}:${seconds}`;
-
-                if (countdownTime <= 0) {
-                    clearInterval(interval);
-                    timerElement.innerHTML = '00:00:00';
-                } else {
-                    countdownTime--;
-                }
-            }, 1000);
-        }
-        document.querySelectorAll('.category-toggle').forEach(item => {
-            item.addEventListener('click', event => {
-                event.preventDefault(); // Ngăn chặn hành động mặc định của thẻ a
-                const parentLi = item.parentElement;
-
-                // Đóng tất cả danh mục con khác
-                document.querySelectorAll('.category-menu > li').forEach(li => {
-                    if (li !== parentLi) {
-                        li.classList.remove('active');
-                    }
-                });
-
-                // Chuyển đổi trạng thái của danh mục cha được ấn
-                parentLi.classList.toggle('active');
-            });
-        });
-
-        // Start the countdown when the page loads
-        window.onload = startCountdown;
-
-    </script>
     <script src="/assets/js/jquery-3.3.1.min.js"></script>
     <script src="/assets/js/bootstrap.min.js"></script>
     <script src="/assets/js/jquery.nice-select.min.js"></script>
@@ -582,6 +583,6 @@
     <script src="/assets/js/mixitup.min.js"></script>
     <script src="/assets/js/owl.carousel.min.js"></script>
     <script src="/assets/js/main.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </body>
-
 </html>

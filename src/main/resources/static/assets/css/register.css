@@ -1,0 +1,85 @@
+.billing-container {
+    width: 100%;
+    max-width: 650px;
+    /* Tăng kích thước tối đa của form */
+    margin: 0 auto;
+    padding: 25px;
+    /* Tăng padding để form rộng hơn */
+    font-family: Arial, sans-serif;
+    border: 2px solid #ccc;
+    border-radius: 10px;
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.15);
+    /* Tăng đổ bóng cho khung */
+    background-color: #f9f9f9;
+}
+
+.billing-container h2 {
+    text-align: center;
+    margin-bottom: 25px;
+    /* Tăng khoảng cách dưới tiêu đề */
+    font-size: 24px;
+    /* Tăng kích thước chữ tiêu đề */
+}
+
+.form-group {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+}
+
+.input-group {
+    width: 48%;
+    /* Tăng chiều rộng input để phù hợp với form lớn hơn */
+    margin-bottom: 20px;
+    /* Tăng khoảng cách dưới */
+}
+
+.input-group.full-width {
+    width: 100%;
+}
+
+.input-group label {
+    display: block;
+    margin-bottom: 10px;
+    /* Tăng khoảng cách giữa nhãn và input */
+    font-size: 16px;
+    /* Tăng kích thước chữ nhãn */
+}
+
+.input-group input {
+    width: 100%;
+    padding: 12px;
+    /* Tăng padding để input lớn hơn */
+    box-sizing: border-box;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    font-size: 16px;
+    /* Tăng kích thước chữ của input */
+}
+
+.btn-submit {
+    display: block;
+    width: 100%;
+    padding: 12px;
+    /* Tăng kích thước nút */
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    cursor: pointer;
+    text-align: center;
+    border-radius: 5px;
+    font-size: 18px;
+    /* Tăng kích thước chữ của nút */
+}
+
+.btn-submit:hover {
+    background-color: #45a049;
+}
+
+.logo img {
+    display: block;
+    margin: 0 auto 25px;
+    /* Tăng khoảng cách dưới logo */
+    max-width: 120px;
+    /* Tăng kích thước của logo */
+}

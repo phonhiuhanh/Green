@@ -7,92 +7,88 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="description" content="">
     <meta name="author" content="">
-    <title>Pixel Admin</title>
+    <title>Admin Green</title>
     <th:block th:insert="~{/admin/common/head :: head}"></th:block>
 
 </head>
 
 <body>
 
-    <div id="wrapper" >
-        <!-- Navigation -->
-        <nav class="navbar navbar-default navbar-static-top m-b-0">
-            <div class="navbar-header"> 
-                <a class="navbar-toggle hidden-sm hidden-md hidden-lg " href="/assets-admin/javascript:void(0)" data-toggle="collapse" data-target=".navbar-collapse">
-                    <i class="fa fa-bars"></i>
-                </a>
-                <div class="top-left-part">
-                    <a class="logo" href="index.html">
-                        <b>
-                            <img src="/assets-admin/plugins/images/pixeladmin-logo.png" alt="home" />
-                        </b>
-                        <span class="hidden-xs">
+<div id="wrapper" >
+    <nav class="navbar navbar-default navbar-static-top m-b-0">
+        <div class="navbar-header">
+            <a class="navbar-toggle hidden-sm hidden-md hidden-lg " href="/assets-admin/javascript:void(0)" data-toggle="collapse" data-target=".navbar-collapse">
+                <i class="fa fa-bars"></i>
+            </a>
+            <div class="top-left-part">
+                <a class="logo" href="/Admin/Trang-chủ">
+                    <b>
+                        <img src="/assets-admin/images/pixeladmin-logo.png" alt="home" />
+                    </b>
+                    <span class="hidden-xs">
                             <img src="/assets-admin/plugins/images/pixeladmin-text.png" alt="home" />
                         </span>
-                    </a>
-                </div>
-                <ul class="nav navbar-top-links navbar-left m-l-20 hidden-xs">
-                    <li>
-                        <form role="search" class="app-search hidden-xs">
-                            <input type="text" placeholder="Search..." class="form-control"> 
-                            <a href="/assets-admin/">
-                                <i class="fa fa-search"></i>
-                            </a>
-                        </form>
-                    </li>
-                </ul>
-                <ul class="nav navbar-top-links navbar-right pull-right">
-                    <li>
-                        <div class="dropdown">
-                            <a class="profile-pic dropdown-toggle" data-toggle="dropdown" href="/assets-admin/#">
-                                <img src="/assets-admin/plugins/images/users/varun.jpg" alt="user-img" width="36" class="img-circle" />
-                                <b class="hidden-xs">Cybersoft</b> 
-                            </a>
-                            <ul class="dropdown-menu">
-                                <li><a href="/assets-admin/profile.html">Thông tin cá nhân</a></li>
-                                <li><a href="/assets-admin/#">Thống kê công việc</a></li>
-                                <li class="divider"></li>
-                                <li><a href="/assets-admin/#">Đăng xuất</a></li>
-                            </ul>
-                        </div>
-                    </li>
-                </ul>
+                </a>
             </div>
-            <!-- /.navbar-header -->
-            <!-- /.navbar-top-links -->
-            <!-- /.navbar-static-side -->
-        </nav>
-        <!-- Left navbar-header -->
-        <div class="navbar-default sidebar" role="navigation">
-            <div class="sidebar-nav navbar-collapse slimscrollsidebar">
-                <ul class="nav" id="side-menu">
-                    <li style="padding: 10px 0 0;">
-                        <a href="index.html" class="waves-effect"><i class="fa fa-clock-o fa-fw"
-                                                                                   aria-hidden="true"></i><span class="hide-menu">Trang Chủ</span></a>
-                    </li>
-                    <li>
-                        <a th:href="@{/Admin/Motorbikes}" class="waves-effect"><i class="fa fa-user fa-fw"
-                                   aria-hidden="true"></i><span class="hide-menu">Sản Phẩm</span></a>
-                    </li>
-                    <li>
-                        <a th:href="@{/Admin/Quản-lý-nhân-viên}" class="waves-effect"><i class="fa fa-user fa-fw"
-                                aria-hidden="true"></i><span class="hide-menu">Nhân viên</span></a>
-                    </li>
-                    <li>
-                        <a th:href="@{/Admin/Quản-lý-chức-vụ}" class="waves-effect"><i class="fa fa-modx fa-fw"
-                                aria-hidden="true"></i><span class="hide-menu">Đơn Hàng</span></a>
-                    </li>
-                    <li>
-                        <a href="/assets-admin/groupwork.html" class="waves-effect"><i class="fa fa-table fa-fw"
-                                                                                       aria-hidden="true"></i><span class="hide-menu">Khách Hàng</span></a>
-                    </li>
-                    <li>
-                        <a href="/assets-admin/task.html" class="waves-effect"><i class="fa fa-table fa-fw"
-                                                                                  aria-hidden="true"></i><span class="hide-menu">Chấm Công</span></a>
-                    </li>
-                </ul>
-            </div>
+            <ul class="nav navbar-top-links navbar-left m-l-20 hidden-xs">
+                <li>
+                    <form role="search" class="app-search hidden-xs">
+                        <input type="text" placeholder="Search..." class="form-control">
+                        <a href="/assets-admin/">
+                            <i class="fa fa-search"></i>
+                        </a>
+                    </form>
+                </li>
+            </ul>
+            <ul class="nav navbar-top-links navbar-right pull-right">
+                <li>
+                    <div class="dropdown">
+                        <a class="profile-pic dropdown-toggle" data-toggle="dropdown" href="/assets-admin/#">
+                            <img src="/assets-admin/plugins/images/users/varun.jpg" alt="user-img" width="36" class="img-circle" />
+                            <b class="hidden-xs">Cybersoft</b>
+                        </a>
+                        <ul class="dropdown-menu">
+                            <li><a href="/assets-admin/profile.html">Thông tin cá nhân</a></li>
+                            <li><a href="/assets-admin/#">Thống kê công việc</a></li>
+                            <li class="divider"></li>
+                            <li><a href="/assets-admin/#">Đăng xuất</a></li>
+                        </ul>
+                    </div>
+                </li>
+            </ul>
         </div>
+    </nav>
+    <!-- Left navbar-header -->
+    <div class="navbar-default sidebar" role="navigation">
+        <div class="sidebar-nav navbar-collapse slimscrollsidebar">
+            <ul class="nav" id="side-menu">
+                <li style="padding: 10px 0 0;">
+                    <a th:href="@{/Admin/trangchu}" class="waves-effect"><i class="fa fa-user fa-fw"
+                                                                            aria-hidden="true"></i><span class="hide-menu">Trang Chủ</span></a>
+                </li>
+                <li>
+                    <a th:href="@{/sanpham/products}" class="waves-effect"><i class="fa fa-user fa-fw"
+                                                                           aria-hidden="true"></i><span class="hide-menu">Sản Phẩm</span></a>
+                </li>
+                <li>
+                    <a th:href="@{/Admin/nhanvien}" class="waves-effect"><i class="fa fa-user fa-fw"
+                                                                            aria-hidden="true"></i><span class="hide-menu">Nhân viên</span></a>
+                </li>
+                <li>
+                    <a th:href="@{/Admin/chucvu}" class="waves-effect"><i class="fa fa-modx fa-fw"
+                                                                          aria-hidden="true"></i><span class="hide-menu">Chức Vụ</span></a>
+                </li>
+                <li>
+                    <a th:href="@{/Admin/donhang}" class="waves-effect"><i class="fa fa-table fa-fw"
+                                                                           aria-hidden="true"></i><span class="hide-menu">Đơn Hàng</span></a>
+                </li>
+                <li>
+                    <a th:href="@{/Admin/chamcong}" class="waves-effect"><i class="fa fa-table fa-fw"
+                                                                            aria-hidden="true"></i><span class="hide-menu">Chấm Luong</span></a>
+                </li>
+            </ul>
+        </div>
+    </div>
         <!-- Left navbar-header end -->
         <!-- Page Content -->
         <div id="page-wrapper" layout:fragment="admin">
@@ -107,15 +103,15 @@
             <!-- row -->
             <div class="row">
                 <!--col -->
-                <div class="col-lg-3 col-md-3 col-sm-12 col-xs-12">
+                <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12">
                     <div class="white-box">
                         <div class="col-in row">
                             <div class="col-md-6 col-sm-6 col-xs-6"> <i data-icon="E"
                                     class="linea-icon linea-basic"></i>
-                                <h5 class="text-muted vb">KHÁCH HÀNG</h5>
+                                <h5 class="text-muted vb">CHƯA BẮT ĐẦU</h5>
                             </div>
                             <div class="col-md-6 col-sm-6 col-xs-6">
-                                <h3 class="counter text-right m-t-15 text-danger">200</h3>
+                                <h3 class="counter text-right m-t-15 text-danger">23</h3>
                             </div>
                             <div class="col-md-12 col-sm-12 col-xs-12">
                                 <div class="progress">
@@ -129,12 +125,12 @@
                 </div>
                 <!-- /.col -->
                 <!--col -->
-                <div class="col-lg-3 col-md-3 col-sm-12 col-xs-12">
+                <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12">
                     <div class="white-box">
                         <div class="col-in row">
                             <div class="col-md-6 col-sm-6 col-xs-6"> <i class="linea-icon linea-basic"
                                     data-icon="&#xe01b;"></i>
-                                <h5 class="text-muted vb">ĐƠN HÀNG</h5>
+                                <h5 class="text-muted vb">ĐANG THỰC HIỆN</h5>
                             </div>
                             <div class="col-md-6 col-sm-6 col-xs-6">
                                 <h3 class="counter text-right m-t-15 text-megna">169</h3>
@@ -151,40 +147,20 @@
                 </div>
                 <!-- /.col -->
                 <!--col -->
-                <div class="col-lg-3 col-md-3 col-sm-12 col-xs-12">
+                <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12">
                     <div class="white-box">
                         <div class="col-in row">
                             <div class="col-md-6 col-sm-6 col-xs-6"> <i class="linea-icon linea-basic"
                                     data-icon="&#xe00b;"></i>
-                                <h5 class="text-muted vb">NHÂN VIÊN</h5>
+                                <h5 class="text-muted vb">ĐÃ HOÀN THÀNH</h5>
                             </div>
                             <div class="col-md-6 col-sm-6 col-xs-6">
-                                <h3 class="counter text-right m-t-15 text-primary">4</h3>
+                                <h3 class="counter text-right m-t-15 text-primary">157</h3>
                             </div>
                             <div class="col-md-12 col-sm-12 col-xs-12">
                                 <div class="progress">
                                     <div class="progress-bar progress-bar-primary" role="progressbar" aria-valuenow="40"
                                         aria-valuemin="0" aria-valuemax="100" style="width: 40%"> <span
-                                            class="sr-only">40% Complete (success)</span> </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-lg-3 col-md-3 col-sm-12 col-xs-12">
-                    <div class="white-box">
-                        <div class="col-in row">
-                            <div class="col-md-6 col-sm-6 col-xs-6"> <i class="linea-icon linea-basic"
-                                                                        data-icon="&#xe01b;"></i>
-                                <h5 class="text-muted vb">DOANH THU</h5>
-                            </div>
-                            <div class="col-md-6 col-sm-6 col-xs-6">
-                                <h3 class="counter text-right m-t-15 text-megna">169.000$</h3>
-                            </div>
-                            <div class="col-md-12 col-sm-12 col-xs-12">
-                                <div class="progress">
-                                    <div class="progress-bar progress-bar-megna" role="progressbar" aria-valuenow="40"
-                                         aria-valuemin="0" aria-valuemax="100" style="width: 40%"> <span
                                             class="sr-only">40% Complete (success)</span> </div>
                                 </div>
                             </div>
@@ -241,12 +217,6 @@
     <script src="/assets-admin/plugins/bower_components/toast-master/js/jquery.toast.js"></script>
 <!--    <script src="/assets-admin/js/jquery.dataTables.js"></script>-->
     <script src="https://cdn.datatables.net/2.0.8/js/dataTables.min.js"></script>
-    <script>
-        $(document).ready(function () {
-            $('#tableNhanVien').DataTable();
-        });
-    </script>
-
 </body>
 
 </html>
