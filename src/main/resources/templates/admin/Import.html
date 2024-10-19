@@ -94,7 +94,7 @@
             <div class="container-fluid">
                 <div class="row bg-title">
                     <div class="col-lg-3 col-md-4 col-sm-4 col-xs-12">
-                        <h4 class="page-title">Danh sách chấm công</h4>
+                        <h4 class="page-title">Danh sách nhập hàng</h4>
                     </div>
                 </div>
                 <!-- /.row -->
@@ -103,30 +103,30 @@
                     <div class="col-sm-12">
                         <div class="white-box">
                             <div class="table-responsive">
-                                <table class="table">
+                                <table class="table" id="import">
                                     <thead>
                                     <tr>
                                         <th>ID</th>
-                                        <th>Tên người dùng</th>
-                                        <th>Ngày làm việc</th>
-                                        <th>Giờ vào</th>
-                                        <th>Giờ ra</th>
-                                        <th>Lương theo ngày</th>
+                                        <th>Import ID</th>
+                                        <th>Product ID</th>
+                                        <th>Tiền hàng</th>
+                                        <th>Số lượng hàng</th>
+                                        <th>Trạng thái</th>
                                         <th>Action</th>
                                     </tr>
                                     </thead>
                                     <tbody>
-                                    <tr th:each="attendance : ${attendanceList}">
-                                        <td th:text="${attendance.attendanceID}"></td>
-                                        <td th:text="${attendance.user.username}"></td>
-                                        <td th:text="${attendance.work_date}"></td>
-                                        <td th:text="${attendance.check_in_time}"></td>
-                                        <td th:text="${attendance.check_out_time}"></td>
-                                        <td th:text="${attendance.daily_wage}"></td>
+                                    <tr th:each="importInfo : ${importInfoList}">
+                                        <td th:text="${importInfo.importInfoID}"></td>
+                                        <td th:text="${importInfo.importID}"></td>
+                                        <td th:text="${importInfo.productID}"></td>
+                                        <td th:text="${importInfo.priceImport}"></td>
+                                        <td th:text="${importInfo.quantityImport}"></td>
+                                        <td th:text="${importInfo.status}"></td>
                                         <td>
                                             <a href="#" class="btn btn-sm btn-primary">Sửa</a>
-                                            <form th:action="@{/attendance/delete}" method="post" style="display:inline;">
-                                                <input type="hidden" name="id" th:value="${attendance.attendanceID}" />
+                                            <form th:action="@{/import/delete}" method="post" style="display:inline;">
+                                                <input type="hidden" name="id" th:value="${importInfo.importInfoID}" />
                                                 <button type="submit" class="btn btn-sm btn-danger">Xóa</button>
                                             </form>
                                         </td>

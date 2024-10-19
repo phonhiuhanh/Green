@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Chỉnh sửa sản phẩm</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <style>
+        body {
+            background-color: #f7f7f7;
+        }
+
+        .card {
+            margin-top: 20px;
+            padding: 20px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            border-radius: 10px;
+            background-color: #fff;
+        }
+
+        .card-header {
+            font-size: 24px;
+            font-weight: bold;
+            color: #333;
+            border-bottom: 1px solid #ddd;
+            margin-bottom: 20px;
+        }
+
+        .form-control {
+            border-radius: 8px;
+        }
+
+        .btn-success {
+            background-color: #28a745;
+            border-color: #28a745;
+            border-radius: 8px;
+        }
+
+        .btn-secondary {
+            border-radius: 8px;
+        }
+
+        .product-image {
+            margin-top: 10px;
+            border: 1px solid #ddd;
+            padding: 5px;
+            border-radius: 8px;
+            max-width: 100px;
+            max-height: 100px;
+            object-fit: cover;
+        }
+
+        .form-group label {
+            font-weight: bold;
+            color: #555;
+        }
+
+        .form-horizontal {
+            max-width: 800px;
+            margin: auto;
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <div class="card">
+        <div class="card-header">
+            Chỉnh sửa sản phẩm
+        </div>
+        <div class="card-body">
+            <form th:object="${product}" th:action="@{/sanpham/update}" method="post" enctype="multipart/form-data" class="form-horizontal form-material">
+                <!-- Trường ẩn cho ID của sản phẩm, chỉ hiển thị khi sửa -->
+                <input type="hidden" th:field="*{productID}"/>
+
+                <div class="form-group">
+                    <label class="col-md-12">Tên sản phẩm</label>
+                    <div class="col-md-12">
+                        <input th:field="*{name}" type="text" placeholder="Tên sản phẩm" class="form-control form-control-line" required />
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="col-md-12">Mô tả sản phẩm</label>
+                    <div class="col-md-12">
+                        <textarea th:field="*{description}" class="form-control form-control-line" placeholder="Mô tả sản phẩm"></textarea>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="col-md-12">Giá</label>
+                    <div class="col-md-12">
+                        <input th:field="*{price}" type="text" placeholder="Giá" class="form-control form-control-line" required />
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="col-md-12">Phần trăm giảm giá</label>
+                    <div class="col-md-12">
+                        <input th:field="*{giamgia}" type="number" placeholder="Phần trăm giảm giá" class="form-control form-control-line" required />
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="col-md-12">Giá cũ</label>
+                    <div class="col-md-12">
+                        <input th:field="*{giacu}" type="text" placeholder="Giá cũ" class="form-control form-control-line" required />
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="col-md-12">Ảnh sản phẩm</label>
+                    <div class="col-md-12">
+                        <input name="image" type="file" class="form-control form-control-line" />
+                        <!-- Hiển thị ảnh hiện tại nếu có -->
+                        <img th:src="@{'/uploads/' + ${product.images[0].imageURL}}" class="product-image" />
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="col-md-12">Ảnh chính</label>
+                    <div class="col-md-12">
+                        <input th:field="*{images[0].isMain}" type="checkbox" /> Ảnh chính
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <div class="col-md-12 text-right">
+                        <button type="submit" class="btn btn-success">Cập nhật</button>
+                        <a href="/sanpham/products" class="btn btn-secondary">Hủy</a>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+</body>
+</html>

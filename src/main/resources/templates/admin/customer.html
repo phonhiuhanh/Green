@@ -68,20 +68,24 @@
                                                                            aria-hidden="true"></i><span class="hide-menu">Sản Phẩm</span></a>
                 </li>
                 <li>
-                    <a th:href="@{/Admin/nhanvien}" class="waves-effect"><i class="fa fa-user fa-fw"
-                                                                            aria-hidden="true"></i><span class="hide-menu">Nhân viên</span></a>
+                    <a th:href="@{/customer/list}" class="waves-effect"><i class="fa fa-user fa-fw"
+                                                                            aria-hidden="true"></i><span class="hide-menu">Khách Hành</span></a>
                 </li>
                 <li>
-                    <a th:href="@{/Admin/chucvu}" class="waves-effect"><i class="fa fa-modx fa-fw"
+                    <a th:href="@{/user/list}" class="waves-effect"><i class="fa fa-modx fa-fw"
                                                                           aria-hidden="true"></i><span class="hide-menu">Chức Vụ</span></a>
                 </li>
                 <li>
-                    <a th:href="@{/Admin/donhang}" class="waves-effect"><i class="fa fa-table fa-fw"
+                    <a th:href="@{/order/list}" class="waves-effect"><i class="fa fa-table fa-fw"
                                                                            aria-hidden="true"></i><span class="hide-menu">Đơn Hàng</span></a>
                 </li>
                 <li>
-                    <a th:href="@{/Admin/chamcong}" class="waves-effect"><i class="fa fa-table fa-fw"
+                    <a th:href="@{/attendance/list}" class="waves-effect"><i class="fa fa-table fa-fw"
                                                                             aria-hidden="true"></i><span class="hide-menu">Chấm Luong</span></a>
+                </li>
+                <li>
+                    <a th:href="@{/import/list}" class="waves-effect"><i class="fa fa-table fa-fw"
+                                                                             aria-hidden="true"></i><span class="hide-menu">Nhập hàng</span></a>
                 </li>
             </ul>
         </div>
@@ -90,7 +94,7 @@
     <div class="container-fluid">
         <div class="row bg-title">
             <div class="col-lg-3 col-md-4 col-sm-4 col-xs-12">
-                <h4 class="page-title">Nhân Viên</h4>
+                <h4 class="page-title">Khách Hàng</h4>
             </div>
         </div>
         <div class="col-sm-12">
@@ -121,13 +125,14 @@
                             <td>
                                 <a href="#" class="btn btn-sm btn-primary">Sửa</a>
                                 <form th:action="@{/customer/delete}" method="post" style="display:inline;">
-                                    <input type="hidden" name="id" th:value="${khachhang.customerID}" /> <!-- Đảm bảo dùng customerID -->
+                                    <input type="hidden" name="id" th:value="${khachhang.customerID}" />
                                     <button type="submit" class="btn btn-sm btn-danger">Xóa</button>
                                 </form>
                             </td>
                         </tr>
                         </tbody>
                     </table>
+
 
                 </div>
             </div>

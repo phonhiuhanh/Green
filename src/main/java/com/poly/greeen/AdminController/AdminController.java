@@ -1,16 +1,9 @@
-package com.poly.greeen.Controller;
+package com.poly.greeen.AdminController;
 
-import com.poly.greeen.Entity.Product;
 import com.poly.greeen.Repository.ProductRepository;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-
-import java.util.List;
 
 @Controller
 @RequestMapping("/Admin")
@@ -25,7 +18,7 @@ public class AdminController {
 
     @RequestMapping("/nhanvien")
     public String AddEmployeePage() {
-        return "admin/nhanvien";
+        return "customer";
     }
 
     @RequestMapping("/chamcong")
@@ -39,7 +32,7 @@ public class AdminController {
     }
     @RequestMapping("/donhang")
     public String Managedonhang() {
-        return "admin/donhang";
+        return "oder";
     }
 
 }

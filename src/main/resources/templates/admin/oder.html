@@ -68,20 +68,24 @@
                                                                            aria-hidden="true"></i><span class="hide-menu">Sản Phẩm</span></a>
                 </li>
                 <li>
-                    <a th:href="@{/Admin/nhanvien}" class="waves-effect"><i class="fa fa-user fa-fw"
-                                                                            aria-hidden="true"></i><span class="hide-menu">Nhân viên</span></a>
+                    <a th:href="@{/customer/list}" class="waves-effect"><i class="fa fa-user fa-fw"
+                                                                           aria-hidden="true"></i><span class="hide-menu">Khách Hành</span></a>
                 </li>
                 <li>
-                    <a th:href="@{/Admin/chucvu}" class="waves-effect"><i class="fa fa-modx fa-fw"
+                    <a th:href="@{/user/list}" class="waves-effect"><i class="fa fa-modx fa-fw"
                                                                           aria-hidden="true"></i><span class="hide-menu">Chức Vụ</span></a>
                 </li>
                 <li>
-                    <a th:href="@{/Admin/donhang}" class="waves-effect"><i class="fa fa-table fa-fw"
+                    <a th:href="@{/order/list}" class="waves-effect"><i class="fa fa-table fa-fw"
                                                                            aria-hidden="true"></i><span class="hide-menu">Đơn Hàng</span></a>
                 </li>
                 <li>
-                    <a th:href="@{/Admin/chamcong}" class="waves-effect"><i class="fa fa-table fa-fw"
+                    <a th:href="@{/attendance/list}" class="waves-effect"><i class="fa fa-table fa-fw"
                                                                             aria-hidden="true"></i><span class="hide-menu">Chấm Luong</span></a>
+                </li>
+                <li>
+                    <a th:href="@{/import/list}" class="waves-effect"><i class="fa fa-table fa-fw"
+                                                                         aria-hidden="true"></i><span class="hide-menu">Nhập hàng</span></a>
                 </li>
             </ul>
         </div>
@@ -96,39 +100,45 @@
         <!-- /.row -->
         <!-- .row -->
         <div class="row">
-            <div class="col-md-2 col-12"></div>
-            <div class="col-md-8 col-xs-12" th:object="${cv}">
+            <div class="col-sm-12">
                 <div class="white-box">
-                    <form class="form-horizontal form-material">
-                        <div class="form-group">
-                            <label class="col-md-12">Tên quyền</label>
-                            <div class="col-md-12">
-                                <input id="tenChucVuUpdate" type="text" placeholder="Tên quyền" th:value="${cv?.tenChucVu}"
-                                       class="form-control form-control-line" />
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label class="col-md-12">Mô tả</label>
-                            <div class="col-md-12">
-                                <input id="descChucVuUpdate" th:value="${cv?.mieuTa}" type="text" placeholder="Mô tả" class="form-control form-control-line" />
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <div class="col-sm-12">
-                                <button id="btnUpdateChucVu" class="btn btn-success waves-effect waves-light m-r-10">Cập nhật</button>
-                                <a href="/Admin/Quản-lý-chức-vụ" class="btn btn-primary">Quay lại</a>
-                            </div>
-                        </div>
-                    </form>
+                    <div class="table-responsive">
+                        <table class="table">
+                            <thead>
+                            <tr>
+                                <th>ID Chi Tiết Đơn Hàng</th>
+                                <th>ID Đơn Hàng</th>
+                                <th>ID Sản Phẩm</th>
+                                <th>Số Lượng</th>
+                                <th>Giá</th>
+                                <th>Hành Động</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr th:each="orderDetail : ${orderDetails}">
+                                <td th:text="${orderDetail.orderDetailID}"></td>
+                                <td th:text="${orderDetail.orderID}"></td>
+                                <td th:text="${orderDetail.productID}"></td>
+                                <td th:text="${orderDetail.quantity}"></td>
+                                <td th:text="${orderDetail.price}"></td>
+                                <td>
+                                    <a href="#" class="btn btn-sm btn-primary">Sửa</a>
+                                    <form th:action="@{/order/delete}" method="post" style="display:inline;">
+                                        <input type="hidden" name="orderDetailID" th:value="${orderDetail.orderDetailID}" />
+                                        <button type="submit" class="btn btn-sm btn-danger">Xóa</button>
+                                    </form>
+                                </td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
                 </div>
             </div>
-            <script src="/assets-admin/script/ChucVuJS.js"></script>
-
         </div>
         <!-- /.row -->
     </div>
     <!-- /.container-fluid -->
-    <footer class="footer text-center"> 2018 &copy; myclass.com </footer>
+    <footer class="footer text-center"> Green </footer>
 </div>
 <!-- /#page-wrapper -->
 </body>
