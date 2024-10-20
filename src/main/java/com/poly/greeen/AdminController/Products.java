@@ -135,10 +135,4 @@ public class Products {
             return "redirect:/error";
         }
     }
-//    @GetMapping("/category")
-//    public String getProductsByCategory(@RequestParam("categoryID") int categoryID, Model model) {
-//        List<Product> products = productRepository.findByCategoryID(categoryID);
-//        model.addAttribute("products", products);
-//        return "giaodien/product";  // Tên file Thymeleaf hiển thị sản phẩm
-//    }
 }
