@@ -1,0 +1,168 @@
+<!doctype html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head></head>
+<body>
+<header class="header" th:fragment="navbar">
+    <div class="header__top">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-2 col-md-3 d-none d-md-flex justify-content-end align-items-center">
+                    <div class="header__logo">
+                        <a th:href="@{/index/shop}"><img src="/assets/img/logo.png" alt=""></a>
+                    </div>
+                </div>
+                <div class="col-lg-8 col-md-6 col-sm-12">
+                    <nav class="header__menu d-flex justify-content-center align-items-center">
+                        <div class="hero__search__form">
+                            <form action="#">
+                                <div class="hero__search__categories">
+                                    Sản phẩm
+                                </div>
+                                <input type="text" placeholder="Giao nhanh trong vòng 2h">
+                                <button type="submit" class="site-btn">Tìm kiếm</button>
+                            </form>
+                        </div>
+                    </nav>
+                </div>
+                <div class="col-lg-2 col-md-3 d-none d-md-flex flex-row align-items-center justify-content-start gap-3">
+                    <div class="header__cart">
+                        <ul>
+                            <li><a th:href="@{/index/details}"><i class="fa fa-shopping-bag"></i> <span>3</span></a></li>
+                        </ul>
+                    </div>
+                    <div class="header__top__right__auth">
+                        <a href="#"><i class="fa fa-user"></i> Đăng nhập</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+
+<div class="col-lg-3 d-lg-block d-none fixed-sidebar" th:fragment="sidebar">
+    <div class="hero__categories">
+        <div class="hero__categories__all">
+            <i class="fa fa-bars"></i>
+            <span>DANH MỤC</span>
+        </div>
+        <ul class="category-menu">
+            <li class="has-submenu">
+                <a href="#" class="category-toggle">THỊT, CÁ, HẢI SẢN</a>
+                <ul class="submenu">
+                    <li><a th:href="@{/index/product}">Thịt heo</a></li>
+                    <li><a th:href="@{/index/product}">Thịt bò</a></li>
+                    <li><a th:href="@{/index/product}">Thịt gà, vịt, chim</a></li>
+                    <li><a th:href="@{/index/product}">Cá, hải sản</a></li>
+                </ul>
+            </li>
+            <li class="has-submenu">
+                <a href="#" class="category-toggle">TRỨNG, SỮA</a>
+                <ul class="submenu">
+                    <li><a th:href="@{/index/product}">Trứng gà, vịt, cút</a></li>
+                    <li><a th:href="@{/index/product}">Sữa tươi</a></li>
+                </ul>
+            </li>
+            <li class="has-submenu">
+                <a href="#" class="category-toggle">RAU, CỦ, NẤM, TRÁI CÂY</a>
+                <ul class="submenu">
+                    <li><a th:href="@{/index/product}">Rau lá</a></li>
+                    <li><a th:href="@{/index/product}">Củ, quả</a></li>
+                    <li><a th:href="@{/index/product}">Nấm các loại</a></li>
+                    <li><a th:href="@{/index/product}">Trái cây</a></li>
+                </ul>
+            </li>
+            <li class="has-submenu">
+                <a href="#" class="category-toggle">DẦU ĂN, NƯỚC CHẤM</a>
+                <ul class="submenu">
+                    <li><a th:href="@{/index/product}">Dầu ăn</a></li>
+                    <li><a th:href="@{/index/product}">Nước mắm</a></li>
+                    <li><a th:href="@{/index/product}">Gia vị các loại</a></li>
+                </ul>
+            </li>
+            <li class="has-submenu">
+                <a href="#" class="category-toggle">GẠO, BỘT, ĐỒ KHÔ</a>
+                <ul class="submenu">
+                    <li><a th:href="@{/index/product}">Gạo</a></li>
+                    <li><a th:href="@{/index/product}">Bột mì</a></li>
+                    <li><a th:href="@{/index/product}">Đồ khô</a></li>
+                </ul>
+            </li>
+            <li class="has-submenu">
+                <a href="#" class="category-toggle">BIA, NƯỚC GIẢI KHÁT</a>
+                <ul class="submenu">
+                    <li><a th:href="@{/index/product}">Bia</a></li>
+                    <li><a th:href="@{/index/product}">Nước ngọt</a></li>
+                </ul>
+            </li>
+            <li class="has-submenu">
+                <a href="#" class="category-toggle">THỰC PHẨM ĐÔNG MÁT</a>
+                <ul class="submenu">
+                    <li><a th:href="@{/index/product}">Cá viên chiên</a></li>
+                    <li><a th:href="@{/index/product}">Súc xích</a></li>
+                    <li><a th:href="@{/index/product}">Bò viên</a></li>
+                </ul>
+            </li>
+            <li class="has-submenu">
+                <a href="#" class="category-toggle">BÁNH KẸO CÁC LOẠI</a>
+                <ul class="submenu">
+                    <li><a th:href="@{/index/product}">Bánh quy</a></li>
+                    <li><a th:href="@{/index/product}">Kẹo</a></li>
+                </ul>
+            </li>
+            <li class="has-submenu">
+                <a href="#" class="category-toggle">CHĂM SÓC CÁ NHÂN</a>
+                <ul class="submenu">
+                    <li><a th:href="@{/index/product}">BVS các loại</a></li>
+                    <li><a th:href="@{/index/product}">BCS các loại</a></li>
+                </ul>
+            </li>
+            <li class="has-submenu">
+                <a href="#" class="category-toggle">VỆ SINH NHÀ CỬA</a>
+                <ul class="submenu">
+                    <li><a th:href="@{/index/product}">Nước lau sàn</a></li>
+                    <li><a th:href="@{/index/product}">Nước rửa chén</a></li>
+                    <li><a th:href="@{/index/product}">Chổi lau nhà</a></li>
+                </ul>
+            </li>
+        </ul>
+    </div>
+</div>
+
+<footer class="footer" th:fragment="footer">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-5 d-lg-block d-none">
+                <div class="footer__about">
+                    <div class="footer__about__logo">
+                        <a href="/index/shop"><img src="/assets/img/logo.png" alt=""></a>
+                    </div>
+                    <ul>
+                        <li>Địa chỉ: P.Trung Mỹ Tây, Q.12, TP.HCM</li>
+                        <li>Số điện thoại: 1900 1980</li>
+                        <li>Email: nghiase123@gmail.com</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="col-lg-7 col-md-12">
+                <div class="footer__widget">
+                    <h6>THAM GIA BẢNG TIM CỦA CHÚNG TÔI NGAY BÂY GIỜ</h6>
+                    <p>Nhận thông tin cập nhật qua Email về của hàng</p>
+                    <form action="#">
+                        <input type="text" placeholder="Nhập mail của bạn">
+                        <button type="submit" class="site-btn">Đăng ký</button>
+                    </form>
+                    <div class="footer__widget__social">
+                        <a href="#"><i class="fa fa-facebook"></i></a>
+                        <a href="#"><i class="fa fa-instagram"></i></a>
+                        <a href="#"><i class="fa fa-twitter"></i></a>
+                        <a href="#"><i class="fa fa-pinterest"></i></a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</footer>
+
+</div>
+</body>
+</html>
