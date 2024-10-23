@@ -1,11 +1,13 @@
+@import url('https://fonts.googleapis.com/css2?family=Playwrite+GB+S:ital,wght@0,100..400;1,100..400&display=swap');
 * {
+    font-family: "Playwrite GB S", serif;
+    font-optical-sizing: auto;
     margin: 0;
     padding: 0;
     box-sizing: border-box;
 }
 
 body {
-    font-family: Arial, sans-serif;
     background-color: #f1f1f1;
     display: flex;
     justify-content: center;

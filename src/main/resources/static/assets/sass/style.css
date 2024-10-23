@@ -1,9 +1,14 @@
 /* Transitions */
 /* Default CSS */
+@import url('https://fonts.googleapis.com/css2?family=Playwrite+GB+S:ital,wght@0,100..400;1,100..400&display=swap');
+* {
+  font-family: "Playwrite GB S", serif;
+  font-optical-sizing: auto;
+}
 html,
 body {
   height: 100%;
-  font-family: 'Cairo', sans-serif;
+  /*font-family: 'Cairo', sans-serif;*/
 }
 
 h1,
@@ -573,7 +578,7 @@ ol {
   right: 18px;
   top: 9px;
   content: '\33';
-  font-family: 'ElegantIcons';
+  /*font-family: 'ElegantIcons';*/
   font-size: 18px;
   color: #ffffff;
 }

@@ -1,42 +1,38 @@
 package com.poly.greeen.Controller;
-import com.poly.greeen.Entity.Product;
-import com.poly.greeen.Repository.ProductRepository;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.ui.Model;
+
+import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-import java.util.List;
-
-@org.springframework.stereotype.Controller
+@Controller
 @RequestMapping("/index")
 public class GiaodienController {
-    @RequestMapping("/shop")
+    @GetMapping("/shop")
     public String Home() {
         return "/giaodien/shop";
     }
 
-    @RequestMapping("/products")
+    @GetMapping("/products")
     public String product() {
         return "/giaodien/product";
     }
 
-    @RequestMapping("/oder")
+    @GetMapping("/oder")
     public String oder() {
         return "/giaodien/oder";
     }
 
-    @RequestMapping("/details")
+    @GetMapping("/details")
     public String details() {
         return "/giaodien/details";
     }
 
-    @RequestMapping("/login")
+    @GetMapping("/login")
     public String login() {
         return "/giaodien/login";
     }
 
-    @RequestMapping("/register")
+    @GetMapping("/register")
     public String register() {
         return "/giaodien/register";
     }
