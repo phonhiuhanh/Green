@@ -26,16 +26,16 @@ public class Login {
         return "giaodien/login";
     }
 
-    @PostMapping("/login")
-    public String login(@RequestParam("phone") String phone,
-                        @RequestParam("password") String password,
-                        Model model) {
-        Optional<Customer> customer = customerRepository.findByPhone(phone);
-        if (customer.isPresent() && passwordEncoder.matches(password, customer.get().getPassword())) {
-            return "redirect:/giaodien/shop";
-        } else {
-            model.addAttribute("error", "Số điện thoại hoặc mật khẩu không chính xác.");
-            return "giaodien/login";
-        }
-    }
+//    @PostMapping("/login")
+//    public String login(@RequestParam("phone") String phone,
+//                        @RequestParam("password") String password,
+//                        Model model) {
+//        Optional<Customer> customer = customerRepository.findByPhone(phone);
+//        if (customer.isPresent() && passwordEncoder.matches(password, customer.get().getPassword())) {
+//            return "redirect:/giaodien/shop";
+//        } else {
+//            model.addAttribute("error", "Số điện thoại hoặc mật khẩu không chính xác.");
+//            return "giaodien/login";
+//        }
+//    }
 }
