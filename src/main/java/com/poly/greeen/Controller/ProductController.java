@@ -6,10 +6,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @Slf4j
 @RequiredArgsConstructor
@@ -41,6 +38,18 @@ public class ProductController {
             Pageable topTen = PageRequest.of(0, 10);
             var top10Products = productRepository.findTop10ByCategoryID(categoryID, topTen);
             return ResponseEntity.ok(top10Products);
+        } catch (Exception e) {
+            log.error("Error: ", e);
+            return ResponseEntity.badRequest().body("Error: " + e);
+        }
+    }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<?> getProductById(@PathVariable("id") Integer id) {
+        try {
+            log.info("REST request to get product by id");
+            var product = productRepository.findById(id);
+            return ResponseEntity.ok(product);
         } catch (Exception e) {
             log.error("Error: ", e);
             return ResponseEntity.badRequest().body("Error: " + e);

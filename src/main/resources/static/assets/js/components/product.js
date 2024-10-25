@@ -43,8 +43,8 @@ const loadTop10Products = async (containerId, endpoint, requestParams) => {
             $(this).css('background-image', 'url(' + bg + ')');
         });
 
-        $('.owl-carousel').owlCarousel('destroy');
-        $('.owl-carousel').owlCarousel({
+        $(`#${containerId}`).owlCarousel('destroy');
+        $(`#${containerId}`).owlCarousel({
             loop: true,
             margin: 10,
             nav: true,
