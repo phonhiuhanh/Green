@@ -32,7 +32,7 @@ public class AdminController {
     }
     @RequestMapping("/donhang")
     public String Managedonhang() {
-        return "oder";
+        return "admin/order";
     }
 
 }

@@ -17,9 +17,9 @@ public class GiaodienController {
         return "/giaodien/product";
     }
 
-    @GetMapping("/oder")
-    public String oder() {
-        return "/giaodien/oder";
+    @GetMapping("/order")
+    public String order() {
+        return "/giaodien/order";
     }
 
     @GetMapping("/details")

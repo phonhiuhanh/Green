@@ -374,12 +374,14 @@
 
 /* giao hàng */
 .checkout__order {
-    padding: 20px;
+    padding: 40px!important;
     /* Tăng padding để làm cho phần cao lên */
     background-color: #f9f9f9;
     /* Màu nền nhẹ để nổi bật */
-    margin-left: 100px;
+    margin-left: 2rem;
     /* Khoảng cách từ giỏ hàng sang "Your Order" */
+    position: sticky;
+    top: 1rem;
 }
 
 .section-title {

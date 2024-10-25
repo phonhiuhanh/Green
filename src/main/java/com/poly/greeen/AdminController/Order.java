@@ -23,7 +23,7 @@ public class Order {
     public String listOrderDetails(Model model) {
         List<OrderDetail> orderDetailList = orderDetailRepository.findAll();
         model.addAttribute("orderDetails", orderDetailList);
-        return "admin/oder";
+        return "admin/order";
     }
 
     // Phương thức xóa đơn hàng

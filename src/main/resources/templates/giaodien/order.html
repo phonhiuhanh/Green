@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<html lang="zxx">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="description" content="Ogani Template">
+    <meta name="keywords" content="Ogani, unica, creative, html">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+    <link rel="icon" href="/assets/img/leaf.png" type="image/x-icon">
+    <title>Green</title>
+
+    <!-- Google Font -->
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@200;300;400;600;900&display=swap" rel="stylesheet">
+
+    <!-- Css Styles -->
+    <link rel="stylesheet" href="/assets/css/bootstrap.min.css" type="text/css">
+    <link rel="stylesheet" href="/assets/css/font-awesome.min.css" type="text/css">
+    <link rel="stylesheet" href="/assets/css/elegant-icons.css" type="text/css">
+    <link rel="stylesheet" href="/assets/css/nice-select.css" type="text/css">
+    <link rel="stylesheet" href="/assets/css/jquery-ui.min.css" type="text/css">
+    <link rel="stylesheet" href="/assets/css/owl.carousel.min.css" type="text/css">
+    <link rel="stylesheet" href="/assets/css/slicknav.min.css" type="text/css">
+
+    <link rel="stylesheet" href="/assets/sass/style.css" type="text/css">
+    <link rel="stylesheet" href="/assets/css/components/common.css" type="text/css">
+    <link rel="stylesheet" href="/assets/css/components/hiddenSidebar.css" type="text/css">
+    <style>
+        .too-long-text {
+            /*white-space: nowrap;*/
+            overflow: hidden;
+            text-overflow: ellipsis;
+            margin-inline: 0.75rem;
+            width: 12rem;
+            max-height: 5rem;
+        }
+    </style>
+</head>
+
+<body>
+<header th:replace="~{giaodien/commonFragment :: navbar}">
+</header>
+
+<!-- Hero Section -->
+<main class="main-content">
+    <section class="hero">
+        <div class="container">
+            <div class="row">
+                <div th:replace="~{giaodien/commonFragment :: sidebar}"></div>
+                <div class="col-12 d-flex flex-column content-area">
+                    <section class="breadcrumb-section set-bg" data-setbg="/assets/img/breadcrumb.jpg">
+                        <div class="w-100">
+                            <div class="text-center">
+                                <div class="breadcrumb__text">
+                                    <h2>GIỎ HÀNG</h2>
+                                    <div class="breadcrumb__option">
+                                        <a th:href="@{/index/shop}">GREEN</a>
+                                        <span>GIỎ HÀNG</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+                    <!-- Giao hàng -->
+                    <div class="shipping__details">
+                        <div class="row d-flex align-items-center w-100">
+                            <div class="col-lg-6">
+                                <div class="shipping__from">
+                                    <h5>Giao từ</h5>
+                                    <p>Green 171 Hà Đặc, Khu Phố 01, P. Trung Mỹ Tây, Q. 12</p>
+                                    <p>Nếu tồn kho có thay đổi, Green sẽ liên hệ trước khi giao hàng</p>
+                                    <p>Liên hệ với chúng tôi: 19001980</p>
+                                </div>
+                            </div>
+                            <div class="col-lg-6">
+                                <div class="shipping__info">
+                                    <h5>Giao đến</h5>
+                                    <p id="address">108 Lê Thị Nho, Phường Trung Mỹ Tây, Quận 12, TP. Hồ Chí Minh</p>
+                                    <p><span id="username">username</span> - <span id="phone">phone</span></p>
+                                    <!--                                    <p>Giao trước 15h hôm nay <a href="#" class="change-link">(Đổi giờ giao)</a></p>-->
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- BÊN TRÁI -->
+                    <section class="checkout spad">
+                        <div class="row">
+                            <div class="col-lg-8">
+                                <div class="shoping__cart__table table-responsive">
+                                    <table>
+                                        <thead>
+                                        <tr>
+                                            <th class="shoping__product">SẢN PHẨM</th>
+                                            <th>GIÁ</th>
+                                            <th>SỐ LƯỢNG</th>
+                                            <th>TỔNG</th>
+                                            <th></th>
+                                        </tr>
+                                        </thead>
+                                        <tbody id="cart-body">
+                                        <tr>
+                                            <td class="shoping__cart__item">
+                                                <a th:href="@{/index/details}"><img src="/assets/img/cart/cart-1.jpg"
+                                                                                    alt=""></a>
+                                                <h5>RAU CỦ QUẢ</h5>
+                                            </td>
+                                            <td class="shoping__cart__price">
+                                                55.00
+                                            </td>
+                                            <td class="shoping__cart__quantity">
+                                                <div class="quantity">
+                                                    <div class="pro-qty">
+                                                        <input type="text" value="2">
+                                                    </div>
+                                                </div>
+                                            </td>
+                                            <td class="shoping__cart__total">
+                                                110.000
+                                            </td>
+                                            <td class="shoping__cart__item__close">
+                                                <span class="icon_close"></span>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td class="shoping__cart__item">
+                                                <img src="/assets/img/cart/cart-2.jpg" alt="">
+                                                <h5>COMBO RAU CỦ QUẢ</h5>
+                                            </td>
+                                            <td class="shoping__cart__price">
+                                                39.00
+                                            </td>
+                                            <td class="shoping__cart__quantity">
+                                                <div class="quantity">
+                                                    <div class="pro-qty">
+                                                        <input type="text" value="1">
+                                                    </div>
+                                                </div>
+                                            </td>
+                                            <td class="shoping__cart__total">
+                                                39.99
+                                            </td>
+                                            <td class="shoping__cart__item__close">
+                                                <span class="icon_close"></span>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td class="shoping__cart__item">
+                                                <img src="/assets/img/cart/cart-3.jpg" alt="">
+                                                <h5>CHUỐI TÂY SIÊU TO</h5>
+                                            </td>
+                                            <td class="shoping__cart__price">
+                                                69.00
+                                            </td>
+                                            <td class="shoping__cart__quantity">
+                                                <div class="quantity">
+                                                    <div class="pro-qty">
+                                                        <input type="text" value="1">
+                                                    </div>
+                                                </div>
+                                            </td>
+                                            <td class="shoping__cart__total">
+                                                69.99
+                                            </td>
+                                            <td class="shoping__cart__item__close">
+                                                <span class="icon_close"></span>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td class="shoping__cart__item">
+                                                <img src="/assets/img/cart/cart-1.jpg" alt="">
+                                                <h5>RAU CỦ QUẢ</h5>
+                                            </td>
+                                            <td class="shoping__cart__price">
+                                                55.00
+                                            </td>
+                                            <td class="shoping__cart__quantity">
+                                                <div class="quantity">
+                                                    <div class="pro-qty">
+                                                        <input type="text" value="2">
+                                                    </div>
+                                                </div>
+                                            </td>
+                                            <td class="shoping__cart__total">
+                                                110.000
+                                            </td>
+                                            <td class="shoping__cart__item__close">
+                                                <span class="icon_close"></span>
+                                            </td>
+                                        </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                            <!-- Bên tay phải -->
+                            <div class="col-lg-4">
+                                <div class="checkout__order">
+                                    <h4>ĐƠN HÀNG CỦA BẠN</h4>
+                                    <!--                                    <div class="checkout__order__products">CÁC SẢN PHẨM<span>TỔNG CỘNG</span></div>-->
+                                    <!--                                    <ul>-->
+                                    <!--&lt;!&ndash;                                        <li>RAU CỦ QUẢ <span>110.000</span></li>&ndash;&gt;-->
+                                    <!--&lt;!&ndash;                                        <li>COMBO RAU CỦ QUẢ <span>39.00</span></li>&ndash;&gt;-->
+                                    <!--&lt;!&ndash;                                        <li>CHUỐI TÂY SIÊU TO <span>69.00</span></li>&ndash;&gt;-->
+                                    <!--                                    </ul>-->
+                                    <div class="checkout__order__subtotal">TỔNG CỘNG <span>218.000</span>
+                                        <ul>
+                                            <li>PHÍ GIAO HÀNG, PHỤ PHÍ <span class="shipping-fee">30.000₫</span></li>
+                                        </ul>
+                                    </div>
+                                    <div class="checkout__order__total">PHẢI THANH TOÁN <span>500.000</span></div>
+                                    <button type="button" onclick="checkOut()" class="site-btn">ĐẶT HÀNG</button>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+                    <!-- sản phẩm giảm giá -->
+                    <section>
+                        <div class="row">
+                            <div class="col-lg-12 col-md-12">
+                                <div class="product__discount">
+                                    <div class="section-title product__discount__title">
+                                        <div class="discount-buttons">
+                                            <h2>ƯU ĐÃI CHO ĐƠN HÀNG NÀY</h2>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="product__discount__slider owl-carousel" id="top-sales">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+                    <footer class="footer" th:replace="~{giaodien/commonFragment :: footer}"></footer>
+                </div>
+            </div>
+        </div>
+    </section>
+</main>
+<script src="/assets/js/jquery-3.3.1.min.js"></script>
+<script src="/assets/js/bootstrap.min.js"></script>
+<script src="/assets/js/jquery.nice-select.min.js"></script>
+<script src="/assets/js/jquery-ui.min.js"></script>
+<script src="/assets/js/jquery.slicknav.js"></script>
+<script src="/assets/js/mixitup.min.js"></script>
+<script src="/assets/js/owl.carousel.min.js"></script>
+<script src="/assets/js/lib/axios.min.js"></script>
+<script src="/assets/js/main.js"></script>
+<script src="/assets/js/components/auth.js"></script>
+<script src="/assets/js/components/product.js"></script>
+<script src="/assets/js/components/cart.js"></script>
+<script>
+    $(document).ready(function () {
+        loadTop10Products('top-sales', '/api/products/top10-by-giamgia');
+        updateCartSummary();
+        // Load cart items into the table
+        loadCartItemsIntoTable();
+        // Initialize the pro-qty plugin
+        setQuantityAdjustmentButtons();
+        loadUserInfoForCheckOut();
+    });
+</script>
+</body>
+</html>

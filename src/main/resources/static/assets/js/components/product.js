@@ -10,20 +10,20 @@ const loadTop10Products = async (containerId, endpoint, requestParams) => {
             size: 10
         }
     })
-    .then(res => {
-        let products = res.data;
-        let content = '';
-        console.log(products);
-        products.forEach(product => {
-            let mainImage = product.images.find(image => image.isMain) || { imageURL: '/assets/img/product/discount/default.jpg' };
-            console.log(mainImage.imageURL);
-            content += `<div class="">
+        .then(res => {
+            let products = res.data;
+            let content = '';
+            console.log(products);
+            products.forEach(product => {
+                let mainImage = product.images.find(image => image.isMain) || {imageURL: '/assets/img/product/discount/default.jpg'};
+                console.log(mainImage.imageURL);
+                content += `<div class="">
                             <div class="product__discount__item">
-                                <div class="product__discount__item__pic set-bg"
+                                <div class="product__discount__item__pic set-bg" onclick="navigateToProductDetails(${product.productID})"
                                      data-setbg="${mainImage.imageURL}">
                                 </div>
                                 <div class="product__item__text">
-                                    <h6>${product.name}</h6>
+                                    <h6 onclick="navigateToProductDetails(${product.productID})">${product.name}</h6>
                                     <div class="price">
                                         <span class="current-price">${formatCurrency(product.price)}đ</span>
                                         ${product.giamgia !== 0 ? `
@@ -31,32 +31,50 @@ const loadTop10Products = async (containerId, endpoint, requestParams) => {
                                         <span class="discount">-${product.giamgia}%</span>                                        
                                         ` : ``}
                                     </div>
-                                    <a href="/index/order" class="button-buy">MUA</a>
+                                    <button 
+                                    onclick="addToCart(${product.productID}, 1, ${product.price}, '${product.name.trim()}', '${mainImage.imageURL}')" 
+                                    class="button-buy">MUA</button>
                                 </div>
                             </div>
                         </div>`;
-        });
-        $(`#${containerId}`).html(content);
+            });
+            $(`#${containerId}`).html(content);
 
-        $('.set-bg').each(function() {
-            var bg = $(this).data('setbg');
-            $(this).css('background-image', 'url(' + bg + ')');
-        });
+            $('.set-bg').each(function () {
+                var bg = $(this).data('setbg');
+                $(this).css('background-image', 'url(' + bg + ')');
+            });
 
-        $(`#${containerId}`).owlCarousel('destroy');
-        $(`#${containerId}`).owlCarousel({
-            loop: true,
-            margin: 10,
-            nav: true,
-            items: 4,
-            autoplay: true,
-            autoplayTimeout: 3000,
-            autoplayHoverPause: true
+            $(`#${containerId}`).owlCarousel('destroy');
+            $(`#${containerId}`).owlCarousel({
+                loop: true,
+                margin: 10,
+                nav: true,
+                items: 4,
+                autoplay: true,
+                autoplayTimeout: 3000,
+                autoplayHoverPause: true
+            });
+        })
+        .catch(err => {
+            console.log(err);
         });
-    })
-    .catch(err => {
-        console.log(err);
-    });
+}
+
+const addToCart = (productID, quantity, price, name, thumbnail) => {
+    let item = {
+        productID: productID,
+        quantity: quantity,
+        price: price,
+        name: name,
+        thumbnail: thumbnail
+    };
+    addItemToCart(item);
+    window.location.href = '/index/order';
+}
+
+const navigateToProductDetails = (productID) => {
+    window.location.href = `/index/details?id=${productID}`;
 }
 
 let countdownTime = 2 * 60 * 60;

@@ -1,0 +1,12 @@
+
+.fixed-sidebar {
+    z-index: 1000;
+    height: auto!important;
+}
+.category-menu {
+    display: none;
+}
+.content-area {
+    padding-top: 4.5rem!important;
+    margin-left: 0!important;
+}

@@ -21,12 +21,15 @@ const idMap = {
     relevantProducts: 'relevant-products'
 }
 
+let currentProduct = {};
+
 const loadProductDetails = async (productId) => {
     const response = await axios.get(`/api/products/${productId}`)
         .catch(err => {
             console.log(err);
         });
     const product = response.data;
+    currentProduct = product;
     let imageContent = ``;
     product.images.forEach(image => {
         imageContent += `<div class="product__details__pic__item">
@@ -57,4 +60,16 @@ const loadProductDetails = async (productId) => {
     $(`.${idMap.productDescription}`).text(product.description);
 
     await loadTop10Products(idMap.relevantProducts, '/api/products/top10-by-category', {categoryID: product.category.categoryID});
+}
+
+const addToCartFromDetailPage = () => {
+    let item = {
+        productID: currentProduct.productID,
+        quantity: parseInt($(`#product-quantity`).val()),
+        price: currentProduct.price,
+        name: currentProduct.name,
+        thumbnail: currentProduct.images.find(image => image.isMain).imageURL
+    };
+    addItemToCart(item);
+    window.location.href = '/index/order';
 }
