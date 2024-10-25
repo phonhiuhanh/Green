@@ -32,6 +32,7 @@ public class CustomUserDetailsService implements UserDetailsService {
             var authUser = AuthUser.builder()
                     .uniqueId(username)
                     .role(ROLES.get("ROLE_CUSTOMER"))
+                    .name(customer.getUsername())
                     .password(customer.getPassword())
                     .build();
             return CustomUserDetails.builder()
@@ -44,6 +45,7 @@ public class CustomUserDetailsService implements UserDetailsService {
             var authUser = AuthUser.builder()
                     .uniqueId(username)
                     .role(user.getRole().getRoleName())
+                    .name(user.getUsername())
                     .password(user.getPassword())
                     .build();
             return CustomUserDetails.builder()

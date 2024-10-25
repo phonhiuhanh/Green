@@ -1,4 +1,5 @@
 package com.poly.greeen.Entity;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.Data;
 
@@ -9,7 +10,8 @@ public class ProductImage {
     @Id
     private Integer id;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JsonIgnore
     @JoinColumn(name = "productID")
     private Product product;
     private String imageURL;

@@ -1,6 +1,5 @@
-package com.poly.greeen.Controller;
+package com.poly.greeen.ViewController;
 
-import com.poly.greeen.Entity.Category;
 import com.poly.greeen.Repository.CategoryRepository;
 import com.poly.greeen.Repository.ProductRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,7 +10,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.List;
-import java.util.Optional;
 
 @Controller
 @RequestMapping("product")

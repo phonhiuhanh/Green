@@ -9,6 +9,7 @@ import lombok.*;
 @NoArgsConstructor
 public class AuthUser {
     private String uniqueId;
+    private String name;
     private String password;
     private String role;
 }

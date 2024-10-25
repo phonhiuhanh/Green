@@ -1,6 +1,6 @@
 <!doctype html>
-<html xmlns:th="http://www.thymeleaf.org">
-<head></head>
+<html xmlns:th="http://www.thymeleaf.org" lang="vi">
+<head><title>common</title></head>
 <body>
 <header class="header" th:fragment="navbar">
     <div class="header__top">
@@ -27,11 +27,22 @@
                 <div class="col-lg-2 col-md-3 d-none d-md-flex flex-row align-items-center justify-content-start gap-3">
                     <div class="header__cart">
                         <ul>
-                            <li><a th:href="@{/index/details}"><i class="fa fa-shopping-bag"></i> <span>3</span></a></li>
+                            <li><a th:href="@{/index/details}"><i class="fa fa-shopping-bag"></i> <span>3</span></a>
+                            </li>
                         </ul>
                     </div>
                     <div class="header__top__right__auth">
-                        <a href="#"><i class="fa fa-user"></i> Đăng nhập</a>
+                        <div class="dropdown-center">
+                            <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown"
+                                    aria-expanded="false">
+                                <i class="fa fa-user"></i> <span class="username"></span>
+                            </button>
+                            <ul class="dropdown-menu">
+                                <li><a class="dropdown-item" href="/profile">Xem thông tin cá nhân</a></li>
+                                <li><a class="dropdown-item" href="/change-password">Đổi mật khẩu</a></li>
+                                <li class="dropdown-item" onclick="logout()">Đăng xuất</li>
+                            </ul>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -162,7 +173,5 @@
         </div>
     </div>
 </footer>
-
-</div>
 </body>
 </html>

@@ -1,4 +1,4 @@
-package com.poly.greeen.Controller;
+package com.poly.greeen.ViewController;
 
 import com.poly.greeen.Repository.CategoryRepository;
 import com.poly.greeen.Repository.ProductRepository;

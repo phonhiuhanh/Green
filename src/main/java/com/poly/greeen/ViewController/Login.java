@@ -1,16 +1,10 @@
-package com.poly.greeen.Controller;
+package com.poly.greeen.ViewController;
 
-import com.poly.greeen.Entity.Customer;
 import com.poly.greeen.Repository.CustomerRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-
-import java.util.Optional;
 
 @Controller
 public class Login {

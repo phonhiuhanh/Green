@@ -1,17 +1,11 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="vi" xmlns:th="http://www.thymeleaf.org">
 
 <head>
     <meta charset="UTF-8">
-    <meta name="description" content="Ogani Template">
-    <meta name="keywords" content="Ogani, unica, creative, html">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Green</title>
-
-    <!-- Google Font -->
-    <!--    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@200;300;400;600;900&display=swap" rel="stylesheet">-->
-
     <!-- Css Styles -->
     <link rel="stylesheet" href="/assets/css/bootstrap.min.css" type="text/css">
     <link rel="stylesheet" href="/assets/css/font-awesome.min.css" type="text/css">
@@ -20,43 +14,20 @@
     <link rel="stylesheet" href="/assets/css/jquery-ui.min.css" type="text/css">
     <link rel="stylesheet" href="/assets/css/owl.carousel.min.css" type="text/css">
     <link rel="stylesheet" href="/assets/css/slicknav.min.css" type="text/css">
-
+<!--    custom css-->
     <link rel="stylesheet" href="/assets/sass/style.css" type="text/css">
-    <style>
-        body {
-            height: 100vh;
-            overflow-y: hidden;
-        }
-
-        .header {
-            position: sticky;
-            height: 98px; /* Example height, adjust as needed */
-        }
-
-        .main-content {
-            height: calc(100vh - 98px); /* Subtract the height of the header */
-            overflow-y: auto; /* Ensure content is scrollable if it overflows */
-        }
-
-        .fixed-sidebar {
-            position: fixed;
-        }
-
-        .content-area {
-            margin-left: 30%;
-        }
-    </style>
+    <link rel="stylesheet" href="/assets/css/common.css" type="text/css">
 </head>
 
 <body>
-<header class="header" th:replace="giaodien/commonFragment :: navbar">
+<header th:replace="~{giaodien/commonFragment :: navbar}">
 </header>
 
 <main class="main-content">
     <section class="hero">
         <div class="container-fluid">
             <div class="row">
-                <div class="col-lg-3 d-lg-block d-none fixed-sidebar" th:replace="giaodien/commonFragment :: sidebar">
+                <div class="col-lg-3 col-md-2 d-md-block d-none fixed-sidebar" th:replace="~{giaodien/commonFragment :: sidebar}">
                 </div>
                 <div class="col-lg-9 col-md-10 col-sm-12 d-flex flex-column content-area">
                     <div class="hero__item set-bg" data-setbg="/assets/img/hero/banner.jpg">
@@ -86,103 +57,8 @@
                             </div>
                         </div>
                         <div class="row">
-                            <div class="product__discount__slider owl-carousel">
-                                <div class="col-lg-4">
-                                    <div class="product__discount__item">
-                                        <div class="product__discount__item__pic set-bg"
-                                             data-setbg="/assets/img/product/discount/pd-1.jpg">
-                                        </div>
-                                        <div class="product__item__text">
-                                            <h6>Thịt cừu dai giòn siêu ngon</h6>
-                                            <div class="price">
-                                                <span class="current-price">22.000đ</span>
-                                                <span class="old-price">32.000đ</span>
-                                                <span class="discount">-31%</span>
-                                            </div>
-                                            <a th:href="@{/index/details}" class="button-buy">MUA</a>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-lg-4">
-                                    <div class="product__discount__item">
-                                        <div class="product__discount__item__pic set-bg"
-                                             data-setbg="/assets/img/product/discount/pd-2.jpg">
-                                        </div>
-                                        <div class="product__item__text">
-                                            <h6>Thịt cừu dai giòn siêu ngon</h6>
-                                            <div class="price">
-                                                <span class="current-price">22.000đ</span>
-                                                <span class="old-price">32.000đ</span>
-                                                <span class="discount">-31%</span>
-                                            </div>
-                                            <a th:href="@{/index/details}" class="button-buy">MUA</a>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-lg-4">
-                                    <div class="product__discount__item">
-                                        <div class="product__discount__item__pic set-bg"
-                                             data-setbg="/assets/img/product/discount/pd-3.jpg">
-                                        </div>
-                                        <div class="product__item__text">
-                                            <h6>Thịt cừu dai giòn siêu ngon</h6>
-                                            <div class="price">
-                                                <span class="current-price">22.000đ</span>
-                                                <span class="old-price">32.000đ</span>
-                                                <span class="discount">-31%</span>
-                                            </div>
-                                            <a th:href="@{/index/details}" class="button-buy">MUA</a>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-lg-4">
-                                    <div class="product__discount__item">
-                                        <div class="product__discount__item__pic set-bg"
-                                             data-setbg="/assets/img/product/discount/pd-4.jpg">
-                                        </div>
-                                        <div class="product__item__text">
-                                            <h6>Thịt cừu dai giòn siêu ngon</h6>
-                                            <div class="price">
-                                                <span class="current-price">22.000đ</span>
-                                                <span class="old-price">32.000đ</span>
-                                                <span class="discount">-31%</span>
-                                            </div>
-                                            <a th:href="@{/index/details}" class="button-buy">MUA</a>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-lg-4">
-                                    <div class="product__discount__item">
-                                        <div class="product__discount__item__pic set-bg"
-                                             data-setbg="/assets/img/product/discount/pd-5.jpg">
-                                        </div>
-                                        <div class="product__item__text">
-                                            <h6>Thịt cừu dai giòn siêu ngon</h6>
-                                            <div class="price">
-                                                <span class="current-price">22.000đ</span>
-                                                <span class="old-price">32.000đ</span>
-                                                <span class="discount">-31%</span>
-                                            </div>
-                                            <a th:href="@{/index/details}" class="button-buy">MUA</a>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-lg-4">
-                                    <div class="product__discount__item">
-                                        <div class="product__discount__item__pic set-bg"
-                                             data-setbg="/assets/img/product/discount/pd-6.jpg">
-                                        </div>
-                                        <div class="product__item__text">
-                                            <h6>Thịt cừu dai giòn siêu ngon</h6>
-                                            <div class="price">
-                                                <span class="current-price">22.000đ</span>
-                                                <span class="old-price">32.000đ</span>
-                                                <span class="discount">-31%</span>
-                                            </div>
-                                            <a th:href="@{/index/details}" class="button-buy">MUA</a>
-                                        </div>
-                                    </div>
-                                </div>
+                            <div class="product__discount__slider owl-carousel" id="top-sale-products">
+                                <!-- Product items will be loaded here -->
                             </div>
                         </div>
                     </div>
@@ -194,62 +70,13 @@
                         <div class="category-title-wrapper">
                             <div class="category-line"></div>
                             <div class="category-title text-center">
-                                <h2>THỊT , CÁ , HẢI SẢN</h2>
+                                <h2 id="category-1">THỊT , CÁ , HẢI SẢN</h2>
                             </div>
                         </div>
                     </div>
                     <div class="row">
-                        <div class="col-lg-3 col-md-6 col-sm-6">
-                            <div class="product__item">
-                                <div class="product__item__pic set-bg"
-                                     data-setbg="/assets/img/product/product-1.jpg"></div>
-                                <div class="product__item__text">
-                                    <h6>Thịt cừu dai giòn siêu ngon</h6>
-                                    <div class="price">
-                                        <span class="product-lo">22.000đ</span>
-                                    </div>
-                                    <a th:href="@{/index/details}" class="button-buy">MUA</a>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-lg-3 col-md-6 col-sm-6">
-                            <div class="product__item">
-                                <div class="product__item__pic set-bg"
-                                     data-setbg="/assets/img/product/product-2.jpg"></div>
-                                <div class="product__item__text">
-                                    <h6><a href="#">Tên sản phẩm 2</a></h6>
-                                    <div class="price">
-                                        <span class="product-lo">22.000đ</span>
-                                    </div>
-                                    <a th:href="@{/index/details}" class="button-buy">MUA</a>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-lg-3 col-md-6 col-sm-6">
-                            <div class="product__item">
-                                <div class="product__item__pic set-bg"
-                                     data-setbg="/assets/img/product/product-3.jpg"></div>
-                                <div class="product__item__text">
-                                    <h6><a href="#">Tên sản phẩm 2</a></h6>
-                                    <div class="price">
-                                        <span class="product-lo">22.000đ</span>
-                                    </div>
-                                    <a href="#" class="button-buy">MUA</a>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-lg-3 col-md-6 col-sm-6">
-                            <div class="product__item">
-                                <div class="product__item__pic set-bg"
-                                     data-setbg="/assets/img/product/product-4.jpg"></div>
-                                <div class="product__item__text">
-                                    <h6><a href="#">Tên sản phẩm 2</a></h6>
-                                    <div class="price">
-                                        <span class="product-lo">22.000đ</span>
-                                    </div>
-                                    <a href="#" class="button-buy">MUA</a>
-                                </div>
-                            </div>
+                        <div class="product__discount__slider owl-carousel" id="products-category-1">
+                            <!-- Product items will be loaded here -->
                         </div>
                     </div>
                     <section class="breadcrumb-section set-bg" data-setbg="/assets/img/traicay.jpg"
@@ -260,120 +87,23 @@
                         <div class="category-title-wrapper">
                             <div class="category-line"></div>
                             <div class="category-title text-center">
-                                <h2>TRÁI CÂY CÁC LOẠI</h2>
+                                <h2 id="category-3">THỊT , CÁ , HẢI SẢN</h2>
                             </div>
                         </div>
                     </div>
                     <div class="row">
-                        <div class="col-lg-3 col-md-6 col-sm-6">
-                            <div class="product__item">
-                                <div class="product__item__pic set-bg"
-                                     data-setbg="/assets/img/product/product-1.jpg"></div>
-                                <div class="product__item__text">
-                                    <h6>Thịt cừu dai giòn siêu ngon</h6>
-                                    <div class="price">
-                                        <span class="product-lo">22.000đ</span>
-                                    </div>
-                                    <a href="#" class="button-buy">MUA</a>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-lg-3 col-md-6 col-sm-6">
-                            <div class="product__item">
-                                <div class="product__item__pic set-bg"
-                                     data-setbg="/assets/img/product/product-2.jpg"></div>
-                                <div class="product__item__text">
-                                    <h6><a href="#">Tên sản phẩm 2</a></h6>
-                                    <div class="price">
-                                        <span class="product-lo">22.000đ</span>
-                                    </div>
-                                    <a href="#" class="button-buy">MUA</a>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-lg-3 col-md-6 col-sm-6">
-                            <div class="product__item">
-                                <div class="product__item__pic set-bg"
-                                     data-setbg="/assets/img/product/product-3.jpg"></div>
-                                <div class="product__item__text">
-                                    <h6><a href="#">Tên sản phẩm 2</a></h6>
-                                    <div class="price">
-                                        <span class="product-lo">22.000đ</span>
-                                    </div>
-                                    <a href="#" class="button-buy">MUA</a>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-lg-3 col-md-6 col-sm-6">
-                            <div class="product__item">
-                                <div class="product__item__pic set-bg"
-                                     data-setbg="/assets/img/product/product-4.jpg"></div>
-                                <div class="product__item__text">
-                                    <h6><a href="#">Tên sản phẩm 2</a></h6>
-                                    <div class="price">
-                                        <span class="product-lo">22.000đ</span>
-                                    </div>
-                                    <a href="#" class="button-buy">MUA</a>
-                                </div>
-                            </div>
+                        <div class="product__discount__slider owl-carousel" id="products-category-3">
+                            <!-- Product items will be loaded here -->
                         </div>
                     </div>
-                    <footer class="footer" th:replace="giaodien/commonFragment :: footer"></footer>
+                    <footer class="footer" th:replace="~{giaodien/commonFragment :: footer}"></footer>
                 </div>
             </div>
         </div>
     </section>
 </main>
-<script>
-    // Set the time for the countdown (2 hours in seconds)
-    let countdownTime = 2 * 60 * 60; // 2 hours = 7200 seconds
-
-    function startCountdown() {
-        const timerElement = document.getElementById('flash-sale-timer');
-
-        const interval = setInterval(() => {
-            let hours = Math.floor(countdownTime / 3600);
-            let minutes = Math.floor((countdownTime % 3600) / 60);
-            let seconds = countdownTime % 60;
-
-            // Format time with leading zeros
-            hours = hours < 10 ? '0' + hours : hours;
-            minutes = minutes < 10 ? '0' + minutes : minutes;
-            seconds = seconds < 10 ? '0' + seconds : seconds;
-
-            // Update the timer element
-            timerElement.innerHTML = `${hours}:${minutes}:${seconds}`;
-
-            if (countdownTime <= 0) {
-                clearInterval(interval);
-                timerElement.innerHTML = '00:00:00';
-            } else {
-                countdownTime--;
-            }
-        }, 1000);
-    }
-
-    document.querySelectorAll('.category-toggle').forEach(item => {
-        item.addEventListener('click', event => {
-            event.preventDefault(); // Ngăn chặn hành động mặc định của thẻ a
-            const parentLi = item.parentElement;
-
-            // Đóng tất cả danh mục con khác
-            document.querySelectorAll('.category-menu > li').forEach(li => {
-                if (li !== parentLi) {
-                    li.classList.remove('active');
-                }
-            });
-
-            // Chuyển đổi trạng thái của danh mục cha được ấn
-            parentLi.classList.toggle('active');
-        });
-    });
-
-    // Start the countdown when the page loads
-    window.onload = startCountdown;
-</script>
 <script src="/assets/js/jquery-3.3.1.min.js"></script>
+<script src="/assets/js/lib/axios.min.js"></script>
 <script src="/assets/js/bootstrap.min.js"></script>
 <script src="/assets/js/jquery.nice-select.min.js"></script>
 <script src="/assets/js/jquery-ui.min.js"></script>
@@ -381,6 +111,19 @@
 <script src="/assets/js/mixitup.min.js"></script>
 <script src="/assets/js/owl.carousel.min.js"></script>
 <script src="/assets/js/main.js"></script>
+<script src="/assets/js/auth.js"></script>
+<script src="/assets/js/product.js"></script>
+<script src="/assets/js/category.js"></script>
+<script>
+    window.onload = () => {
+        loadTop10Products('top-sale-products', '/api/products/top10-by-giamgia');
+        setCategoryName('category-1', 1);
+        loadTop10Products('products-category-1', '/api/products/top10-by-category', {categoryID: 1});
+        setCategoryName('category-3', 3);
+        loadTop10Products('products-category-3', '/api/products/top10-by-category', {categoryID: 3});
+        startCountdown();
+    }
+</script>
 </body>
 
 </html>
