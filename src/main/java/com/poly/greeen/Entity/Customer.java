@@ -10,7 +10,7 @@ import java.util.Date;
 @Table(name = "Customers")
 public class Customer {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+//    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer customerID;
     private String username;
     private String password;
