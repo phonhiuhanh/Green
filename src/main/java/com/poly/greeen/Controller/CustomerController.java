@@ -100,4 +100,59 @@ public class CustomerController {
             return ResponseEntity.badRequest().body("Lỗi: " + e);
         }
     }
+
+    @PostMapping("/p/forgot-password/request")
+    public ResponseEntity<?> requestForgotPassword(@RequestParam String email) {
+        log.info("Yêu cầu REST để quên mật khẩu với email: {}", email);
+        try {
+            var customer = customerRepository.findByEmailOrPhone(email, email)
+                    .orElseThrow(() -> new Exception("Không tìm thấy khách hàng"));
+            String otp = AuthorizationCodeGenerator.generateRandomOTP();
+            var registerRequest = RegisterRequest.builder()
+                    .customer(customer)
+                    .code(otp)
+                    .createdAt(Timestamp.from(Instant.now()))
+                    .build();
+            systemStorage.put(email + "-forgot-password", registerRequest);
+            // Compose the email
+            String subject = "Đặt lại mật khẩu";
+            String message = "Mã OTP xác nhận đặt lại mật khẩu: " + otp + "<br>" +
+                    "<span style=\"color: red;\">Mã OTP này chỉ có hiệu lực trong 5 phút.</span>";
+
+            // Send the email
+            emailService.sendEmail(email, subject, message);
+            return ResponseEntity.ok().body("Yêu cầu đặt lại mật khẩu đã được gửi đến email của bạn");
+        } catch (Exception e) {
+            log.error("Lỗi: ", e);
+            return ResponseEntity.badRequest().body("Lỗi: " + e);
+        }
+    }
+
+    @PostMapping("/p/forgot-password/verify")
+    public ResponseEntity<?> verifyForgotPassword(@RequestParam String email, @RequestParam String otp, @RequestParam String newPassword) {
+        log.info("Yêu cầu REST để xác minh quên mật khẩu với email: {} và mã OTP: {}", email, otp);
+        try {
+            var registerRequest = (RegisterRequest) systemStorage.get(email + "-forgot-password");
+            if (registerRequest == null) {
+                return ResponseEntity.badRequest().body("Email không hợp lệ");
+            }
+            if (!registerRequest.getCode().equals(otp)) {
+                return ResponseEntity.badRequest().body("Mã OTP không hợp lệ");
+            }
+            long currentTime = Instant.now().toEpochMilli();
+            long createdTime = registerRequest.getCreatedAt().getTime();
+            if (currentTime - createdTime > 5 * 60 * 1000) {
+                systemStorage.remove(email + "-forgot-password");
+                return ResponseEntity.badRequest().body("Mã OTP đã hết hạn");
+            }
+            var customer = registerRequest.getCustomer();
+            customer.setPassword(passwordEncoder.encode(newPassword));
+            customerRepository.save(customer);
+            systemStorage.remove(email + "-forgot-password");
+            return ResponseEntity.ok().body("Đặt lại mật khẩu thành công, bạn có thể đóng trang này và đăng nhập ngay bây giờ");
+        } catch (Exception e) {
+            log.error("Lỗi: ", e);
+            return ResponseEntity.badRequest().body("Lỗi: " + e);
+        }
+    }
 }

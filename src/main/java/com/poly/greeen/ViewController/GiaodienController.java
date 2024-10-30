@@ -36,4 +36,9 @@ public class GiaodienController {
     public String register() {
         return "/giaodien/register";
     }
+
+    @GetMapping("/forgot-password")
+    public String toForgotPassword() {
+        return "/giaodien/forgotPassword";
+    }
 }
