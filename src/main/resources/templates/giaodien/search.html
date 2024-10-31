@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="vi" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="icon" href="/assets/img/leaf.png" type="image/x-icon">
+    <title>Green</title>
+    <!-- Css Styles -->
+    <link rel="stylesheet" href="/assets/css/bootstrap.min.css" type="text/css">
+    <link rel="stylesheet" href="/assets/css/font-awesome.min.css" type="text/css">
+    <link rel="stylesheet" href="/assets/css/elegant-icons.css" type="text/css">
+    <link rel="stylesheet" href="/assets/css/nice-select.css" type="text/css">
+    <link rel="stylesheet" href="/assets/css/jquery-ui.min.css" type="text/css">
+    <link rel="stylesheet" href="/assets/css/owl.carousel.min.css" type="text/css">
+    <link rel="stylesheet" href="/assets/css/slicknav.min.css" type="text/css">
+<!--    custom css-->
+    <link rel="stylesheet" href="/assets/sass/style.css" type="text/css">
+    <link rel="stylesheet" href="/assets/css/components/common.css" type="text/css">
+    <script src="/assets/js/lib/bootstrap.bundle.min.js"></script>
+    <style>
+        .product__discount__item__pic img {
+            object-fit: contain;
+            background-repeat: no-repeat;
+        }
+    </style>
+</head>
+
+<body>
+<header th:replace="~{giaodien/commonFragment :: navbar}">
+</header>
+
+<main class="main-content">
+    <section class="hero">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-lg-3 col-md-2 d-md-block d-none fixed-sidebar" th:replace="~{giaodien/commonFragment :: sidebar}">
+                </div>
+                <div class="col-lg-9 col-md-10 col-sm-12 d-flex flex-column content-area">
+                    <div class="filter__item">
+                        <div class="category-title-wrapper">
+                            <div class="category-line"></div>
+                            <div class="category-title text-center">
+                                <h2>KẾT QUẢ TÌM KIẾM</h2>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row row-cols-lg-4 row-cols-md-3 row-cols-sm-2" id="search-result-container">
+                    </div>
+                    <footer class="footer" th:replace="~{giaodien/commonFragment :: footer}"></footer>
+                </div>
+            </div>
+        </div>
+    </section>
+</main>
+
+<section>
+    <div th:replace="~{giaodien/commonFragment :: #changePasswordModal}"></div>
+    <div th:replace="~{giaodien/commonFragment :: #profileModal}"></div>
+</section>
+
+<script src="/assets/js/jquery-3.3.1.min.js"></script>
+<script src="/assets/js/lib/axios.min.js"></script>
+<script src="/assets/js/bootstrap.min.js"></script>
+<script src="/assets/js/jquery.nice-select.min.js"></script>
+<script src="/assets/js/jquery-ui.min.js"></script>
+<script src="/assets/js/jquery.slicknav.js"></script>
+<script src="/assets/js/mixitup.min.js"></script>
+<script src="/assets/js/owl.carousel.min.js"></script>
+<script src="/assets/js/main.js"></script>
+<script src="/assets/js/components/category.js"></script>
+<script src="/assets/js/components/auth.js"></script>
+<script src="/assets/js/components/product.js"></script>
+<script src="/assets/js/components/category.js"></script>
+<script src="/assets/js/components/cart.js"></script>
+<script src="/assets/js/components/modalHandling.js"></script>
+<script>
+    window.onload = () => {
+        const urlParams = new URLSearchParams(window.location.search);
+        const keyword = urlParams.get('keyword') ?? '';
+        const categoryID = urlParams.get('categoryID') ?? null;
+        const params = {keyword, categoryID};
+        loadSearchResults('search-result-container', '/api/products/q', params);
+    }
+</script>
+</body>
+
+</html>

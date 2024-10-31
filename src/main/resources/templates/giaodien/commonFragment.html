@@ -14,12 +14,12 @@
                 <div class="col-lg-8 col-md-6 col-sm-12">
                     <nav class="header__menu d-flex justify-content-center align-items-center">
                         <div class="hero__search__form">
-                            <form action="#">
+                            <form onsubmit="event.preventDefault(); searchProducts();">
                                 <div class="hero__search__categories">
                                     Sản phẩm
                                 </div>
-                                <input type="text" placeholder="Giao nhanh trong vòng 2h">
-                                <button type="submit" class="site-btn">Tìm kiếm</button>
+                                <input id="search-input" type="text" placeholder="Giao nhanh trong vòng 2h">
+                                <button type="submit" class="site-btn" onclick="searchProducts()">Tìm kiếm</button>
                             </form>
                         </div>
                     </nav>
@@ -49,18 +49,6 @@
                                 <li class="dropdown-item" onclick="logout()">Đăng xuất</li>
                             </ul>
                         </div>
-
-                        <!--                        <div class="dropdown-center">-->
-                        <!--                            <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown"-->
-                        <!--                                    aria-expanded="false">-->
-                        <!--                                <i class="fa fa-user"></i> <span class="username"></span>-->
-                        <!--                            </button>-->
-                        <!--                            <ul class="dropdown-menu">-->
-                        <!--                                <li class="dropdown-item" data-bs-toggle="modal" data-bs-target="#profileModal">Xem thông tin cá nhân</li>-->
-                        <!--                                <li class="dropdown-item" data-bs-toggle="modal" data-bs-target="#changePasswordModal">Đổi mật khẩu</a></li>-->
-                        <!--                                <li class="dropdown-item" onclick="logout()">Đăng xuất</li>-->
-                        <!--                            </ul>-->
-                        <!--                        </div>-->
                     </div>
                 </div>
             </div>
@@ -156,84 +144,7 @@
             <span>DANH MỤC</span>
         </div>
         <ul class="category-menu">
-            <li class="has-submenu">
-                <a href="#" class="category-toggle">THỊT, CÁ, HẢI SẢN</a>
-                <ul class="submenu">
-                    <li><a th:href="@{/index/product}">Thịt heo</a></li>
-                    <li><a th:href="@{/index/product}">Thịt bò</a></li>
-                    <li><a th:href="@{/index/product}">Thịt gà, vịt, chim</a></li>
-                    <li><a th:href="@{/index/product}">Cá, hải sản</a></li>
-                </ul>
-            </li>
-            <li class="has-submenu">
-                <a href="#" class="category-toggle">TRỨNG, SỮA</a>
-                <ul class="submenu">
-                    <li><a th:href="@{/index/product}">Trứng gà, vịt, cút</a></li>
-                    <li><a th:href="@{/index/product}">Sữa tươi</a></li>
-                </ul>
-            </li>
-            <li class="has-submenu">
-                <a href="#" class="category-toggle">RAU, CỦ, NẤM, TRÁI CÂY</a>
-                <ul class="submenu">
-                    <li><a th:href="@{/index/product}">Rau lá</a></li>
-                    <li><a th:href="@{/index/product}">Củ, quả</a></li>
-                    <li><a th:href="@{/index/product}">Nấm các loại</a></li>
-                    <li><a th:href="@{/index/product}">Trái cây</a></li>
-                </ul>
-            </li>
-            <li class="has-submenu">
-                <a href="#" class="category-toggle">DẦU ĂN, NƯỚC CHẤM</a>
-                <ul class="submenu">
-                    <li><a th:href="@{/index/product}">Dầu ăn</a></li>
-                    <li><a th:href="@{/index/product}">Nước mắm</a></li>
-                    <li><a th:href="@{/index/product}">Gia vị các loại</a></li>
-                </ul>
-            </li>
-            <li class="has-submenu">
-                <a href="#" class="category-toggle">GẠO, BỘT, ĐỒ KHÔ</a>
-                <ul class="submenu">
-                    <li><a th:href="@{/index/product}">Gạo</a></li>
-                    <li><a th:href="@{/index/product}">Bột mì</a></li>
-                    <li><a th:href="@{/index/product}">Đồ khô</a></li>
-                </ul>
-            </li>
-            <li class="has-submenu">
-                <a href="#" class="category-toggle">BIA, NƯỚC GIẢI KHÁT</a>
-                <ul class="submenu">
-                    <li><a th:href="@{/index/product}">Bia</a></li>
-                    <li><a th:href="@{/index/product}">Nước ngọt</a></li>
-                </ul>
-            </li>
-            <li class="has-submenu">
-                <a href="#" class="category-toggle">THỰC PHẨM ĐÔNG MÁT</a>
-                <ul class="submenu">
-                    <li><a th:href="@{/index/product}">Cá viên chiên</a></li>
-                    <li><a th:href="@{/index/product}">Súc xích</a></li>
-                    <li><a th:href="@{/index/product}">Bò viên</a></li>
-                </ul>
-            </li>
-            <li class="has-submenu">
-                <a href="#" class="category-toggle">BÁNH KẸO CÁC LOẠI</a>
-                <ul class="submenu">
-                    <li><a th:href="@{/index/product}">Bánh quy</a></li>
-                    <li><a th:href="@{/index/product}">Kẹo</a></li>
-                </ul>
-            </li>
-            <li class="has-submenu">
-                <a href="#" class="category-toggle">CHĂM SÓC CÁ NHÂN</a>
-                <ul class="submenu">
-                    <li><a th:href="@{/index/product}">BVS các loại</a></li>
-                    <li><a th:href="@{/index/product}">BCS các loại</a></li>
-                </ul>
-            </li>
-            <li class="has-submenu">
-                <a href="#" class="category-toggle">VỆ SINH NHÀ CỬA</a>
-                <ul class="submenu">
-                    <li><a th:href="@{/index/product}">Nước lau sàn</a></li>
-                    <li><a th:href="@{/index/product}">Nước rửa chén</a></li>
-                    <li><a th:href="@{/index/product}">Chổi lau nhà</a></li>
-                </ul>
-            </li>
+            <li><a href="/index/search">TẤT CẢ THỂ LOẠI</a></li>
         </ul>
     </div>
 </div>

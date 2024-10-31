@@ -61,6 +61,68 @@ const loadTop10Products = async (containerId, endpoint, requestParams) => {
         });
 }
 
+const loadSearchResults = async (containerId, endpoint, requestParams) => {
+    $(`#${containerId}`).html('Loading...');
+    await axios.get(endpoint, {
+        params: requestParams
+    })
+        .then(res => {
+            let products = res.data;
+            let content = '';
+            // console.log(products);
+            products.forEach(product => {
+                let mainImage = product.images.find(image => image.isMain) || {imageURL: '/assets/img/product/discount/default.jpg'};
+                // console.log(mainImage.imageURL);
+                content += `<div class="col">
+                                <div class="product__discount__item">
+                                    <div class="product__discount__item__pic d-flex" onclick="navigateToProductDetails(${product.productID})">
+                                         <img src="${mainImage.imageURL}" alt="" class="">
+                                    </div>
+                                    <div class="product__item__text">
+                                        <h6 onclick="navigateToProductDetails(${product.productID})">${product.name}</h6>
+                                        <div class="price">
+                                            <span class="current-price">${formatCurrency(product.price)}đ</span>
+                                            ${product.giamgia !== 0 ? `
+                                            <span class="old-price">${formatCurrency(product.giacu)}đ</span>
+                                            <span class="discount">-${product.giamgia}%</span>                                        
+                                            ` : ``}
+                                        </div>
+                                        <button 
+                                        onclick="addToCart(${product.productID}, 1, ${product.price}, '${product.name.trim()}', '${mainImage.imageURL}')" 
+                                        class="button-buy">MUA</button>
+                                    </div>
+                                </div>
+                            </div>`;
+            });
+            $(`#${containerId}`).html(content);
+        })
+        .catch(err => {
+            // console.log(err);
+        });
+}
+
+function initializeSearchInput() {
+    const searchInput = document.getElementById('search-input');
+    searchInput.addEventListener('keypress', function(event) {
+        event.preventDefault();
+        if (event.key === 'Enter') {
+            searchProducts();
+        }
+    });
+}
+
+const searchProducts = () => {
+    const searchInput = document.getElementById('search-input');
+    const searchValue = searchInput.value;
+    if (searchValue.trim() === '') {
+        return;
+    }
+    const urlParams = new URLSearchParams(window.location.search);
+    const categoryID = urlParams.get('categoryID') ?? ``;
+    console.log(`/index/search?keyword=${searchValue}&categoryID=${categoryID}`);
+    window.location.href = `/index/search?keyword=${searchValue}&categoryID=${categoryID}`;
+}
+
 const addToCart = (productID, quantity, price, name, thumbnail) => {
     let item = {
         productID: productID,
@@ -116,3 +178,7 @@ document.querySelectorAll('.category-toggle').forEach(item => {
         parentLi.classList.toggle('active');
     });
 });
+
+window.onload = () => {
+    initializeSearchInput();
+}

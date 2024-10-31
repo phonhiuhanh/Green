@@ -37,6 +37,11 @@ public class GiaodienController {
         return "/giaodien/register";
     }
 
+    @GetMapping("/search")
+    public String toSeach() {
+        return "/giaodien/search";
+    }
+
     @GetMapping("/forgot-password")
     public String toForgotPassword() {
         return "/giaodien/forgotPassword";

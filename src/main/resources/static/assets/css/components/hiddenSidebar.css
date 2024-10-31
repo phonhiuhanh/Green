@@ -5,6 +5,7 @@
 }
 .category-menu {
     display: none;
+    max-height: calc(-11rem + 100vh) !important;
 }
 .content-area {
     padding-top: 4.5rem!important;

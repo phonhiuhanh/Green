@@ -15,7 +15,7 @@ public class Product {
     private Integer giamgia;
     private Double giacu;
 
-    @OneToMany(mappedBy = "product", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "product", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private List<ProductImage> images;
 
     @ManyToOne
