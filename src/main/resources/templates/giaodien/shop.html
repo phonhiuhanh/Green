@@ -18,6 +18,7 @@
 <!--    custom css-->
     <link rel="stylesheet" href="/assets/sass/style.css" type="text/css">
     <link rel="stylesheet" href="/assets/css/components/common.css" type="text/css">
+    <script src="/assets/js/lib/bootstrap.bundle.min.js"></script>
 </head>
 
 <body>
@@ -103,6 +104,12 @@
         </div>
     </section>
 </main>
+
+<section>
+    <div th:replace="~{giaodien/commonFragment :: #changePasswordModal}"></div>
+    <div th:replace="~{giaodien/commonFragment :: #profileModal}"></div>
+</section>
+
 <script src="/assets/js/jquery-3.3.1.min.js"></script>
 <script src="/assets/js/lib/axios.min.js"></script>
 <script src="/assets/js/bootstrap.min.js"></script>
@@ -116,6 +123,7 @@
 <script src="/assets/js/components/product.js"></script>
 <script src="/assets/js/components/category.js"></script>
 <script src="/assets/js/components/cart.js"></script>
+<script src="/assets/js/components/modalHandling.js"></script>
 <script>
     window.onload = () => {
         loadTop10Products('top-sale-products', '/api/products/top10-by-giamgia');

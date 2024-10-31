@@ -54,7 +54,7 @@ const setQuantityAdjustmentButtons = () => {
         $button.parent()[0].classList.forEach((className) => {
             if (className.startsWith('product-')) {
                 const productID = className.split('-')[1];
-                console.log(productID, newVal);
+                // console.log(productID, newVal);
                 updateItemQuantity(productID, newVal);
             }
         });
@@ -66,7 +66,7 @@ const updateItemQuantity = (productID, quantity) => {
     let cartItems = getCartItems();
     const item = cartItems.find(item => item.productID === parseInt(productID));
 
-    console.log(cartItems, item);
+    // console.log(cartItems, item);
     if (item) {
         item.quantity = quantity;
         if (item.quantity <= 0) {

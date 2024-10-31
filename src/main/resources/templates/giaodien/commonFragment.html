@@ -32,23 +32,122 @@
                         </ul>
                     </div>
                     <div class="header__top__right__auth">
-                        <div class="dropdown-center">
-                            <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown"
-                                    aria-expanded="false">
+                        <div class="btn-group">
+                            <button type="button" class="btn dropdown-toggle"
+                                    data-bs-display="static" aria-expanded="true" onclick="toggleDropdown(this)"
+                            >
+                                <!--                                    onblur="removeDropdownShow(this)"-->
                                 <i class="fa fa-user"></i> <span class="username"></span>
                             </button>
-                            <ul class="dropdown-menu">
-                                <li><a class="dropdown-item" href="/profile">Xem thông tin cá nhân</a></li>
-                                <li><a class="dropdown-item" href="/change-password">Đổi mật khẩu</a></li>
+                            <ul class="dropdown-menu dropdown-menu-end dropdown-menu-lg-start" data-bs-popper="static">
+                                <li class="dropdown-item" data-bs-toggle="modal" data-bs-target="#profileModal">
+                                    Xem thông tin cá nhân
+                                </li>
+                                <li class="dropdown-item" data-bs-toggle="modal" data-bs-target="#changePasswordModal">
+                                    Đổi mật khẩu
+                                </li>
                                 <li class="dropdown-item" onclick="logout()">Đăng xuất</li>
                             </ul>
                         </div>
+
+                        <!--                        <div class="dropdown-center">-->
+                        <!--                            <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown"-->
+                        <!--                                    aria-expanded="false">-->
+                        <!--                                <i class="fa fa-user"></i> <span class="username"></span>-->
+                        <!--                            </button>-->
+                        <!--                            <ul class="dropdown-menu">-->
+                        <!--                                <li class="dropdown-item" data-bs-toggle="modal" data-bs-target="#profileModal">Xem thông tin cá nhân</li>-->
+                        <!--                                <li class="dropdown-item" data-bs-toggle="modal" data-bs-target="#changePasswordModal">Đổi mật khẩu</a></li>-->
+                        <!--                                <li class="dropdown-item" onclick="logout()">Đăng xuất</li>-->
+                        <!--                            </ul>-->
+                        <!--                        </div>-->
                     </div>
                 </div>
             </div>
         </div>
     </div>
 </header>
+
+<!-- Profile Information Modal -->
+<div class="modal fade" id="profileModal" tabindex="-1" aria-labelledby="profileModalLabel" aria-hidden="true"
+     th:fragment="profileModal">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="profileModalLabel">Thông tin cá nhân</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form id="profileForm">
+                    <div class="mb-3">
+                        <label for="phone" class="form-label">Số điện thoại</label>
+                        <input type="text" class="form-control" id="phone" readonly>
+                    </div>
+                    <div class="mb-3">
+                        <label for="email" class="form-label">Email</label>
+                        <input type="email" class="form-control" id="email" readonly>
+                    </div>
+                    <div class="mb-3">
+                        <label for="username" class="form-label">Tên người dùng</label>
+                        <input type="text" class="form-control" id="username" disabled>
+                    </div>
+                    <div class="mb-3">
+                        <label for="address" class="form-label">Địa chỉ</label>
+                        <input type="text" class="form-control" id="address" disabled>
+                    </div>
+                    <div class="mb-3">
+                        <label for="city" class="form-label">Thành phố</label>
+                        <input type="text" class="form-control" id="city" disabled>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" id="editButton" onclick="toggleEdit()">Chỉnh sửa
+                </button>
+                <button type="button" class="btn btn-primary" id="saveButton" onclick="saveChanges()" disabled>Lưu thay
+                    đổi
+                </button>
+                <button type="button" class="btn btn-warning" data-bs-toggle="modal"
+                        data-bs-target="#changePasswordModal">Đổi mật khẩu
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Change Password Modal -->
+<div class="modal fade" id="changePasswordModal" tabindex="-1" aria-labelledby="changePasswordModalLabel"
+     aria-hidden="true" th:fragment="changePasswordModal">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="changePasswordModalLabel">Đổi mật khẩu</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form id="changePasswordForm">
+                    <div class="mb-3">
+                        <label for="currentPassword" class="form-label">Mật khẩu hiện tại</label>
+                        <input type="password" class="form-control" id="currentPassword" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="newPassword" class="form-label">Mật khẩu mới</label>
+                        <input type="password" class="form-control" id="newPassword" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="confirmPassword" class="form-label">Xác nhận mật khẩu mới</label>
+                        <input type="password" class="form-control" id="confirmPassword" required>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Hủy</button>
+                <button type="button" class="btn btn-primary" id="confirmButton" onclick="changePassword()">Xác nhận
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
 
 <div class="col-lg-3 d-lg-block d-none fixed-sidebar" th:fragment="sidebar">
     <div class="hero__categories">

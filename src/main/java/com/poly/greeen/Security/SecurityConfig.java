@@ -26,7 +26,7 @@ public class SecurityConfig {
     private final CustomUserDetailsService userDetailsService;
 
     private static final String[] NON_AUTHENTICATED_ENDPOINTS = {
-            "/login", "/index/register", "/css/**", "/js/**", "/assets/**", "/api/products/**", "/index/forgot-password", "/p/**", "/api/*/p/**"
+            "/login", "/index/register", "/css/**", "/js/**", "/assets/**", "/api/products/**", "/index/forgot-password", "/p/**", "/api/*/p/**", "/*/p/**"
     };
     private static final String[] IGNORED_ENDPOINTS = {
             "/static/**", "/user/**", "/assets/**", "/assets-admin/**", "/admin/**", "/giaodien/**"

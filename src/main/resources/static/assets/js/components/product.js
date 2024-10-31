@@ -13,10 +13,10 @@ const loadTop10Products = async (containerId, endpoint, requestParams) => {
         .then(res => {
             let products = res.data;
             let content = '';
-            console.log(products);
+            // console.log(products);
             products.forEach(product => {
                 let mainImage = product.images.find(image => image.isMain) || {imageURL: '/assets/img/product/discount/default.jpg'};
-                console.log(mainImage.imageURL);
+                // console.log(mainImage.imageURL);
                 content += `<div class="">
                             <div class="product__discount__item">
                                 <div class="product__discount__item__pic set-bg" onclick="navigateToProductDetails(${product.productID})"
@@ -57,7 +57,7 @@ const loadTop10Products = async (containerId, endpoint, requestParams) => {
             });
         })
         .catch(err => {
-            console.log(err);
+            // console.log(err);
         });
 }
 

@@ -41,4 +41,9 @@ public class GiaodienController {
     public String toForgotPassword() {
         return "/giaodien/forgotPassword";
     }
+
+    @GetMapping("/p/test")
+    public String toTest() {
+        return "/giaodien/test/index";
+    }
 }

@@ -7,9 +7,9 @@ const init = () => {
         const urlParams = new URLSearchParams(window.location.search);
         const productId = urlParams.get('id');
         loadProductDetails(productId);
-        console.log("Product ID:", productId);
+        // console.log("Product ID:", productId);
     } else {
-        console.log("The URL does not contain '/details?id='");
+        // console.log("The URL does not contain '/details?id='");
     }
 }
 
@@ -26,7 +26,7 @@ let currentProduct = {};
 const loadProductDetails = async (productId) => {
     const response = await axios.get(`/api/products/${productId}`)
         .catch(err => {
-            console.log(err);
+            // console.log(err);
         });
     const product = response.data;
     currentProduct = product;

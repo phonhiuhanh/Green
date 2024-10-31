@@ -155,4 +155,41 @@ public class CustomerController {
             return ResponseEntity.badRequest().body("Lỗi: " + e);
         }
     }
+
+    @PostMapping("/update-profile")
+    public ResponseEntity<?> updateProfile(@RequestBody Customer customer) {
+        log.info("Yêu cầu REST để cập nhật thông tin khách hàng: {}", customer);
+        try {
+            var userDetails = (CustomUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+            var currentCustomer = customerRepository.findByEmailOrPhone(userDetails.getUsername(), userDetails.getUsername())
+                    .orElseThrow(() -> new Exception("Không tìm thấy khách hàng"));
+            currentCustomer.setUsername(customer.getUsername());
+            currentCustomer.setAddress(customer.getAddress());
+            currentCustomer.setCity(customer.getCity());
+            customerRepository.save(currentCustomer);
+            return ResponseEntity.ok().body("Cập nhật thông tin thành công");
+        } catch (Exception e) {
+            log.error("Lỗi: ", e);
+            return ResponseEntity.badRequest().body("Lỗi: " + e);
+        }
+    }
+
+    @PutMapping("/update-password")
+    public ResponseEntity<?> updatePassword(@RequestParam String oldPassword, @RequestParam String newPassword) {
+        log.info("Yêu cầu REST để cập nhật mật khẩu");
+        try {
+            var userDetails = (CustomUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+            var currentCustomer = customerRepository.findByEmailOrPhone(userDetails.getUsername(), userDetails.getUsername())
+                    .orElseThrow(() -> new Exception("Không tìm thấy khách hàng"));
+            if (!passwordEncoder.matches(oldPassword, currentCustomer.getPassword())) {
+                return ResponseEntity.badRequest().body("Mật khẩu cũ không chính xác");
+            }
+            currentCustomer.setPassword(passwordEncoder.encode(newPassword));
+            customerRepository.save(currentCustomer);
+            return ResponseEntity.ok().body("Cập nhật mật khẩu thành công");
+        } catch (Exception e) {
+            log.error("Lỗi: ", e);
+            return ResponseEntity.badRequest().body("Lỗi: " + e);
+        }
+    }
 }
