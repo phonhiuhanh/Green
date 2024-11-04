@@ -27,4 +27,9 @@ public class AuthController {
     public ResponseEntity<?> verifyAccount(@RequestParam String email, @RequestParam String code, @RequestParam Timestamp timestamp) {
         return ResponseEntity.ok("Account verified");
     }
+
+    public static AuthUser getAuthUser() {
+        var userDetails = (CustomUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        return userDetails.getAuthUser();
+    }
 }

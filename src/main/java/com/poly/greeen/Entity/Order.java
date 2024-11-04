@@ -17,6 +17,7 @@ public class Order {
     @Temporal(TemporalType.TIMESTAMP)
     private Date orderDate; // Ngày đặt hàng
     private BigDecimal totalAmount; // Tổng số tiền
+    private String buyerId;
 
     @OneToMany(mappedBy = "order", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<OrderDetail> orderDetails;

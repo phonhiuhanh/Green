@@ -122,8 +122,7 @@ const loadCartItemsIntoTable = () => {
 
 }
 
-const updateCartSummary = () => {
-    const cartItems = getCartItems();
+const calc = (cartItems) => {
     let subtotal = 0;
     let shippingFee = cartItems.length === 0 ? 0 : 30000; // Example shipping fee
     let total = 0;
@@ -134,6 +133,22 @@ const updateCartSummary = () => {
 
     shippingFee = subtotal / 10 < shippingFee ? subtotal / 10 : shippingFee;
     total = subtotal + shippingFee;
+    return {subtotal, shippingFee, total};
+}
+
+const updateCartSummary = () => {
+    const cartItems = getCartItems();
+    const {subtotal, shippingFee, total} = calc(cartItems);
+    // let subtotal = 0;
+    // let shippingFee = cartItems.length === 0 ? 0 : 30000; // Example shipping fee
+    // let total = 0;
+    //
+    // cartItems.forEach(item => {
+    //     subtotal += item.price * item.quantity;
+    // });
+    //
+    // shippingFee = subtotal / 10 < shippingFee ? subtotal / 10 : shippingFee;
+    // total = subtotal + shippingFee;
 
     // Update the DOM elements
     document.querySelector('.checkout__order__subtotal span').textContent = formatCurrency(subtotal) + '₫';
@@ -141,20 +156,50 @@ const updateCartSummary = () => {
     $('.shipping-fee').text(formatCurrency(shippingFee) + '₫');
 }
 
-const checkOut = () => {
+const checkOut = async () => {
     const cartItems = getCartItems();
     if (cartItems.length === 0) {
         alert('Giỏ hàng của bạn đang trống!');
         return;
     }
     confirm('Bạn có chắc chắn muốn tiến hành đặt hàng?') &&
-        (() => {
-            // Do something
+    (() => {
+        createOrder(cartItems);
+    })();
+}
+
+const createOrder = async (cartItems) => {
+    const {subtotal, shippingFee, total} = calc(cartItems);
+
+    const order = {
+        totalAmount: total,
+        orderDetails: cartItems.map(item => ({
+            productID: item.productID,
+            quantity: item.quantity,
+            price: item.price
+        }))
+    };
+
+    try {
+        const response = await fetch('/api/orders', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(order)
+        });
+        if (response.status === 200) {
             alert('Đặt hàng thành công!');
             saveCartItems([]);
             loadCartItemsIntoTable();
             updateCartSummary();
-        })();
+        } else {
+            alert('Đặt hàng thất bại. Vui lòng thử lại!');
+        }
+    } catch (error) {
+        console.error('Error creating order:', error);
+        alert('Đặt hàng thất bại. Vui lòng thử lại!');
+    }
 }
 
 const updateCartItemCount = () => {
