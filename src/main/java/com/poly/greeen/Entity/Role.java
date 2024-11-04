@@ -13,6 +13,6 @@ public class Role {
     private Integer roleID;
     private String roleName;
 
-    @OneToMany(mappedBy = "role")
-    private List<Users> users;
+//    @OneToMany(mappedBy = "role", fetch = FetchType.LAZY)
+//    private List<Users> users;
 }

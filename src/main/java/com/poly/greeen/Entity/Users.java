@@ -16,6 +16,7 @@ public class Users {
     private String address;
     private String city;
 
+//    @ManyToOne(fetch = FetchType.LAZY)
     @ManyToOne
     @JoinColumn(name = "roleID")
     private Role role;

@@ -13,50 +13,7 @@
 
 <body>
 <div id="wrapper">
-    <nav class="navbar navbar-default navbar-static-top m-b-0">
-        <div class="navbar-header">
-            <a class="navbar-toggle hidden-sm hidden-md hidden-lg " data-target=".navbar-collapse"
-               data-toggle="collapse" href="/assets-admin/javascript:void(0)">
-                <i class="fa fa-bars"></i>
-            </a>
-            <div class="top-left-part">
-                <a class="logo" th:href="@{/Admin/trangchu}">
-                    <b>
-                        <img alt="home" src="/assets-admin/plugins/images/logo.png"
-                             style="margin-left: 50px;width: 90px"/>
-                    </b>
-                </a>
-            </div>
-            <ul class="nav navbar-top-links navbar-left m-l-20 hidden-xs">
-                <li>
-                    <!-- Form tìm kiếm sản phẩm theo ID -->
-                    <form action="/sanpham/search" class="app-search hidden-xs" method="GET" role="search">
-                        <input class="form-control" name="id" placeholder="search..." type="text">
-                        <a th:href="@{/sanpham/products}">
-                            <i class="fa fa-search"></i>
-                        </a>
-                    </form>
-                </li>
-            </ul>
-            <ul class="nav navbar-top-links navbar-right pull-right">
-                <li>
-                    <div class="dropdown">
-                        <a class="profile-pic dropdown-toggle" data-toggle="dropdown" href="/assets-admin/#">
-                            <img alt="user-img" class="img-circle" src="/assets-admin/plugins/images/users/varun.jpg"
-                                 width="36"/>
-                            <b class="hidden-xs">Cybersoft</b>
-                        </a>
-                        <ul class="dropdown-menu">
-                            <li><a href="/assets-admin/profile.html">Thông tin cá nhân</a></li>
-                            <li><a href="/assets-admin/#">Thống kê công việc</a></li>
-                            <li class="divider"></li>
-                            <li><a href="/assets-admin/#">Đăng xuất</a></li>
-                        </ul>
-                    </div>
-                </li>
-            </ul>
-        </div>
-    </nav>
+    <nav th:replace="~{admin/commonFragment :: navbar}"></nav>
     <!-- Left navbar-header -->
     <div class="navbar-default sidebar" role="navigation">
         <div class="sidebar-nav navbar-collapse slimscrollsidebar">
