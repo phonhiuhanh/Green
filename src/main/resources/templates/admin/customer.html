@@ -1,108 +1,67 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" >
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
 
 <head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="description" content="">
-    <meta name="author" content="">
-    <title>Admin Green</title>
+    <title>Quản lý Khách hàng</title>
     <th:block th:insert="~{/admin/common/head :: head}"></th:block>
-
 </head>
 
 <body>
 
-<div id="wrapper" >
+<div id="wrapper">
     <nav th:replace="~{admin/commonFragment :: navbar}"></nav>
-    <!-- Left navbar-header -->
-    <div class="navbar-default sidebar" role="navigation">
-        <div class="sidebar-nav navbar-collapse slimscrollsidebar">
-            <ul class="nav" id="side-menu">
-                <li style="padding: 10px 0 0;">
-                    <a th:href="@{/Admin/trangchu}" class="waves-effect"><i class="fa fa-user fa-fw"
-                                                                            aria-hidden="true"></i><span class="hide-menu">Trang Chủ</span></a>
-                </li>
-                <li >
-                    <a th:href="@{/sanpham/products}" class="waves-effect"><i class="fa fa-user fa-fw"
-                                                                           aria-hidden="true"></i><span class="hide-menu">Sản Phẩm</span></a>
-                </li>
-                <li>
-                    <a th:href="@{/customer/list}" class="waves-effect"><i class="fa fa-user fa-fw"
-                                                                            aria-hidden="true"></i><span class="hide-menu">Khách Hành</span></a>
-                </li>
-                <li>
-                    <a th:href="@{/user/list}" class="waves-effect"><i class="fa fa-modx fa-fw"
-                                                                          aria-hidden="true"></i><span class="hide-menu">Chức Vụ</span></a>
-                </li>
-                <li>
-                    <a th:href="@{/order/list}" class="waves-effect"><i class="fa fa-table fa-fw"
-                                                                           aria-hidden="true"></i><span class="hide-menu">Đơn Hàng</span></a>
-                </li>
-                <li>
-                    <a th:href="@{/attendance/list}" class="waves-effect"><i class="fa fa-table fa-fw"
-                                                                            aria-hidden="true"></i><span class="hide-menu">Chấm Luong</span></a>
-                </li>
-                <li>
-                    <a th:href="@{/import/list}" class="waves-effect"><i class="fa fa-table fa-fw"
-                                                                             aria-hidden="true"></i><span class="hide-menu">Nhập hàng</span></a>
-                </li>
-            </ul>
-        </div>
-    </div>
-<div id="page-wrapper" layout:fragment="admin">
-    <div class="container-fluid">
-        <div class="row bg-title">
-            <div class="col-lg-3 col-md-4 col-sm-4 col-xs-12">
-                <h4 class="page-title">Khách Hàng</h4>
+    <div th:replace="~{admin/commonFragment :: sidebar}"></div>
+    <div id="page-wrapper" layout:fragment="admin">
+        <div class="container-fluid">
+            <div class="row bg-title">
+                <div class="col-lg-3 col-md-4 col-sm-4 col-xs-12">
+                    <h4 class="page-title">Khách Hàng</h4>
+                </div>
             </div>
-        </div>
-        <div class="col-sm-12">
-            <div class="white-box">
-                <div class="table-responsive">
-                    <table class="table" id="nhanvien">
-                        <thead>
-                        <tr>
-                            <th>ID</th>
-                            <th>Tên người dùng</th>
-                            <th>Passwork</th>
-                            <th>Email</th>
-                            <th>Địa chỉ</th>
-                            <th>Thành Phố</th>
-                            <th>Số điện thoại</th>
-                            <th>Action</th>
-                        </tr>
-                        </thead>
-                        <tbody>
-                        <tr th:each="khachhang : ${customers}">
-                            <td th:text="${khachhang.customerID}"></td>
-                            <td th:text="${khachhang.username}"></td>
-                            <td th:text="${khachhang.password}"></td>
-                            <td th:text="${khachhang.email}"></td>
-                            <td th:text="${khachhang.address}"></td>
-                            <td th:text="${khachhang.city}"></td>
-                            <td th:text="${khachhang.phone}"></td>
-                            <td>
-                                <a href="#" class="btn btn-sm btn-primary">Sửa</a>
-                                <form th:action="@{/customer/delete}" method="post" style="display:inline;">
-                                    <input type="hidden" name="id" th:value="${khachhang.customerID}" />
-                                    <button type="submit" class="btn btn-sm btn-danger">Xóa</button>
-                                </form>
-                            </td>
-                        </tr>
-                        </tbody>
-                    </table>
-
-
+            <div class="col-sm-12">
+                <div class="white-box">
+                    <div class="table-responsive">
+                        <table class="table" id="nhanvien">
+                            <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>Tên người dùng</th>
+<!--                                <th>Passwork</th>-->
+                                <th>Email</th>
+                                <th>Địa chỉ</th>
+                                <th>Thành Phố</th>
+                                <th>Số điện thoại</th>
+                                <th></th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr th:each="khachhang : ${customers}">
+                                <td th:text="${khachhang.customerID}"></td>
+                                <td th:text="${khachhang.username}"></td>
+<!--                                <td th:text="${khachhang.password}"></td>-->
+                                <td th:text="${khachhang.email}"></td>
+                                <td th:text="${khachhang.address}"></td>
+                                <td th:text="${khachhang.city}"></td>
+                                <td th:text="${khachhang.phone}"></td>
+                                <td>
+<!--                                    <a href="#" class="btn btn-sm btn-primary">Sửa</a>-->
+                                    <form th:action="@{/customer/delete}" method="post" style="display:inline;">
+                                        <input type="hidden" name="id" th:value="${khachhang.customerID}"/>
+                                        <button type="submit" class="btn btn-sm btn-danger">Xóa</button>
+                                    </form>
+                                </td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
-    </div>
     <!-- /.container-fluid -->
-    <footer class="footer text-center"> 2018 &copy; myclass.com </footer>
+    <footer class="footer text-center">Green</footer>
 </div>
+<th:block th:insert="~{/admin/common/importJS :: commonJS}"></th:block>
 </body>
 
 </html>
