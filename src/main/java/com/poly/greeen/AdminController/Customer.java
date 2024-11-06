@@ -24,7 +24,7 @@ public class Customer {
         return "admin/customer"; // Trả về view 'customerList.html'
     }
 
-    @PostMapping("/delete")
+    @PostMapping("/manager/delete")
     public String deleteCustomer(@RequestParam("id") Integer id) {
         customerRepository.deleteById(id); // Xóa khách hàng theo ID
         return "redirect:/customer/list"; // Chuyển hướng về danh sách sau khi xóa

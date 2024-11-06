@@ -87,7 +87,7 @@ public class ProductController {
         }
     }
 
-    @PostMapping(consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+    @PostMapping(consumes = MediaType.MULTIPART_FORM_DATA_VALUE, value = "/manager")
     public ResponseEntity<?> createProduct(
             @RequestPart("product") ProductRequestDTO productRequestDTO,
             @RequestPart("mainImage") MultipartFile mainImage,
@@ -151,7 +151,7 @@ public class ProductController {
         return "/uploads/" + filename;
     }
 
-    @PutMapping(consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+    @PutMapping(consumes = MediaType.MULTIPART_FORM_DATA_VALUE, value = "/manager")
     public ResponseEntity<?> updateProduct(
             @RequestPart("product") ProductRequestDTO productRequestDTO,
             @RequestPart("mainImage") MultipartFile mainImage,
@@ -170,7 +170,7 @@ public class ProductController {
         }
     }
 
-    @DeleteMapping("/{id}")
+    @DeleteMapping("/manager/{id}")
     public ResponseEntity<?> deleteProduct(@PathVariable Integer id) {
         try {
             productRepository.deleteById(id);

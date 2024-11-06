@@ -17,7 +17,7 @@ function displayPage(page) {
 
     paginatedItems.forEach(product => {
         const row = document.createElement('tr');
-        const thumbnail = product?.images.find(image => image.isMain) || product?.images[0];
+        const thumbnail = product.images?.find(image => image.isMain) || product?.images[0];
         row.innerHTML = `
                 <td>${product.productID}</td>
                 <td><img alt="Hình ảnh" style="width: 100px; height: 100px" src="${thumbnail?.imageURL}"></td>
@@ -95,7 +95,7 @@ $(document).ready(function () {
         };
         formData.append('product', new Blob([JSON.stringify(product)], {type: 'application/json'}));
         $.ajax({
-            url: '/api/products',
+            url: '/api/products/manager',
             method: 'PUT',
             processData: false,
             contentType: false,
@@ -115,7 +115,7 @@ $(document).ready(function () {
         const productID = $(this).data('id');
         if (confirm('Are you sure you want to delete this product?')) {
             $.ajax({
-                url: `/api/products/${productID}`,
+                url: `/api/products/manager/${productID}`,
                 method: 'DELETE',
                 success: function () {
                     alert('Product deleted successfully!');

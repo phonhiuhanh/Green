@@ -125,7 +125,7 @@ $('.categorySelect').each(function() {
             formData.append('product', new Blob([JSON.stringify(product)], {type: 'application/json'}));
 
             $.ajax({
-                url: '/api/products',
+                url: '/api/products/manager',
                 method: 'POST',
                 processData: false,
                 contentType: false,

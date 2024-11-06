@@ -35,6 +35,9 @@ public class SecurityConfig {
     private static final String[] IGNORED_ENDPOINTS = {
             "/static/**", "/user/**", "/assets/**", "/assets-admin/**", "/admin/**", "/giaodien/**"
     };
+    private static final String[] MANAGER_ENDPOINTS = {
+            "/api/*/manager/**", "/*/manager/**"
+    };
 
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
@@ -43,6 +46,7 @@ public class SecurityConfig {
                 .cors(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(requests -> requests
                         .requestMatchers(NON_AUTHENTICATED_ENDPOINTS).permitAll()
+                        .requestMatchers(MANAGER_ENDPOINTS).hasAuthority(CustomUserDetailsService.ROLES.get("ROLE_MANAGER"))
                         .anyRequest().authenticated())
                 .formLogin(form -> form
                         .loginPage("/login")
@@ -76,7 +80,7 @@ public class SecurityConfig {
 
     @Bean
     public PasswordEncoder passwordEncoder() {
-        return new BCryptPasswordEncoder(); // Mã hóa mật khẩu bằng BCrypt
+        return new BCryptPasswordEncoder(12); // Mã hóa mật khẩu bằng BCrypt
     }
 
     private AuthenticationSuccessHandler authenticationSuccessHandler() {

@@ -1,148 +1,78 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" >
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
 
 <head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="description" content="">
-    <meta name="author" content="">
-    <title>Admin Green</title>
+    <title>Quản lý Nhân sự</title>
     <th:block th:insert="~{/admin/common/head :: head}"></th:block>
-
 </head>
 
 <body>
 
-<div id="wrapper" >
+<div id="wrapper">
     <nav th:replace="~{admin/commonFragment :: navbar}"></nav>
-    <!-- Left navbar-header -->
-    <div class="navbar-default sidebar" role="navigation">
-        <div class="sidebar-nav navbar-collapse slimscrollsidebar">
-            <ul class="nav" id="side-menu">
-                <li style="padding: 10px 0 0;">
-                    <a th:href="@{/Admin/trangchu}" class="waves-effect"><i class="fa fa-user fa-fw"
-                                                                            aria-hidden="true"></i><span class="hide-menu">Trang Chủ</span></a>
-                </li>
-                <li >
-                    <a th:href="@{/sanpham/products}" class="waves-effect"><i class="fa fa-user fa-fw"
-                                                                           aria-hidden="true"></i><span class="hide-menu">Sản Phẩm</span></a>
-                </li>
-                <li>
-                    <a th:href="@{/customer/list}" class="waves-effect"><i class="fa fa-user fa-fw"
-                                                                           aria-hidden="true"></i><span class="hide-menu">Khách Hành</span></a>
-                </li>
-                <li>
-                    <a th:href="@{/user/list}" class="waves-effect"><i class="fa fa-modx fa-fw"
-                                                                          aria-hidden="true"></i><span class="hide-menu">Chức Vụ</span></a>
-                </li>
-                <li>
-                    <a th:href="@{/order/list}" class="waves-effect"><i class="fa fa-table fa-fw"
-                                                                           aria-hidden="true"></i><span class="hide-menu">Đơn Hàng</span></a>
-                </li>
-                <li>
-                    <a th:href="@{/attendance/list}" class="waves-effect"><i class="fa fa-table fa-fw"
-                                                                            aria-hidden="true"></i><span class="hide-menu">Chấm Luong</span></a>
-                </li>
-                <li>
-                    <a th:href="@{/import/list}" class="waves-effect"><i class="fa fa-table fa-fw"
-                                                                         aria-hidden="true"></i><span class="hide-menu">Nhập hàng</span></a>
-                </li>
-            </ul>
-        </div>
-    </div>
-<div id="page-wrapper" layout:fragment="admin">
-    <div class="container-fluid">
-        <div class="row bg-title">
-            <div class="col-lg-3 col-md-4 col-sm-4 col-xs-12">
-                <h4 class="page-title">Danh sách chức vụ</h4>
-            </div>
-            <div class="col-lg-9 col-sm-8 col-md-8 col-xs-12 text-right">
-                <button type="button" data-toggle="modal" data-target="#btnChucVuModalThem" class="btn btn-sm btn-success">Thêm mới</button>
-            </div>
-            <!-- /.col-lg-12 -->
-        </div>
-        <!-- /row -->
-        <div class="row">
-            <div class="col-sm-12">
-                <div class="white-box">
-                    <div class="table-responsive">
-                        <table class="table">
-                            <thead>
-                            <tr>
-                                <th>ID</th>
-                                <th>Tên người dùng</th>
-                                <th>Vai trò</th>
-                                <th>Email</th>
-                                <th>Điện thoại</th>
-                                <th>Địa chỉ</th>
-                                <th>Thành phố</th>
-                                <th>Action</th>
-                            </tr>
-                            </thead>
-                            <tbody>
-                            <tr th:each="user : ${users}">
-                                <td th:text="${user.userID}"></td>
-                                <td th:text="${user.username}"></td>
-                                <td th:text="${user.role.roleName}"></td>
-                                <td th:text="${user.email}"></td>
-                                <td th:text="${user.phone}"></td>
-                                <td th:text="${user.address}"></td>
-                                <td th:text="${user.city}"></td>
-                                <td>
-                                    <a href="#" class="btn btn-sm btn-primary">Sửa</a>
-                                    <form th:action="@{/users/delete}" method="post" style="display:inline;">
-                                        <input type="hidden" name="id" th:value="${user.userID}" />
-                                        <button type="submit" class="btn btn-sm btn-danger">Xóa</button>
-                                    </form>
-                                </td>
-                            </tr>
-                            </tbody>
-                        </table>
-                    </div>
+    <div th:replace="~{admin/commonFragment :: sidebar}"></div>
+    <div id="page-wrapper" layout:fragment="admin">
+        <div class="container-fluid">
+            <div class="row bg-title">
+                <div class="col-lg-3 col-md-4 col-sm-4 col-xs-12">
+                    <h4 class="page-title">Danh sách chức vụ</h4>
+                </div>
+                <div class="col-lg-9 col-sm-8 col-md-8 col-xs-12 text-right">
+                    <button type="button" data-toggle="modal" data-target="#addUserModal"
+                            class="btn btn-sm btn-success">Thêm mới
+                    </button>
                 </div>
             </div>
-        </div>
-
-        <!-- Modal -->
-        <div class="modal fade" id="btnChucVuModalThem" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
-            <div class="modal-dialog" role="document">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                        <h4 class="modal-title" id="myModalLabel">Modal title</h4>
-                    </div>
-                    <div class="modal-body">
-                        <div class="white-box">
-                            <form class="form-horizontal form-material">
-                                <div class="form-group">
-                                    <label class="col-md-12">Tên quyền</label>
-                                    <div class="col-md-12">
-                                        <input id="tenChucVu" type="text" placeholder="Tên quyền"
-                                               class="form-control form-control-line" />
-                                    </div>
-                                </div>
-                                <div class="form-group">
-                                    <label class="col-md-12">Mô tả</label>
-                                    <div class="col-md-12">
-                                        <input id="descChucVu" type="text" placeholder="Mô tả" class="form-control form-control-line" />
-                                    </div>
-                                </div>
-                            </form>
+            <div class="row">
+                <div class="col-sm-12">
+                    <div class="white-box">
+                        <div class="table-responsive">
+                            <table class="table">
+                                <thead>
+                                <tr>
+                                    <th>ID</th>
+                                    <th>Tên người dùng</th>
+                                    <th>Vai trò</th>
+                                    <th>Email</th>
+                                    <th>Điện thoại</th>
+                                    <th>Địa chỉ</th>
+                                    <th>Thành phố</th>
+                                    <th>Action</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <tr th:each="user : ${users}">
+                                    <td th:text="${user.userID}"></td>
+                                    <td th:text="${user.username}"></td>
+                                    <td th:text="${user.role.roleName}"></td>
+                                    <td th:text="${user.email}"></td>
+                                    <td th:text="${user.phone}"></td>
+                                    <td th:text="${user.address}"></td>
+                                    <td th:text="${user.city}"></td>
+                                    <td>
+                                        <button type="button" class="btn btn-sm btn-primary btn-edit-user"
+                                                th:data-id="${user.userID}">Sửa
+                                        </button>
+                                        <button type="button" class="btn btn-sm btn-danger btn-delete-user" th:data-id="${user.userID}">Xóa</button>
+                                    </td>
+                                </tr>
+                                </tbody>
+                            </table>
                         </div>
                     </div>
-                    <div class="modal-footer">
-                        <button id="btnAddChucVu" type="submit" class="btn btn-success">Add Role</button>
-                    </div>
                 </div>
             </div>
         </div>
-        <script src="/assets-admin/script/ChucVuJS.js"></script>
-        <!-- /.row -->
+        <footer class="footer text-center"> 2018 &copy; myclass.com</footer>
     </div>
-    <!-- /.container-fluid -->
-    <footer class="footer text-center"> 2018 &copy; myclass.com </footer>
 </div>
+
+<div th:replace="~{admin/commonFragment :: #addUserModal}"></div>
+<div th:replace="~{admin/commonFragment :: #updateUserModal}"></div>
+
+
+<th:block th:insert="~{/admin/common/importJS :: commonJS}"></th:block>
+<script src="/assets-admin/script/ChucVuJS.js"></script>
 </body>
 
 </html>

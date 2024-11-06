@@ -1,12 +1,16 @@
 package com.poly.greeen.Entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import groovyjarjarantlr4.v4.runtime.misc.NotNull;
 import jakarta.persistence.*;
-import lombok.Data;
+import lombok.*;
 
 import java.math.BigDecimal;
 
-@Data
+@Getter
+@Setter
+@AllArgsConstructor
+@NoArgsConstructor
 @Entity
 @Table(name = "order_detail")
 public class OrderDetail {
@@ -16,12 +20,14 @@ public class OrderDetail {
     @Column(name = "order_detail_id")
     private Integer orderDetailId;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @JsonIgnore
+    @ManyToOne
     @JoinColumn(name = "orderID", nullable = false)
     private Order order;
 
-    @Column(name = "productID", nullable = false)
-    private String productID;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "productID", nullable = false)
+    private Product product;
 
     @NotNull
     @Column(name = "quantity", nullable = false)

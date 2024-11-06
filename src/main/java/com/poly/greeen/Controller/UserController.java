@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.sql.Timestamp;
 import java.time.Instant;
+import java.util.List;
 
 @Slf4j
 @RequiredArgsConstructor
@@ -27,7 +28,6 @@ public class UserController {
     private final UsersRepository userRepository;
     private final SystemStorage systemStorage;
     private final EmailService emailService;
-    private final ServerUriProvider serverUriProvider;
     private final PasswordEncoder passwordEncoder;
 
     @GetMapping("/get-current-user")
@@ -134,5 +134,59 @@ public class UserController {
             log.error("Lỗi: ", e);
             return ResponseEntity.badRequest().body("Lỗi: " + e);
         }
+    }
+
+    @PostMapping("/manager")
+    public ResponseEntity<Users> createUser(@RequestBody Users user) {
+        log.info("REST request to create user: {}", user);
+        user.setUserID(userRepository.getNextUserId());
+        user.setPassword(passwordEncoder.encode(user.getPassword()));
+        Users savedUser = userRepository.save(user);
+        System.out.println(savedUser);
+        return ResponseEntity.ok(savedUser);
+    }
+
+    // Get all users
+    @GetMapping
+    public ResponseEntity<List<Users>> getAllUsers() {
+        log.info("REST request to get all users");
+        List<Users> users = userRepository.findAll();
+        return ResponseEntity.ok(users);
+    }
+
+    // Get a user by ID
+    @GetMapping("/{id}")
+    public ResponseEntity<Users> getUserById(@PathVariable Integer id) {
+        log.info("REST request to get user by ID: {}", id);
+        Users user = userRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("User not found"));
+        return ResponseEntity.ok(user);
+    }
+
+    // Update a user
+    @PutMapping("/manager/{id}")
+    public ResponseEntity<Users> updateUser(@PathVariable Integer id, @RequestBody Users userDetails) {
+        log.info("REST request to update user: {}", userDetails);
+        Users user = userRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("User not found"));
+
+        user.setUsername(userDetails.getUsername());
+        user.setEmail(userDetails.getEmail());
+        user.setPhone(userDetails.getPhone());
+        user.setAddress(userDetails.getAddress());
+        user.setCity(userDetails.getCity());
+        user.setRole(userDetails.getRole());
+        // Update other fields as necessary
+
+        Users updatedUser = userRepository.save(user);
+        return ResponseEntity.ok(updatedUser);
+    }
+
+    // Delete a user
+    @DeleteMapping("/manager/{id}")
+    public ResponseEntity<Void> deleteUser(@PathVariable Integer id) {
+        log.info("REST request to delete user by ID: {}", id);
+        userRepository.deleteById(id);
+        return ResponseEntity.noContent().build();
     }
 }

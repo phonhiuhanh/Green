@@ -1,107 +1,68 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" >
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
 
 <head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="description" content="">
-    <meta name="author" content="">
-    <title>Admin Green</title>
+    <title>Quản lý Đơn hàng</title>
     <th:block th:insert="~{/admin/common/head :: head}"></th:block>
-
 </head>
 
 <body>
 
-<div id="wrapper" >
+<div id="wrapper">
     <nav th:replace="~{admin/commonFragment :: navbar}"></nav>
-    <!-- Left navbar-header -->
-    <div class="navbar-default sidebar" role="navigation">
-        <div class="sidebar-nav navbar-collapse slimscrollsidebar">
-            <ul class="nav" id="side-menu">
-                <li style="padding: 10px 0 0;">
-                    <a th:href="@{/Admin/trangchu}" class="waves-effect"><i class="fa fa-user fa-fw"
-                                                                            aria-hidden="true"></i><span class="hide-menu">Trang Chủ</span></a>
-                </li>
-                <li >
-                    <a th:href="@{/sanpham/products}" class="waves-effect"><i class="fa fa-user fa-fw"
-                                                                           aria-hidden="true"></i><span class="hide-menu">Sản Phẩm</span></a>
-                </li>
-                <li>
-                    <a th:href="@{/customer/list}" class="waves-effect"><i class="fa fa-user fa-fw"
-                                                                           aria-hidden="true"></i><span class="hide-menu">Khách Hành</span></a>
-                </li>
-                <li>
-                    <a th:href="@{/user/list}" class="waves-effect"><i class="fa fa-modx fa-fw"
-                                                                          aria-hidden="true"></i><span class="hide-menu">Chức Vụ</span></a>
-                </li>
-                <li>
-                    <a th:href="@{/order/list}" class="waves-effect"><i class="fa fa-table fa-fw"
-                                                                           aria-hidden="true"></i><span class="hide-menu">Đơn Hàng</span></a>
-                </li>
-                <li>
-                    <a th:href="@{/attendance/list}" class="waves-effect"><i class="fa fa-table fa-fw"
-                                                                            aria-hidden="true"></i><span class="hide-menu">Chấm Luong</span></a>
-                </li>
-                <li>
-                    <a th:href="@{/import/list}" class="waves-effect"><i class="fa fa-table fa-fw"
-                                                                         aria-hidden="true"></i><span class="hide-menu">Nhập hàng</span></a>
-                </li>
-            </ul>
-        </div>
-    </div>
-<div id="page-wrapper" layout:fragment="admin" >
-    <div class="container-fluid">
-        <div class="row bg-title">
-            <div class="col-lg-3 col-md-4 col-sm-4 col-xs-12">
-                <h4 class="page-title">Chức vụ</h4>
+    <div th:replace="~{admin/commonFragment :: sidebar}"></div>
+    <div id="page-wrapper" layout:fragment="admin">
+        <div class="container-fluid">
+            <div class="row bg-title">
+                <div class="col-lg-3 col-md-4 col-sm-4 col-xs-12">
+                    <h4 class="page-title">Đơn hàng</h4>
+                </div>
             </div>
-        </div>
-        <!-- /.row -->
-        <!-- .row -->
-        <div class="row">
-            <div class="col-sm-12">
-                <div class="white-box">
-                    <div class="table-responsive">
-                        <table class="table">
-                            <thead>
-                            <tr>
-                                <th>ID Chi Tiết Đơn Hàng</th>
-                                <th>ID Đơn Hàng</th>
-                                <th>ID Sản Phẩm</th>
-                                <th>Số Lượng</th>
-                                <th>Giá</th>
-                                <th>Hành Động</th>
-                            </tr>
-                            </thead>
-                            <tbody>
-                            <tr th:each="orderDetail : ${orderDetails}">
-                                <td th:text="${orderDetail.orderDetailID}"></td>
-                                <td th:text="${orderDetail.orderID}"></td>
-                                <td th:text="${orderDetail.productID}"></td>
-                                <td th:text="${orderDetail.quantity}"></td>
-                                <td th:text="${orderDetail.price}"></td>
-                                <td>
-                                    <a href="#" class="btn btn-sm btn-primary">Sửa</a>
-                                    <form th:action="@{/order/delete}" method="post" style="display:inline;">
-                                        <input type="hidden" name="orderDetailID" th:value="${orderDetail.orderDetailID}" />
-                                        <button type="submit" class="btn btn-sm btn-danger">Xóa</button>
-                                    </form>
-                                </td>
-                            </tr>
-                            </tbody>
-                        </table>
+            <!-- /.row -->
+            <!-- .row -->
+            <div class="row">
+                <div class="col-sm-12">
+                    <div class="white-box">
+                        <div class="table-responsive">
+                            <table class="table">
+                                <thead>
+                                <tr>
+                                    <th>ID Chi Tiết Đơn Hàng</th>
+                                    <th>ID Đơn Hàng</th>
+                                    <th>ID Sản Phẩm</th>
+                                    <th>Số Lượng</th>
+                                    <th>Giá</th>
+                                    <th>Hành Động</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <tr th:each="orderDetail : ${orderDetails}">
+                                    <td th:text="${orderDetail.orderDetailID}"></td>
+                                    <td th:text="${orderDetail.orderID}"></td>
+                                    <td th:text="${orderDetail.productID}"></td>
+                                    <td th:text="${orderDetail.quantity}"></td>
+                                    <td th:text="${orderDetail.price}"></td>
+                                    <td>
+                                        <a href="#" class="btn btn-sm btn-primary">Sửa</a>
+                                        <form th:action="@{/order/delete}" method="post" style="display:inline;">
+                                            <input type="hidden" name="orderDetailID"
+                                                   th:value="${orderDetail.orderDetailID}"/>
+                                            <button type="submit" class="btn btn-sm btn-danger">Xóa</button>
+                                        </form>
+                                    </td>
+                                </tr>
+                                </tbody>
+                            </table>
+                        </div>
                     </div>
                 </div>
             </div>
+            <!-- /.row -->
         </div>
-        <!-- /.row -->
+        <!-- /.container-fluid -->
+        <footer class="footer text-center"> Green</footer>
     </div>
-    <!-- /.container-fluid -->
-    <footer class="footer text-center"> Green </footer>
-</div>
-<!-- /#page-wrapper -->
+    <!-- /#page-wrapper -->
 </body>
 
 </html>

@@ -30,6 +30,7 @@ public class AdminController {
     public String ManageRolePage() {
         return "admin/chucvu";
     }
+
     @RequestMapping("/donhang")
     public String Managedonhang() {
         return "admin/order";

@@ -1,14 +1,17 @@
 package com.poly.greeen.Entity;
 
 import jakarta.persistence.*;
-import lombok.Data;
+import lombok.*;
 
 import java.math.BigDecimal;
 import java.util.Date;
 import java.util.List;
 
 @Entity
-@Data
+@Getter
+@Setter
+@AllArgsConstructor
+@NoArgsConstructor
 @Table(name = "Orders") // Thay đổi tên bảng về 'Order' nếu bạn đã định nghĩa nó như vậy trong SQL
 public class Order {
     @Id

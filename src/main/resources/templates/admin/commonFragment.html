@@ -35,8 +35,12 @@
                         <b class="hidden-xs username">Cybersoft</b>
                     </div>
                     <ul class="dropdown-menu">
-                        <li class="dropdown-li" data-bs-toggle="modal" data-bs-target="#profileModal">Thông tin cá nhân</li>
-                        <li class="dropdown-li" data-bs-toggle="modal" data-bs-target="#changePasswordModal">Đổi mật khẩu</li>
+                        <li class="dropdown-li" data-bs-toggle="modal" data-bs-target="#profileModal">Thông tin cá
+                            nhân
+                        </li>
+                        <li class="dropdown-li" data-bs-toggle="modal" data-bs-target="#changePasswordModal">Đổi mật
+                            khẩu
+                        </li>
                         <li class="divider"></li>
                         <li class="dropdown-li" onclick="logout()">Đăng xuất</li>
                     </ul>
@@ -85,7 +89,8 @@
     </div>
 </div>
 
-<div th:fragment="addProductModal" aria-labelledby="myModalLabel" class="modal" id="modalAddProduct" role="dialog" tabindex="-1">
+<div th:fragment="addProductModal" aria-labelledby="myModalLabel" class="modal" id="modalAddProduct" role="dialog"
+     tabindex="-1">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
@@ -170,7 +175,8 @@
     </div>
 </div>
 
-<div th:fragment="updateProductModal" aria-labelledby="labelModalUpdate" class="modal" id="modalUpdateProduct" role="dialog" tabindex="-1">
+<div th:fragment="updateProductModal" aria-labelledby="labelModalUpdate" class="modal" id="modalUpdateProduct"
+     role="dialog" tabindex="-1">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
@@ -254,6 +260,146 @@
                         </div>
                     </form>
                 </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div class="modal" id="updateUserModal" tabindex="-1" role="dialog" aria-labelledby="updateUserModalLabel">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                        aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="updateUserModalLabel">Cập Nhật Người Dùng</h4>
+            </div>
+            <div class="modal-body">
+                <div class="white-box">
+                    <form class="form-horizontal form-material" id="updateUserForm">
+                        <input type="hidden" id="updateUserID" name="userID"/>
+                        <div class="form-group">
+                            <label class="col-md-12">Tên người dùng</label>
+                            <div class="col-md-12">
+                                <input id="updateUsername" name="username" type="text"
+                                       placeholder="Tên người dùng" class="form-control form-control-line"
+                                       required/>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-md-12">Email</label>
+                            <div class="col-md-12">
+                                <input id="updateEmail" name="email" type="email" placeholder="Email"
+                                       class="form-control form-control-line" required/>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-md-12">Số điện thoại</label>
+                            <div class="col-md-12">
+                                <input id="updatePhone" name="phone" type="text" placeholder="Số điện thoại"
+                                       class="form-control form-control-line" required/>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-md-12">Địa chỉ</label>
+                            <div class="col-md-12">
+                                <input id="updateAddress" name="address" type="text" placeholder="Địa chỉ"
+                                       class="form-control form-control-line" required/>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-md-12">Thành phố</label>
+                            <div class="col-md-12">
+                                <input id="updateCity" name="city" type="text" placeholder="Thành phố"
+                                       class="form-control form-control-line" required/>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-md-12">Vai trò</label>
+                            <div class="col-md-12">
+                                <select id="updateRoleSelect" name="role" class="form-control form-control-line"
+                                        required>
+                                    <!-- Options will be populated by jQuery -->
+                                </select>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button id="btnUpdateUser" type="submit" class="btn btn-success">Cập Nhật Người Dùng</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal" id="addUserModal" tabindex="-1" role="dialog" aria-labelledby="addUserModalLabel">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                        aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="addUserModalLabel">Thêm Người Dùng</h4>
+            </div>
+            <div class="modal-body">
+                <div class="white-box">
+                    <form class="form-horizontal form-material" id="addUserForm">
+                        <div class="form-group">
+                            <label class="col-md-12">Tên người dùng</label>
+                            <div class="col-md-12">
+                                <input id="username" name="username" type="text" placeholder="Tên người dùng"
+                                       class="form-control form-control-line" required/>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-md-12">Mật khẩu</label>
+                            <div class="col-md-12">
+                                <input id="password" name="password" type="password" placeholder="Mật khẩu"
+                                       class="form-control form-control-line" required/>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-md-12">Email</label>
+                            <div class="col-md-12">
+                                <input id="email" name="email" type="email" placeholder="Email"
+                                       class="form-control form-control-line" required/>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-md-12">Số điện thoại</label>
+                            <div class="col-md-12">
+                                <input id="phone" name="phone" type="text" placeholder="Số điện thoại"
+                                       class="form-control form-control-line" required/>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-md-12">Địa chỉ</label>
+                            <div class="col-md-12">
+                                <input id="address" name="address" type="text" placeholder="Địa chỉ"
+                                       class="form-control form-control-line" required/>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-md-12">Thành phố</label>
+                            <div class="col-md-12">
+                                <input id="city" name="city" type="text" placeholder="Thành phố"
+                                       class="form-control form-control-line" required/>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-md-12">Vai trò</label>
+                            <div class="col-md-12">
+                                <select id="roleSelect" name="role" class="form-control form-control-line"
+                                        required>
+                                    <!-- Options will be populated by jQuery -->
+                                </select>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button id="btnAddUser" type="submit" class="btn btn-success">Thêm Người Dùng</button>
             </div>
         </div>
     </div>

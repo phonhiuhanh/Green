@@ -23,7 +23,7 @@ public class Users {
         model.addAttribute("users", userList);
         return "admin/chucvu"; // Tên view mà bạn muốn trả về
     }
-    @PostMapping("/delete")
+    @PostMapping("/manager/delete")
     public String deleteUser(@RequestParam Integer userID) {
         usersRepository.deleteById(userID);
         return "redirect:/chucvu"; // Chuyển hướng về danh sách người dùng
