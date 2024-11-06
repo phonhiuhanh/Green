@@ -174,7 +174,7 @@ const createOrder = async (cartItems) => {
     const order = {
         totalAmount: total,
         orderDetails: cartItems.map(item => ({
-            productID: item.productID,
+            product: {productID: item.productID},
             quantity: item.quantity,
             price: item.price
         }))
