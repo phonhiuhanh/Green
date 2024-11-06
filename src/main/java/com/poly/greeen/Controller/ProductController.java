@@ -1,16 +1,26 @@
 package com.poly.greeen.Controller;
 
+import com.poly.greeen.Data.ProductRequestDTO;
 import com.poly.greeen.Entity.Product;
+import com.poly.greeen.Entity.ProductImage;
+import com.poly.greeen.Repository.ProductImageRepository;
 import com.poly.greeen.Repository.ProductRepository;
 import com.poly.greeen.Utils.SystemStorage;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
-import java.util.List;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Slf4j
@@ -20,13 +30,14 @@ import java.util.stream.Collectors;
 public class ProductController {
     private final ProductRepository productRepository;
     private final SystemStorage systemStorage;
+    private final ProductImageRepository productImageRepository;
 
     @GetMapping("/top10-by-giamgia")
     public ResponseEntity<?> getTop10ProductsByGiamgia(@RequestParam(value = "page", required = false, defaultValue = "0") int page,
                                                        @RequestParam(value = "size", required = false, defaultValue = "10") int size) {
         try {
             log.info("REST request to get top 10 products by giamgia");
-            Pageable topTen = PageRequest.of(0, 10);
+            Pageable topTen = PageRequest.of(page, size);
             var top10Products = productRepository.findTop10ByOrderByGiamgiaDesc(topTen);
             return ResponseEntity.ok(top10Products);
         } catch (Exception e) {
@@ -41,9 +52,22 @@ public class ProductController {
                                                   @RequestParam(value = "size", required = false, defaultValue = "10") int size) {
         try {
             log.info("REST request to get top 10 products by categoryID");
-            Pageable topTen = PageRequest.of(0, 10);
+            Pageable topTen = PageRequest.of(page, size);
             var top10Products = productRepository.findTop10ByCategoryID(categoryID, topTen);
             return ResponseEntity.ok(top10Products);
+        } catch (Exception e) {
+            log.error("Error: ", e);
+            return ResponseEntity.badRequest().body("Error: " + e);
+        }
+    }
+
+    @GetMapping
+    public ResponseEntity<?> getAllProducts() {
+        try {
+            log.info("REST request to get all products");
+            initializeAllProducts();
+            var products = (List<Product>) systemStorage.get("all-products");
+            return ResponseEntity.ok(products);
         } catch (Exception e) {
             log.error("Error: ", e);
             return ResponseEntity.badRequest().body("Error: " + e);
@@ -54,21 +78,118 @@ public class ProductController {
     public ResponseEntity<?> getProductById(@PathVariable("id") Integer id) {
         try {
             log.info("REST request to get product by id");
-            var product = productRepository.findById(id);
-            return ResponseEntity.ok(product);
+            Optional<Product> product = productRepository.findById(id);
+            return product.map(ResponseEntity::ok)
+                    .orElseGet(() -> ResponseEntity.notFound().build());
         } catch (Exception e) {
             log.error("Error: ", e);
             return ResponseEntity.badRequest().body("Error: " + e);
         }
     }
 
-    // Phương thức để kiểm tra và cập nhật SystemStore map
-    public void initializeAllProducts() {
-        // Kiểm tra nếu SystemStore không có mục với khóa "all-products"
+    @PostMapping(consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+    public ResponseEntity<?> createProduct(
+            @RequestPart("product") ProductRequestDTO productRequestDTO,
+            @RequestPart("mainImage") MultipartFile mainImage,
+            @RequestPart("additionalImages") MultipartFile[] additionalImages) {
+        try {
+            log.info("REST request to create product");
+            var product = productRequestDTO.toProduct();
+            product.setProductID(productRepository.getNextProductId());
+            Product savedProduct = productRepository.save(product);
+            List<ProductImage> productImages = handleImageUploaded(mainImage, additionalImages, savedProduct);
+            productImageRepository.saveAll(productImages);
+
+            product.setImages(productImages);
+            updateAllProductsCache();
+            return ResponseEntity.ok(savedProduct);
+        } catch (Exception e) {
+            log.error("Error: ", e);
+            return ResponseEntity.badRequest().body("Error: " + e);
+        }
+    }
+
+    private List<ProductImage> handleImageUploaded(MultipartFile mainImage, MultipartFile[] additionalImages, Product savedProduct) throws IOException {
+        List<ProductImage> productImages = new ArrayList<>();
+        int nextProductImageId = productImageRepository.getNextProductImageId();
+
+        // Save main image
+        if (!mainImage.isEmpty()) {
+            String mainImageURL = saveImage(mainImage);
+            ProductImage mainProductImage = new ProductImage();
+            mainProductImage.setId(nextProductImageId++);
+            mainProductImage.setImageURL(mainImageURL);
+            mainProductImage.setIsMain(true);
+            mainProductImage.setProduct(savedProduct);
+            productImages.add(mainProductImage);
+        }
+
+        // Save additional images
+        for (MultipartFile additionalImage : additionalImages) {
+            if (!additionalImage.isEmpty()) {
+                String additionalImageURL = saveImage(additionalImage);
+                ProductImage additionalProductImage = new ProductImage();
+                additionalProductImage.setId(nextProductImageId++);
+                additionalProductImage.setImageURL(additionalImageURL);
+                additionalProductImage.setIsMain(false);
+                additionalProductImage.setProduct(savedProduct);
+                productImages.add(additionalProductImage);
+            }
+        }
+
+        return productImages;
+    }
+
+    @Value("${upload.path}")
+    private String uploadPath;
+
+    private String saveImage(MultipartFile image) throws IOException {
+        String filename = UUID.randomUUID() + "_" + image.getOriginalFilename();
+        Path path = Paths.get(uploadPath, filename);
+        Files.createDirectories(path.getParent());
+        Files.write(path, image.getBytes());
+        return "/uploads/" + filename;
+    }
+
+    @PutMapping(consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+    public ResponseEntity<?> updateProduct(
+            @RequestPart("product") ProductRequestDTO productRequestDTO,
+            @RequestPart("mainImage") MultipartFile mainImage,
+            @RequestPart("additionalImages") MultipartFile[] additionalImages) {
+        try {
+            log.info("REST request to update product");
+            var product = productRequestDTO.toProduct();
+            List<ProductImage> productImages = handleImageUploaded(mainImage, additionalImages, product);
+            product.setImages(productImages);
+            Product updatedProduct = productRepository.save(product);
+            updateAllProductsCache();
+            return ResponseEntity.ok(updatedProduct);
+        } catch (Exception e) {
+            log.error("Error: ", e);
+            return ResponseEntity.badRequest().body("Error: " + e);
+        }
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<?> deleteProduct(@PathVariable Integer id) {
+        try {
+            productRepository.deleteById(id);
+            updateAllProductsCache();
+            return ResponseEntity.ok().build();
+        } catch (Exception e) {
+            log.error("Error: ", e);
+            return ResponseEntity.badRequest().body("Error: " + e);
+        }
+    }
+
+    private void updateAllProductsCache() {
+        List<Product> allProducts = productRepository.findAll();
+        systemStorage.put("all-products", allProducts);
+    }
+
+    private void initializeAllProducts() {
         if (!systemStorage.containsKey("all-products")) {
-            // Tạo mục với khóa "all-products" và giá trị là danh sách tất cả sản phẩm từ cơ sở dữ liệu
-            List<Product> allProducts = productRepository.findAll();
-            systemStorage.put("all-products", allProducts);
+            updateAllProductsCache();
         }
     }
 
@@ -82,8 +203,6 @@ public class ProductController {
 
         // Lấy danh sách sản phẩm từ SystemStore
         List<Product> allProducts = (List<Product>) systemStorage.get("all-products");
-
-//        keyword = keyword != null ? keyword.trim().toLowerCase() : null;
 
         // Áp dụng bộ lọc dựa trên keyword và categoryID
         List<Product> filteredProducts = allProducts.stream()

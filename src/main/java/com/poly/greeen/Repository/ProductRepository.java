@@ -23,4 +23,8 @@ public interface ProductRepository extends JpaRepository<Product, Integer> {
     @Query("SELECT p FROM Product p WHERE p.category.categoryID = :categoryID")
     List<Product> findTop10ByCategoryID(@Param("categoryID") Integer categoryID, Pageable pageable);
 
+
+@Query("SELECT COALESCE(MAX(p.productID), 0) + 1 FROM Product p")
+int getNextProductId();
+
 }

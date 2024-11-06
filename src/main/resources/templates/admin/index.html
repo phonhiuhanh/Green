@@ -2,12 +2,6 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
 
 <head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="description" content="">
-    <meta name="author" content="">
-    <link rel="icon" href="/assets/img/leaf.png" type="image/x-icon">
     <title>Admin Green</title>
     <th:block th:insert="~{/admin/common/head :: head}"></th:block>
 </head>
@@ -16,47 +10,8 @@
 
 <div id="wrapper">
     <nav th:replace="~{admin/commonFragment :: navbar}"></nav>
-    <!-- Left navbar-header -->
-    <div class="navbar-default sidebar" role="navigation">
-        <div class="sidebar-nav navbar-collapse slimscrollsidebar">
-            <ul class="nav" id="side-menu">
-                <li style="padding: 10px 0 0;">
-                    <a th:href="@{/Admin/trangchu}" class="waves-effect"><i class="fa fa-user fa-fw"
-                                                                            aria-hidden="true"></i><span
-                            class="hide-menu">Trang Chủ</span></a>
-                </li>
-                <li>
-                    <a th:href="@{/sanpham/products}" class="waves-effect"><i class="fa fa-user fa-fw"
-                                                                              aria-hidden="true"></i><span
-                            class="hide-menu">Sản Phẩm</span></a>
-                </li>
-                <li>
-                    <a th:href="@{/customer/list}" class="waves-effect"><i class="fa fa-user fa-fw"
-                                                                           aria-hidden="true"></i><span
-                            class="hide-menu">Khách Hành</span></a>
-                </li>
-                <li>
-                    <a th:href="@{/user/list}" class="waves-effect"><i class="fa fa-modx fa-fw"
-                                                                       aria-hidden="true"></i><span class="hide-menu">Chức Vụ</span></a>
-                </li>
-                <li>
-                    <a th:href="@{/order/list}" class="waves-effect"><i class="fa fa-table fa-fw"
-                                                                        aria-hidden="true"></i><span class="hide-menu">Đơn Hàng</span></a>
-                </li>
-                <li>
-                    <a th:href="@{/attendance/list}" class="waves-effect"><i class="fa fa-table fa-fw"
-                                                                             aria-hidden="true"></i><span
-                            class="hide-menu">Chấm Luong</span></a>
-                </li>
-                <li>
-                    <a th:href="@{/import/list}" class="waves-effect"><i class="fa fa-table fa-fw"
-                                                                         aria-hidden="true"></i><span class="hide-menu">Nhập hàng</span></a>
-                </li>
-            </ul>
-        </div>
-    </div>
-    <!-- Left navbar-header end -->
-    <!-- Page Content -->
+    <div th:replace="~{admin/commonFragment :: sidebar}"></div>
+
     <div id="page-wrapper" layout:fragment="admin">
         <div class="container-fluid">
             <div class="row bg-title">

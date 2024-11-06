@@ -1,10 +1,14 @@
 package com.poly.greeen.Entity;
 import jakarta.persistence.*;
-import lombok.Data;
+import lombok.*;
+
 import java.util.List;
 
 @Entity
-@Data
+@Setter
+@Getter
+@NoArgsConstructor
+@AllArgsConstructor
 @Table(name = "Product")
 public class Product {
     @Id
@@ -14,6 +18,7 @@ public class Product {
     private Double price;
     private Integer giamgia;
     private Double giacu;
+    private Integer quantity;
 
     @OneToMany(mappedBy = "product", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private List<ProductImage> images;

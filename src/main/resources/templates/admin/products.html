@@ -14,47 +14,8 @@
 <body>
 <div id="wrapper">
     <nav th:replace="~{admin/commonFragment :: navbar}"></nav>
-    <!-- Left navbar-header -->
-    <div class="navbar-default sidebar" role="navigation">
-        <div class="sidebar-nav navbar-collapse slimscrollsidebar">
-            <ul class="nav" id="side-menu">
-                <li style="padding: 10px 0 0;">
-                    <a class="waves-effect" th:href="@{/Admin/trangchu}"><i aria-hidden="true"
-                                                                            class="fa fa-user fa-fw"></i><span
-                            class="hide-menu">Trang Chủ</span></a>
-                </li>
-                <li>
-                    <a class="waves-effect" th:href="@{/sanpham/products}"><i aria-hidden="true"
-                                                                              class="fa fa-user fa-fw"></i><span
-                            class="hide-menu">Sản Phẩm</span></a>
-                </li>
-                <li>
-                    <a th:href="@{/customer/list}" class="waves-effect"><i class="fa fa-user fa-fw"
-                                                                           aria-hidden="true"></i><span
-                            class="hide-menu">Khách Hành</span></a>
-                </li>
-                <li>
-                    <a class="waves-effect" th:href="@{/user/list}"><i aria-hidden="true"
-                                                                       class="fa fa-modx fa-fw"></i><span
-                            class="hide-menu">Chức Vụ</span></a>
-                </li>
-                <li>
-                    <a class="waves-effect" th:href="@{/order/list}"><i aria-hidden="true"
-                                                                        class="fa fa-table fa-fw"></i><span
-                            class="hide-menu">Đơn Hàng</span></a>
-                </li>
-                <li>
-                    <a class="waves-effect" th:href="@{/attendance/list}"><i aria-hidden="true"
-                                                                             class="fa fa-table fa-fw"></i><span
-                            class="hide-menu">Chấm Luong</span></a>
-                </li>
-                <li>
-                    <a th:href="@{/import/list}" class="waves-effect"><i class="fa fa-table fa-fw"
-                                                                         aria-hidden="true"></i><span class="hide-menu">Nhập hàng</span></a>
-                </li>
-            </ul>
-        </div>
-    </div>
+    <div th:replace="~{admin/commonFragment :: sidebar}"></div>
+
     <div id="page-wrapper" layout:fragment="admin">
         <div class="container-fluid">
             <div class="row bg-title">
@@ -62,13 +23,12 @@
                     <h4 class="page-title">Danh sách sản phẩm</h4>
                 </div>
                 <div class="col-lg-9 col-sm-8 col-md-8 col-xs-12 text-right">
-                    <button class="btn btn-sm btn-success" data-target="#btnChucVuModalThem" data-toggle="modal"
+                    <button class="btn btn-success" data-target="#modalAddProduct" data-toggle="modal"
                             type="button">Thêm mới
                     </button>
                 </div>
                 <!-- /.col-lg-12 -->
             </div>
-            <!-- /row -->
             <div class="row">
                 <div class="col-sm-12">
                     <div class="white-box">
@@ -76,153 +36,114 @@
                             <table class="table" id="sanpham">
                                 <thead>
                                 <tr>
-                                    <th>Id</th>
+                                    <th>ID</th>
                                     <th>Ảnh</th>
                                     <th>Tên sản phẩm</th>
-                                    <th>Giá</th>
-                                    <th>Phần trăm</th>
-                                    <th>Giá cũ</th>
-                                    <th>Action</th>
+                                    <th>Giá (₫)</th>
+                                    <th>Giảm (%)</th>
+                                    <th>Giá cũ (₫)</th>
+                                    <th></th>
                                 </tr>
                                 </thead>
-                                <tbody>
-                                <tr th:each="product : ${products}">
-                                    <td th:text="${product.productID}"></td>
-                                    <td>
-                                        <img alt="Hình ảnh" style="width: 100px; height: 100px"
-                                             th:src="${product.images[0].imageURL}">
-                                    </td>
-                                    <td th:text="${product.name}"></td>
-                                    <td th:text="${product.price}"></td>
-                                    <td th:text="${product.giamgia}"></td>
-                                    <td th:text="${product.giacu}"></td>
-                                    <td>
-                                        <a class="btn btn-sm btn-primary"
-                                           th:href="@{'/sanpham/edit/' + ${product.productID}}">Sửa</a>
-                                        <form method="post" style="display:inline;" th:action="@{/sanpham/delete}">
-                                            <input name="id" th:value="${product.productID}" type="hidden"/>
-                                            <!-- Đổi tên thành "id" -->
-                                            <button class="btn btn-sm btn-danger" type="submit">Xóa</button>
-                                        </form>
-                                    </td>
-                                </tr>
+                                <tbody id="productTableBody">
                                 </tbody>
                             </table>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Modal -->
-            <!-- Modal -->
-            <div aria-labelledby="myModalLabel" class="modal fade" id="btnChucVuModalThem" role="dialog" tabindex="-1">
-                <div class="modal-dialog" role="document">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <button aria-label="Close" class="close" data-dismiss="modal" type="button">
-                                <span aria-hidden="true">&times;</span>
-                            </button>
-                            <h4 class="modal-title" id="myModalLabel">Thêm Sản Phẩm Mới</h4>
-                        </div>
-                        <div class="modal-body">
-                            <div class="white-box">
-                                <form class="form-horizontal form-material" enctype="multipart/form-data" method="post"
-                                      th:action="@{/sanpham/create}">
-                                    <div class="form-group">
-                                        <label class="col-md-12">Mã sản phẩm</label>
-                                        <div class="col-md-12">
-                                            <input class="form-control form-control-line" name="productID"
-                                                   placeholder="Id sản phẩm"
-                                                   required type="text"/>
-                                        </div>
-                                    </div>
-                                    <div class="form-group">
-                                        <label class="col-md-12">ID ảnh</label> <!-- Thêm input cho ID ảnh -->
-                                        <div class="col-md-12">
-                                            <input class="form-control form-control-line" name="id"
-                                                   placeholder="ID cho ảnh"
-                                                   required type="text"/>
-                                        </div>
-                                    </div>
-                                    <div class="form-group">
-                                        <label class="col-md-12">Ảnh</label>
-                                        <div class="col-md-12">
-                                            <input class="form-control form-control-line" name="image" required
-                                                   type="file"/>
-                                        </div>
-                                    </div>
-                                    <div class="form-group">
-                                        <label class="col-md-12">Tên sản phẩm</label>
-                                        <div class="col-md-12">
-                                            <input class="form-control form-control-line" name="name"
-                                                   placeholder="Tên sản phẩm"
-                                                   required type="text"/>
-                                        </div>
-                                    </div>
-                                    <div class="form-group">
-                                        <label class="col-md-12">Giá</label>
-                                        <div class="col-md-12">
-                                            <input class="form-control form-control-line" name="price" placeholder="Giá"
-                                                   required type="text"/>
-                                        </div>
-                                    </div>
-                                    <div class="form-group">
-                                        <label class="col-md-12">Mô tả</label>
-                                        <div class="col-md-12">
-                                            <input class="form-control form-control-line" name="description"
-                                                   placeholder="Mô tả"
-                                                   type="text"/>
-                                        </div>
-                                    </div>
-                                    <div class="form-group">
-                                        <label class="col-md-12">Phần trăm</label>
-                                        <div class="col-md-12">
-                                            <input class="form-control form-control-line" name="giamgia"
-                                                   placeholder="Phần trăm"
-                                                   type="text"/>
-                                        </div>
-                                    </div>
-                                    <div class="form-group">
-                                        <label class="col-md-12">Giá cũ</label>
-                                        <div class="col-md-12">
-                                            <input class="form-control form-control-line" name="giacu"
-                                                   placeholder="Giá cũ"
-                                                   type="text"/>
-                                        </div>
-                                    </div>
-                                    <div>
-                                        <label>Hình ảnh chính:</label>
-                                        <div class="col-md-12">
-                                            <input class="form-control form-control-line" name="isMain"
-                                                   type="checkbox"/>
-                                        </div>
-                                    </div>
-                                    <div class="form-group">
-                                        <div class="col-md-12 text-right">
-                                            <button class="btn btn-success" type="submit">Thêm</button>
-                                            <button class="btn btn-default" data-dismiss="modal" type="button">Đóng
-                                            </button>
-                                        </div>
-                                    </div>
-                                </form>
+                            <div class="pagination-container" style="text-align: center;">
+                                <div class="pagination w-100 align-items-center" style="display: inline-block;">
+                                    <button id="firstPage"><<<</button>
+                                    <button id="prevPage"><-</button>
+                                    <span id="pageInfo"></span>
+                                    <button id="nextPage">-></button>
+                                    <button id="lastPage">>>></button>
+                                </div>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-        <!-- /.row -->
     </div>
-    <!-- /.container-fluid -->
+
+    <div th:replace="~{admin/commonFragment :: updateProductModal}"></div>
+    <div th:replace="~{admin/commonFragment :: addProductModal}"></div>
     <footer class="footer text-center">Green</footer>
 </div>
-<!-- Bootstrap CSS -->
-<link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css" rel="stylesheet">
 
-<!-- jQuery -->
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<!--<link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css" rel="stylesheet">-->
+<!--<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>-->
+<!--<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>-->
 
-<!-- Bootstrap JS -->
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+<th:block th:insert="~{/admin/common/importJS :: commonJS}"></th:block>
+<script src="/assets-admin/js/components/productManagement.js"></script>
+<script>
+    $(document).ready(function () {
+        $.ajax({
+            url: '/api/products',
+            method: 'GET',
+            dataType: 'json',
+            success: function (data) {
+                products = data;
+                displayPage(currentPage);
+            },
+            error: function (error) {
+                console.error('Error fetching products:', error);
+            }
+        });
+
+        $.ajax({
+            url: '/api/categories',
+            method: 'GET',
+            dataType: 'json',
+            success: function (data) {
+$('.categorySelect').each(function() {
+    var categorySelect = $(this);
+    data.forEach(function(category) {
+        categorySelect.append(new Option(category.name, category.categoryID));
+    });
+});
+            },
+            error: function (error) {
+                console.error('Error fetching categories:', error);
+            }
+        });
+
+        displayPage(currentPage);
+        $('#productForm').on('submit', function (e) {
+            e.preventDefault();
+
+            let formData = new FormData(this);
+
+            // Create a product object
+            const product = {
+                name: formData.get('name'),
+                giacu: formData.get('giacu'),
+                giamgia: formData.get('giamgia'),
+                description: formData.get('description'),
+                quantity: formData.get('quantity'),
+                categoryID: $('#categorySelect').val() ?? formData.get('category')
+            };
+
+            console.log('Product:', product);
+
+            // Append the product object as a JSON string
+            formData.append('product', new Blob([JSON.stringify(product)], {type: 'application/json'}));
+
+            $.ajax({
+                url: '/api/products',
+                method: 'POST',
+                processData: false,
+                contentType: false,
+                data: formData,
+                success: function (response) {
+                    alert('Product added successfully!');
+                    location.reload();
+                },
+                error: function (error) {
+                    console.error('Error adding product:', error);
+                }
+            });
+        });
+    });
+</script>
 </body>
 </html>
