@@ -1,11 +1,8 @@
 package com.poly.greeen.Controller;
 
-import com.poly.greeen.Repository.CategoryRepository;
-import com.poly.greeen.Repository.ProductRepository;
+import com.poly.greeen.Service.CategoryService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -14,30 +11,29 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/api/categories")
 @RestController
 public class CategoryController {
-    private final CategoryRepository categoryRepository;
+    private final CategoryService categoryService;
 
     @GetMapping
     public ResponseEntity<?> getAllCategories() {
         try {
-            log.info("REST request to get all categories");
-            var categories = categoryRepository.findAll();
+            log.info("Yêu cầu REST để lấy tất cả danh mục");
+            var categories = categoryService.getAllCategories();
             return ResponseEntity.ok(categories);
         } catch (Exception e) {
-            log.error("Error: ", e);
-            return ResponseEntity.badRequest().body("Error: " + e);
+            log.error("Lỗi: ", e);
+            return ResponseEntity.badRequest().body("Lỗi: " + e);
         }
     }
 
     @GetMapping("/{id}")
     public ResponseEntity<?> getCategoryById(@PathVariable(value = "id") Integer id) {
         try {
-            log.info("REST request to get category by id");
-            var category = categoryRepository.findById(id);
+            log.info("Yêu cầu REST để lấy danh mục theo ID");
+            var category = categoryService.getCategoryById(id);
             return ResponseEntity.ok(category);
         } catch (Exception e) {
-            log.error("Error: ", e);
-            return ResponseEntity.badRequest().body("Error: " + e);
+            log.error("Lỗi: ", e);
+            return ResponseEntity.badRequest().body("Lỗi: " + e);
         }
     }
-
 }
