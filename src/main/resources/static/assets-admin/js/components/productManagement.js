@@ -2,11 +2,6 @@ let products = [];
 const itemsPerPage = 10;
 let currentPage = 1;
 
-function formatCurrency(number) {
-    number = Math.round(number);
-    return number.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
-}
-
 function displayPage(page) {
     const start = (page - 1) * itemsPerPage;
     const end = start + itemsPerPage;
@@ -20,7 +15,7 @@ function displayPage(page) {
         const thumbnail = product.images?.find(image => image.isMain) || product?.images[0];
         row.innerHTML = `
                 <td>${product.productID}</td>
-                <td><img alt="Hình ảnh" style="width: 100px; height: 100px" src="${thumbnail?.imageURL}"></td>
+                <td><img alt="Hình ảnh" style="max-width: 8rem;max-height: 6rem;" src="${thumbnail?.imageURL}"></td>
                 <td>${product.name}</td>
                 <td>${formatCurrency(product.giacu * (1 - product.giamgia / 100))}</td>
                 <td>${product.giamgia}</td>

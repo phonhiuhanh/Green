@@ -17,7 +17,7 @@
     <link href="/assets-admin/css/style.css" rel="stylesheet">
     <!-- color CSS -->
     <link href="/assets-admin/css/colors/blue-dark.css" id="theme" rel="stylesheet">
-<!--    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>-->
+    <!--    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>-->
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
     <!--[if lt IE 9]>
@@ -31,8 +31,44 @@
             padding: 0.5rem 1rem;
             cursor: pointer;
         }
+
         .username {
             cursor: pointer;
         }
+
+        .modal-title {
+            font-size: 1.75rem !important;
+            font-weight: bold !important;
+        }
+
+        .modal-header {
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            justify-content: center;
+            gap: 2rem;
+        }
+
+        [disabled] {
+            cursor: not-allowed!important; /* Sets the cursor to show as "not allowed" for disabled elements */
+            opacity: 0.5!important;        /* Optional: makes the element look visually disabled */
+        }
+
+        td, th {
+            vertical-align: middle!important;
+        }
+
+        thead, th {
+            position: sticky;     /* Optional: keeps the header fixed */
+            top: 0;
+            background-color: #fff;
+            z-index: 1;
+        }
+
+        .table-responsive {
+            max-height: 70vh!important;
+            overflow-y: auto;
+        }
+
     </style>
 </head>

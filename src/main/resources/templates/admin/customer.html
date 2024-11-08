@@ -61,6 +61,12 @@
     <!-- /.container-fluid -->
     <footer class="footer text-center">Green</footer>
 </div>
+
+<section>
+    <div th:replace="~{admin/commonFragment :: #changePasswordModal}"></div>
+    <div th:replace="~{admin/commonFragment :: #profileModal}"></div>
+</section>
+
 <th:block th:insert="~{/admin/common/importJS :: commonJS}"></th:block>
 </body>
 
