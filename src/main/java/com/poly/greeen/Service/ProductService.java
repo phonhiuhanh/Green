@@ -141,7 +141,7 @@ public class ProductService {
         systemStorage.put("all-products", allProducts);
     }
 
-    private void initializeAllProducts() {
+    public void initializeAllProducts() {
         if (!systemStorage.containsKey("all-products")) {
             updateAllProductsCache();
         }

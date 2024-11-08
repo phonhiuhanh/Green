@@ -1,130 +1,93 @@
 package com.poly.greeen.Controller;
 
-import com.poly.greeen.Entity.Customer;
 import com.poly.greeen.Entity.Order;
-import com.poly.greeen.Repository.CustomerRepository;
-import com.poly.greeen.Repository.OrderDetailRepository;
-import com.poly.greeen.Repository.OrderRepository;
-import com.poly.greeen.Security.AuthController;
-import com.poly.greeen.Utils.EmailService;
-import com.poly.greeen.Utils.SystemStorage;
-import groovyjarjarantlr4.v4.runtime.misc.NotNull;
+import com.poly.greeen.Service.OrderService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.Date;
 import java.util.List;
-import java.util.Optional;
 
 @Slf4j
 @RequiredArgsConstructor
 @RequestMapping("/api/orders")
 @RestController
 public class OrderController {
-    private final OrderRepository orderRepository;
-    private final OrderDetailRepository orderDetailRepository;
-    private final CustomerRepository customerRepository;
-    private final EmailService emailService;
-    private final SystemStorage systemStorage;
+    private final OrderService orderService;
 
-    // Lấy danh sách tất cả các đơn hàng
     @GetMapping
     public ResponseEntity<List<Order>> getAllOrders() {
-        List<Order> orders = orderRepository.findAll();
-        return ResponseEntity.ok(orders);
+        try {
+            log.info("Yêu cầu REST để lấy tất cả đơn hàng");
+            List<Order> orders = orderService.getAllOrders();
+            return ResponseEntity.ok(orders);
+        } catch (Exception e) {
+            log.error("Lỗi: ", e);
+            return ResponseEntity.badRequest().body(null);
+        }
     }
 
-    // Lấy thông tin đơn hàng theo ID
     @GetMapping("/{id}")
     public ResponseEntity<Order> getOrderById(@PathVariable Integer id) {
-        Optional<Order> order = orderRepository.findById(id);
-        return order.map(ResponseEntity::ok)
-                .orElseGet(() -> ResponseEntity.notFound().build());
-    }
-
-    // Tạo mới đơn hàng
-    @PostMapping
-    @Transactional
-    public ResponseEntity<Order> createOrder(@RequestBody Order order) {
-        var orderDetails = order.getOrderDetails();
-        var buyerId = AuthController.getAuthUser().getUniqueId();
-        String orderStatus = "Đang chờ xử lý";
-        order.setOrderID(orderRepository.getNextOrderId());
-        order.setOrderDate(new Date());
-        order.setBuyerId(buyerId);
-        order.setOrderDetails(null);
-        order.setOrderStatus(orderStatus);
-        Order savedOrder = orderRepository.save(order);
-        for (var orderDetail : orderDetails) {
-            orderDetail.setOrder(savedOrder);
-            orderDetail.setProduct(systemStorage.findProductById(orderDetail.getProduct().getProductID()).orElseThrow());
-            orderDetailRepository.save(orderDetail);
+        try {
+            log.info("Yêu cầu REST để lấy đơn hàng theo ID");
+            return orderService.getOrderById(id)
+                    .map(ResponseEntity::ok)
+                    .orElseGet(() -> ResponseEntity.notFound().build());
+        } catch (Exception e) {
+            log.error("Lỗi: ", e);
+            return ResponseEntity.badRequest().body(null);
         }
-        savedOrder.setOrderDetails(orderDetails);
-
-        return getOrderResponseEntity(orderStatus, savedOrder);
     }
 
-    // Cập nhật thông tin đơn hàng
+    @PostMapping
+    public ResponseEntity<Order> createOrder(@RequestBody Order order) {
+        try {
+            log.info("Yêu cầu REST để tạo đơn hàng");
+            Order savedOrder = orderService.createOrder(order);
+            orderService.sendOrderStatusUpdateEmail(savedOrder, "Đang chờ xử lý");
+            return ResponseEntity.ok(savedOrder);
+        } catch (Exception e) {
+            log.error("Lỗi: ", e);
+            return ResponseEntity.badRequest().body(null);
+        }
+    }
+
     @PutMapping("/{id}")
     public ResponseEntity<Order> updateOrder(@PathVariable Integer id, @RequestBody Order orderDetails) {
-        Optional<Order> optionalOrder = orderRepository.findById(id);
-        if (optionalOrder.isPresent()) {
-            Order order = optionalOrder.get();
-            // Cập nhật thông tin đơn hàng
-            order.setBuyerId(orderDetails.getBuyerId());
-            order.setOrderDate(orderDetails.getOrderDate());
-            order.setTotalAmount(orderDetails.getTotalAmount());
-            // Lưu lại đơn hàng đã cập nhật
-            return getOrderResponseEntity(orderDetails.getOrderStatus(), order);
-        } else {
-            return ResponseEntity.notFound().build();
-        }
-    }
-
-    @NotNull
-    private ResponseEntity<Order> getOrderResponseEntity(String orderStatus, Order order) {
-        Optional<Customer> optionalCustomer = customerRepository.findByEmailOrPhone(order.getBuyerId(), order.getBuyerId());
-        if (optionalCustomer.isPresent()) {
-            Customer customer = optionalCustomer.get();
-            // Update order status
-            order.setOrderStatus(orderStatus);
-            Order updatedOrder = orderRepository.save(order);
-
-            // Send email notification
-            emailService.sendOrderStatusUpdateEmail(customer.getEmail(), order, orderStatus);
+        try {
+            log.info("Yêu cầu REST để c��p nhật đơn hàng");
+            Order updatedOrder = orderService.updateOrder(id, orderDetails);
             return ResponseEntity.ok(updatedOrder);
-        } else {
-            // Rollback order change
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
+        } catch (Exception e) {
+            log.error("Lỗi: ", e);
+            return ResponseEntity.badRequest().body(null);
         }
     }
 
     @PutMapping("/{orderId}/status")
-    @Transactional
     public ResponseEntity<Order> updateOrderStatus(@PathVariable Integer orderId, @RequestParam String orderStatus) {
-        Optional<Order> optionalOrder = orderRepository.findById(orderId);
-        if (optionalOrder.isPresent()) {
-            Order order = optionalOrder.get();
-            // Find customer by email or phone
-            return getOrderResponseEntity(orderStatus, order);
-        } else {
-            return ResponseEntity.notFound().build();
+        try {
+            log.info("Yêu cầu REST để cập nhật trạng thái đơn hàng");
+            Order updatedOrder = orderService.updateOrderStatus(orderId, orderStatus);
+            orderService.sendOrderStatusUpdateEmail(updatedOrder, orderStatus);
+            return ResponseEntity.ok(updatedOrder);
+        } catch (Exception e) {
+            log.error("Lỗi: ", e);
+            return ResponseEntity.badRequest().body(null);
         }
     }
 
-    // Xóa đơn hàng theo ID
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteOrder(@PathVariable Integer id) {
-        if (orderRepository.existsById(id)) {
-            orderRepository.deleteById(id);
+        try {
+            log.info("Yêu cầu REST để xóa đơn hàng");
+            orderService.deleteOrder(id);
             return ResponseEntity.noContent().build();
-        } else {
-            return ResponseEntity.notFound().build();
+        } catch (Exception e) {
+            log.error("Lỗi: ", e);
+            return ResponseEntity.badRequest().build();
         }
     }
 }
