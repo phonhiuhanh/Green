@@ -1,18 +1,16 @@
 package com.poly.greeen.Controller;
 
-import com.poly.greeen.Data.RegisterRequest;
 import com.poly.greeen.Entity.Users;
-import com.poly.greeen.Repository.UsersRepository;
-import com.poly.greeen.Security.CustomUserDetails;
-import com.poly.greeen.Security.ServerUriProvider;
-import com.poly.greeen.Utils.AuthorizationCodeGenerator;
+import com.poly.greeen.Service.UserService;
 import com.poly.greeen.Utils.EmailService;
 import com.poly.greeen.Utils.SystemStorage;
+import com.poly.greeen.Data.RegisterRequest;
+import com.poly.greeen.Security.CustomUserDetails;
+import com.poly.greeen.Utils.AuthorizationCodeGenerator;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
 import java.sql.Timestamp;
@@ -24,18 +22,17 @@ import java.util.List;
 @RequestMapping("/api/users")
 @RestController
 public class UserController {
-
-    private final UsersRepository userRepository;
+    private final UserService userService;
     private final SystemStorage systemStorage;
     private final EmailService emailService;
-    private final PasswordEncoder passwordEncoder;
 
+    // Lấy người dùng hiện tại
     @GetMapping("/get-current-user")
     public ResponseEntity<?> getCurrentUser() {
         try {
             log.info("Yêu cầu REST để lấy người dùng hiện tại");
             var userDetails = (CustomUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-            var user = userRepository.findByEmailOrPhone(userDetails.getUsername(), userDetails.getUsername())
+            var user = userService.getCurrentUser(userDetails.getUsername())
                     .orElseThrow(() -> new Exception("Không tìm thấy người dùng"));
             return ResponseEntity.ok(user);
         } catch (Exception e) {
@@ -44,11 +41,12 @@ public class UserController {
         }
     }
 
+    // Yêu cầu quên mật khẩu
     @PostMapping("/p/forgot-password/request")
     public ResponseEntity<?> requestForgotPassword(@RequestParam String email) {
         log.info("Yêu cầu REST để quên mật khẩu với email: {}", email);
         try {
-            var user = userRepository.findByEmailOrPhone(email, email)
+            var user = userService.findByEmailOrPhone(email)
                     .orElseThrow(() -> new Exception("Không tìm thấy người dùng"));
             String otp = AuthorizationCodeGenerator.generateRandomOTP();
             var registerRequest = RegisterRequest.builder()
@@ -57,12 +55,9 @@ public class UserController {
                     .createdAt(Timestamp.from(Instant.now()))
                     .build();
             systemStorage.put(email + "-forgot-password", registerRequest);
-            // Compose the email
             String subject = "Đặt lại mật khẩu";
             String message = "Mã OTP xác nhận đặt lại mật khẩu: " + otp + "<br>" +
                     "<span style=\"color: red;\">Mã OTP này chỉ có hiệu lực trong 5 phút.</span>";
-
-            // Send the email
             emailService.sendEmail(email, subject, message);
             return ResponseEntity.ok().body("Yêu cầu đặt lại mật khẩu đã được gửi đến email của bạn");
         } catch (Exception e) {
@@ -71,6 +66,7 @@ public class UserController {
         }
     }
 
+    // Xác minh quên mật khẩu
     @PostMapping("/p/forgot-password/verify")
     public ResponseEntity<?> verifyForgotPassword(@RequestParam String email, @RequestParam String otp, @RequestParam String newPassword) {
         log.info("Yêu cầu REST để xác minh quên mật khẩu với email: {} và mã OTP: {}", email, otp);
@@ -89,8 +85,7 @@ public class UserController {
                 return ResponseEntity.badRequest().body("Mã OTP đã hết hạn");
             }
             var user = registerRequest.getUser();
-            user.setPassword(passwordEncoder.encode(newPassword));
-            userRepository.save(user);
+            userService.updatePassword(user, newPassword);
             systemStorage.remove(email + "-forgot-password");
             return ResponseEntity.ok().body("Đặt lại mật khẩu thành công, bạn có thể đóng trang này và đăng nhập ngay bây giờ");
         } catch (Exception e) {
@@ -99,17 +94,18 @@ public class UserController {
         }
     }
 
+    // Cập nhật thông tin người dùng
     @PostMapping("/update-profile")
     public ResponseEntity<?> updateProfile(@RequestBody Users user) {
         log.info("Yêu cầu REST để cập nhật thông tin người dùng: {}", user);
         try {
             var userDetails = (CustomUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-            var currentUser = userRepository.findByEmailOrPhone(userDetails.getUsername(), userDetails.getUsername())
+            var currentUser = userService.getCurrentUser(userDetails.getUsername())
                     .orElseThrow(() -> new Exception("Không tìm thấy người dùng"));
             currentUser.setUsername(user.getUsername());
             currentUser.setAddress(user.getAddress());
             currentUser.setCity(user.getCity());
-            userRepository.save(currentUser);
+            userService.updateUser(currentUser.getUserID(), currentUser);
             return ResponseEntity.ok().body("Cập nhật thông tin thành công");
         } catch (Exception e) {
             log.error("Lỗi: ", e);
@@ -117,18 +113,18 @@ public class UserController {
         }
     }
 
+    // Cập nhật mật khẩu người dùng
     @PutMapping("/update-password")
     public ResponseEntity<?> updatePassword(@RequestParam String oldPassword, @RequestParam String newPassword) {
         log.info("Yêu cầu REST để cập nhật mật khẩu");
         try {
             var userDetails = (CustomUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-            var currentUser = userRepository.findByEmailOrPhone(userDetails.getUsername(), userDetails.getUsername())
+            var currentUser = userService.getCurrentUser(userDetails.getUsername())
                     .orElseThrow(() -> new Exception("Không tìm thấy người dùng"));
-            if (!passwordEncoder.matches(oldPassword, currentUser.getPassword())) {
+            if (!userService.passwordEncoder.matches(oldPassword, currentUser.getPassword())) {
                 return ResponseEntity.badRequest().body("Mật khẩu cũ không chính xác");
             }
-            currentUser.setPassword(passwordEncoder.encode(newPassword));
-            userRepository.save(currentUser);
+            userService.updatePassword(currentUser, newPassword);
             return ResponseEntity.ok().body("Cập nhật mật khẩu thành công");
         } catch (Exception e) {
             log.error("Lỗi: ", e);
@@ -136,57 +132,44 @@ public class UserController {
         }
     }
 
+    // Tạo mới người dùng
     @PostMapping("/manager")
     public ResponseEntity<Users> createUser(@RequestBody Users user) {
-        log.info("REST request to create user: {}", user);
-        user.setUserID(userRepository.getNextUserId());
-        user.setPassword(passwordEncoder.encode(user.getPassword()));
-        Users savedUser = userRepository.save(user);
-        System.out.println(savedUser);
+        log.info("Yêu cầu REST để tạo người dùng: {}", user);
+        Users savedUser = userService.createUser(user);
         return ResponseEntity.ok(savedUser);
     }
 
-    // Get all users
+    // Lấy tất cả người dùng
     @GetMapping
     public ResponseEntity<List<Users>> getAllUsers() {
-        log.info("REST request to get all users");
-        List<Users> users = userRepository.findAll();
+        log.info("Yêu cầu REST để lấy tất cả người dùng");
+        List<Users> users = userService.getAllUsers();
         return ResponseEntity.ok(users);
     }
 
-    // Get a user by ID
+    // Lấy người dùng theo ID
     @GetMapping("/{id}")
     public ResponseEntity<Users> getUserById(@PathVariable Integer id) {
-        log.info("REST request to get user by ID: {}", id);
-        Users user = userRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("User not found"));
+        log.info("Yêu cầu REST để lấy người dùng theo ID: {}", id);
+        Users user = userService.getUserById(id)
+                .orElseThrow(() -> new RuntimeException("Không tìm thấy người dùng"));
         return ResponseEntity.ok(user);
     }
 
-    // Update a user
+    // Cập nhật người dùng
     @PutMapping("/manager/{id}")
     public ResponseEntity<Users> updateUser(@PathVariable Integer id, @RequestBody Users userDetails) {
-        log.info("REST request to update user: {}", userDetails);
-        Users user = userRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("User not found"));
-
-        user.setUsername(userDetails.getUsername());
-        user.setEmail(userDetails.getEmail());
-        user.setPhone(userDetails.getPhone());
-        user.setAddress(userDetails.getAddress());
-        user.setCity(userDetails.getCity());
-        user.setRole(userDetails.getRole());
-        // Update other fields as necessary
-
-        Users updatedUser = userRepository.save(user);
+        log.info("Yêu cầu REST để cập nhật người dùng: {}", userDetails);
+        Users updatedUser = userService.updateUser(id, userDetails);
         return ResponseEntity.ok(updatedUser);
     }
 
-    // Delete a user
+    // Xóa người dùng theo ID
     @DeleteMapping("/manager/{id}")
     public ResponseEntity<Void> deleteUser(@PathVariable Integer id) {
-        log.info("REST request to delete user by ID: {}", id);
-        userRepository.deleteById(id);
+        log.info("Yêu cầu REST để xóa người dùng theo ID: {}", id);
+        userService.deleteUser(id);
         return ResponseEntity.noContent().build();
     }
 }
