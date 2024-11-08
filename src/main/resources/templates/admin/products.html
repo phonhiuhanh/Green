@@ -88,7 +88,7 @@
                 displayPage(currentPage);
             },
             error: function (error) {
-                console.error('Error fetching products:', error);
+                console.error('Lỗi khi lấy sản phẩm:', error);
             }
         });
 
@@ -97,15 +97,15 @@
             method: 'GET',
             dataType: 'json',
             success: function (data) {
-$('.categorySelect').each(function() {
-    var categorySelect = $(this);
-    data.forEach(function(category) {
-        categorySelect.append(new Option(category.name, category.categoryID));
-    });
-});
+                $('.categorySelect').each(function() {
+                    var categorySelect = $(this);
+                    data.forEach(function(category) {
+                        categorySelect.append(new Option(category.name, category.categoryID));
+                    });
+                });
             },
             error: function (error) {
-                console.error('Error fetching categories:', error);
+                console.error('Lỗi khi lấy danh mục:', error);
             }
         });
 
@@ -115,7 +115,7 @@ $('.categorySelect').each(function() {
 
             let formData = new FormData(this);
 
-            // Create a product object
+            // Tạo đối tượng sản phẩm
             const product = {
                 name: formData.get('name'),
                 giacu: formData.get('giacu'),
@@ -125,7 +125,7 @@ $('.categorySelect').each(function() {
                 categoryID: $('#categorySelect').val() ?? formData.get('category')
             };
 
-            // Append the product object as a JSON string
+            // Thêm đối tượng sản phẩm dưới dạng chuỗi JSON
             formData.append('product', new Blob([JSON.stringify(product)], {type: 'application/json'}));
 
             $.ajax({
@@ -135,11 +135,17 @@ $('.categorySelect').each(function() {
                 contentType: false,
                 data: formData,
                 success: function (response) {
-                    alert('Product added successfully!');
-                    location.reload();
+                    Swal.fire({
+                        title: 'Thành công',
+                        text: 'Sản phẩm đã được thêm thành công!',
+                        icon: 'success',
+                        confirmButtonText: 'OK'
+                    }).then(() => {
+                        location.reload();
+                    });
                 },
                 error: function (error) {
-                    console.error('Error adding product:', error);
+                    console.error('Lỗi khi thêm sản phẩm:', error);
                 }
             });
         });

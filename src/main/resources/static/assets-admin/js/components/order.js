@@ -30,11 +30,22 @@ $(document).ready(function () {
                 method: 'PUT',
                 data: { orderStatus: 'Đang giao' },
                 success: function () {
-                    alert('Đơn hàng đã được duyệt!');
-                    location.reload();
+                    Swal.fire({
+                        title: 'Thành công',
+                        text: 'Đơn hàng đã được duyệt!',
+                        icon: 'success',
+                        confirmButtonText: 'OK'
+                    }).then(() => {
+                        location.reload();
+                    });
                 },
                 error: function (error) {
-                    console.error('Error approving order:', error);
+                    Swal.fire({
+                        title: 'Lỗi',
+                        text: 'Không thể duyệt đơn hàng',
+                        icon: 'error',
+                        confirmButtonText: 'OK'
+                    });
                 }
             });
         });
@@ -47,11 +58,22 @@ $(document).ready(function () {
                 method: 'PUT',
                 data: { orderStatus: 'Bị hủy' },
                 success: function () {
-                    alert('Đơn hàng đã bị hủy!');
-                    location.reload();
+                    Swal.fire({
+                        title: 'Thành công',
+                        text: 'Đơn hàng đã bị hủy!',
+                        icon: 'success',
+                        confirmButtonText: 'OK'
+                    }).then(() => {
+                        location.reload();
+                    });
                 },
                 error: function (error) {
-                    console.error('Error rejecting order:', error);
+                    Swal.fire({
+                        title: 'Lỗi',
+                        text: 'Không thể hủy đơn hàng',
+                        icon: 'error',
+                        confirmButtonText: 'OK'
+                    });
                 }
             });
         });

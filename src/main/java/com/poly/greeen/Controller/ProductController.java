@@ -2,47 +2,34 @@ package com.poly.greeen.Controller;
 
 import com.poly.greeen.Data.ProductRequestDTO;
 import com.poly.greeen.Entity.Product;
-import com.poly.greeen.Entity.ProductImage;
-import com.poly.greeen.Repository.ProductImageRepository;
-import com.poly.greeen.Repository.ProductRepository;
-import com.poly.greeen.Utils.SystemStorage;
+import com.poly.greeen.Service.ProductService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
-import java.util.*;
-import java.util.stream.Collectors;
+import java.util.List;
+import java.util.Optional;
 
 @Slf4j
 @RequiredArgsConstructor
 @RequestMapping("/api/products")
 @RestController
 public class ProductController {
-    private final ProductRepository productRepository;
-    private final SystemStorage systemStorage;
-    private final ProductImageRepository productImageRepository;
+    private final ProductService productService;
 
     @GetMapping("/top10-by-giamgia")
     public ResponseEntity<?> getTop10ProductsByGiamgia(@RequestParam(value = "page", required = false, defaultValue = "0") int page,
                                                        @RequestParam(value = "size", required = false, defaultValue = "10") int size) {
         try {
-            log.info("REST request to get top 10 products by giamgia");
-            Pageable topTen = PageRequest.of(page, size);
-            var top10Products = productRepository.findTop10ByOrderByGiamgiaDesc(topTen);
+            log.info("Yêu cầu REST để lấy 10 sản phẩm giảm giá hàng đầu");
+            var top10Products = productService.getTop10ProductsByGiamgia(page, size);
             return ResponseEntity.ok(top10Products);
         } catch (Exception e) {
-            log.error("Error: ", e);
-            return ResponseEntity.badRequest().body("Error: " + e);
+            log.error("Lỗi: ", e);
+            return ResponseEntity.badRequest().body("Lỗi: " + e);
         }
     }
 
@@ -51,39 +38,37 @@ public class ProductController {
                                                   @RequestParam(value = "page", required = false, defaultValue = "0") int page,
                                                   @RequestParam(value = "size", required = false, defaultValue = "10") int size) {
         try {
-            log.info("REST request to get top 10 products by categoryID");
-            Pageable topTen = PageRequest.of(page, size);
-            var top10Products = productRepository.findTop10ByCategoryID(categoryID, topTen);
+            log.info("Yêu cầu REST để lấy 10 sản phẩm hàng đầu theo ID danh mục");
+            var top10Products = productService.getTop10ByCategoryID(categoryID, page, size);
             return ResponseEntity.ok(top10Products);
         } catch (Exception e) {
-            log.error("Error: ", e);
-            return ResponseEntity.badRequest().body("Error: " + e);
+            log.error("Lỗi: ", e);
+            return ResponseEntity.badRequest().body("Lỗi: " + e);
         }
     }
 
     @GetMapping
     public ResponseEntity<?> getAllProducts() {
         try {
-            log.info("REST request to get all products");
-            initializeAllProducts();
-            var products = (List<Product>) systemStorage.get("all-products");
+            log.info("Yêu cầu REST để lấy tất cả sản phẩm");
+            var products = productService.getAllProducts();
             return ResponseEntity.ok(products);
         } catch (Exception e) {
-            log.error("Error: ", e);
-            return ResponseEntity.badRequest().body("Error: " + e);
+            log.error("Lỗi: ", e);
+            return ResponseEntity.badRequest().body("Lỗi: " + e);
         }
     }
 
     @GetMapping("/{id}")
     public ResponseEntity<?> getProductById(@PathVariable("id") Integer id) {
         try {
-            log.info("REST request to get product by id");
-            Optional<Product> product = productRepository.findById(id);
+            log.info("Yêu cầu REST để lấy sản phẩm theo ID");
+            Optional<Product> product = productService.getProductById(id);
             return product.map(ResponseEntity::ok)
                     .orElseGet(() -> ResponseEntity.notFound().build());
         } catch (Exception e) {
-            log.error("Error: ", e);
-            return ResponseEntity.badRequest().body("Error: " + e);
+            log.error("Lỗi: ", e);
+            return ResponseEntity.badRequest().body("Lỗi: " + e);
         }
     }
 
@@ -93,62 +78,13 @@ public class ProductController {
             @RequestPart("mainImage") MultipartFile mainImage,
             @RequestPart("additionalImages") MultipartFile[] additionalImages) {
         try {
-            log.info("REST request to create product");
-            var product = productRequestDTO.toProduct();
-            product.setProductID(productRepository.getNextProductId());
-            Product savedProduct = productRepository.save(product);
-            List<ProductImage> productImages = handleImageUploaded(mainImage, additionalImages, savedProduct);
-            productImageRepository.saveAll(productImages);
-
-            product.setImages(productImages);
-            updateAllProductsCache();
+            log.info("Yêu cầu REST để tạo sản phẩm");
+            Product savedProduct = productService.createProduct(productRequestDTO, mainImage, additionalImages);
             return ResponseEntity.ok(savedProduct);
         } catch (Exception e) {
-            log.error("Error: ", e);
-            return ResponseEntity.badRequest().body("Error: " + e);
+            log.error("Lỗi: ", e);
+            return ResponseEntity.badRequest().body("Lỗi: " + e);
         }
-    }
-
-    private List<ProductImage> handleImageUploaded(MultipartFile mainImage, MultipartFile[] additionalImages, Product savedProduct) throws IOException {
-        List<ProductImage> productImages = new ArrayList<>();
-        int nextProductImageId = productImageRepository.getNextProductImageId();
-
-        // Save main image
-        if (!mainImage.isEmpty()) {
-            String mainImageURL = saveImage(mainImage);
-            ProductImage mainProductImage = new ProductImage();
-            mainProductImage.setId(nextProductImageId++);
-            mainProductImage.setImageURL(mainImageURL);
-            mainProductImage.setIsMain(true);
-            mainProductImage.setProduct(savedProduct);
-            productImages.add(mainProductImage);
-        }
-
-        // Save additional images
-        for (MultipartFile additionalImage : additionalImages) {
-            if (!additionalImage.isEmpty()) {
-                String additionalImageURL = saveImage(additionalImage);
-                ProductImage additionalProductImage = new ProductImage();
-                additionalProductImage.setId(nextProductImageId++);
-                additionalProductImage.setImageURL(additionalImageURL);
-                additionalProductImage.setIsMain(false);
-                additionalProductImage.setProduct(savedProduct);
-                productImages.add(additionalProductImage);
-            }
-        }
-
-        return productImages;
-    }
-
-    @Value("${upload.path}")
-    private String uploadPath;
-
-    private String saveImage(MultipartFile image) throws IOException {
-        String filename = UUID.randomUUID() + "_" + image.getOriginalFilename();
-        Path path = Paths.get(uploadPath, filename);
-        Files.createDirectories(path.getParent());
-        Files.write(path, image.getBytes());
-        return "/uploads/" + filename;
     }
 
     @PutMapping(consumes = MediaType.MULTIPART_FORM_DATA_VALUE, value = "/manager")
@@ -157,71 +93,37 @@ public class ProductController {
             @RequestPart("mainImage") MultipartFile mainImage,
             @RequestPart("additionalImages") MultipartFile[] additionalImages) {
         try {
-            log.info("REST request to update product");
-            var product = productRequestDTO.toProduct();
-            List<ProductImage> productImages = handleImageUploaded(mainImage, additionalImages, product);
-            product.setImages(productImages);
-            Product updatedProduct = productRepository.save(product);
-            updateAllProductsCache();
+            log.info("Yêu cầu REST để cập nhật sản phẩm");
+            Product updatedProduct = productService.updateProduct(productRequestDTO, mainImage, additionalImages);
             return ResponseEntity.ok(updatedProduct);
         } catch (Exception e) {
-            log.error("Error: ", e);
-            return ResponseEntity.badRequest().body("Error: " + e);
+            log.error("Lỗi: ", e);
+            return ResponseEntity.badRequest().body("Lỗi: " + e);
         }
     }
 
     @DeleteMapping("/manager/{id}")
     public ResponseEntity<?> deleteProduct(@PathVariable Integer id) {
         try {
-            productRepository.deleteById(id);
-            updateAllProductsCache();
+            productService.deleteProduct(id);
             return ResponseEntity.ok().build();
         } catch (Exception e) {
-            log.error("Error: ", e);
-            return ResponseEntity.badRequest().body("Error: " + e);
-        }
-    }
-
-    private void updateAllProductsCache() {
-        List<Product> allProducts = productRepository.findAll();
-        systemStorage.put("all-products", allProducts);
-    }
-
-    private void initializeAllProducts() {
-        if (!systemStorage.containsKey("all-products")) {
-            updateAllProductsCache();
+            log.error("Lỗi: ", e);
+            return ResponseEntity.badRequest().body("Lỗi: " + e);
         }
     }
 
     @GetMapping("/q")
-    public ResponseEntity<List<Product>> searchProducts(
+    public ResponseEntity<?> searchProducts(
             @RequestParam(value = "keyword", required = false) String keyword,
             @RequestParam(value = "categoryID", required = false) Integer categoryID) {
-
-        // Khởi tạo dữ liệu
-        initializeAllProducts();
-
-        // Lấy danh sách sản phẩm từ SystemStore
-        List<Product> allProducts = (List<Product>) systemStorage.get("all-products");
-
-        // Áp dụng bộ lọc dựa trên keyword và categoryID
-        List<Product> filteredProducts = allProducts.stream()
-                .filter(product -> {
-                    var name = product.getName().toLowerCase();
-                    var category = product.getCategory().getName().toLowerCase();
-                    boolean matchesKeyword = (keyword == null || keyword.isEmpty()) ||
-                            name.startsWith(keyword.trim().toLowerCase()) ||
-                            name.contains(keyword.trim().toLowerCase()) ||
-                            category.startsWith(keyword.trim().toLowerCase()) ||
-                            category.contains(keyword.trim().toLowerCase());
-                    boolean matchesCategory = (categoryID == null) ||
-                            product.getCategory().getCategoryID().equals(categoryID);
-                    return matchesKeyword && matchesCategory;
-                })
-                .collect(Collectors.toList());
-
-        // Trả về danh sách sản phẩm đã lọc
-        return ResponseEntity.ok(filteredProducts);
+        try {
+            log.info("Yêu cầu REST để tìm kiếm sản phẩm");
+            List<Product> filteredProducts = productService.searchProducts(keyword, categoryID);
+            return ResponseEntity.ok(filteredProducts);
+        } catch (Exception e) {
+            log.error("Lỗi: ", e);
+            return ResponseEntity.badRequest().body("Lỗi: " + e);
+        }
     }
-
 }

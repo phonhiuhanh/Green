@@ -12,7 +12,7 @@ function displayPage(page) {
 
     paginatedItems.forEach(product => {
         const row = document.createElement('tr');
-        const thumbnail = product.images?.find(image => image.isMain) || product?.images[0];
+        const thumbnail = product.images?.find(image => image.isMain) || "";
         row.innerHTML = `
                 <td>${product.productID}</td>
                 <td><img alt="Hình ảnh" style="max-width: 8rem;max-height: 6rem;" src="${thumbnail?.imageURL}"></td>
@@ -96,11 +96,22 @@ $(document).ready(function () {
             contentType: false,
             data: formData,
             success: function (response) {
-                alert('Product updated successfully!');
-                location.reload();
+                Swal.fire({
+                    title: 'Thành công',
+                    text: 'Sản phẩm đã được cập nhật thành công!',
+                    icon: 'success',
+                    confirmButtonText: 'OK'
+                }).then(() => {
+                    location.reload();
+                });
             },
             error: function (error) {
-                console.error('Error updating product:', error);
+                Swal.fire({
+                    title: 'Lỗi',
+                    text: 'Không thể cập nhật sản phẩm',
+                    icon: 'error',
+                    confirmButtonText: 'OK'
+                });
             }
         });
     });
@@ -108,20 +119,39 @@ $(document).ready(function () {
     // Event listener for "Xóa" button
     $(document).on('click', '.delete-product', function () {
         const productID = $(this).data('id');
-        if (confirm('Are you sure you want to delete this product?')) {
-            $.ajax({
-                url: `/api/products/manager/${productID}`,
-                method: 'DELETE',
-                success: function () {
-                    alert('Product deleted successfully!');
-                    location.reload();
-                },
-                error: function (error) {
-                    console.error('Error deleting product:', error);
-                }
-            });
-        }
+        Swal.fire({
+            title: 'Bạn có chắc chắn?',
+            text: "Bạn sẽ không thể hoàn tác hành động này!",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Xóa'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                $.ajax({
+                    url: `/api/products/manager/${productID}`,
+                    method: 'DELETE',
+                    success: function () {
+                        Swal.fire({
+                            title: 'Đã xóa!',
+                            text: 'Sản phẩm đã được xóa.',
+                            icon: 'success',
+                            confirmButtonText: 'OK'
+                        }).then(() => {
+                            location.reload();
+                        });
+                    },
+                    error: function (error) {
+                        Swal.fire({
+                            title: 'Lỗi',
+                            text: 'Không thể xóa sản phẩm',
+                            icon: 'error',
+                            confirmButtonText: 'OK'
+                        });
+                    }
+                });
+            }
+        });
     });
 });
-
-
