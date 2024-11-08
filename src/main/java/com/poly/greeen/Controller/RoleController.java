@@ -1,23 +1,14 @@
 package com.poly.greeen.Controller;
 
-import com.poly.greeen.Data.RegisterRequest;
 import com.poly.greeen.Entity.Role;
-import com.poly.greeen.Entity.Users;
-import com.poly.greeen.Repository.RoleRepository;
-import com.poly.greeen.Repository.UsersRepository;
-import com.poly.greeen.Security.CustomUserDetails;
-import com.poly.greeen.Utils.AuthorizationCodeGenerator;
-import com.poly.greeen.Utils.EmailService;
-import com.poly.greeen.Utils.SystemStorage;
+import com.poly.greeen.Service.RoleService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
-import java.sql.Timestamp;
-import java.time.Instant;
 import java.util.List;
 
 @Slf4j
@@ -26,13 +17,13 @@ import java.util.List;
 @RestController
 public class RoleController {
 
-    private final RoleRepository roleRepository;
+    private final RoleService roleService;
 
     @GetMapping
     public ResponseEntity<?> getAllRoles() {
         try {
             log.info("Yêu cầu REST để lấy tất cả các vai trò");
-            List<Role> roles = roleRepository.findAll();
+            List<Role> roles = roleService.getAllRoles();
             return ResponseEntity.ok(roles);
         } catch (Exception e) {
             log.error("Lỗi: ", e);

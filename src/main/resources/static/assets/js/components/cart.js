@@ -190,29 +190,47 @@ const createOrder = async (cartItems) => {
     };
 
     try {
-        const response = await fetch('/api/orders', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
+        let timerInterval;
+        let response = {};
+        Swal.fire({
+            title: "Đang xử lý đơn hàng...",
+            timer: 10000,
+            allowOutsideClick: false,
+            allowEscapeKey: false,
+            allowEnterKey: false,
+            timerProgressBar: true,
+            didOpen: async () => {
+                Swal.showLoading();
+                response = await fetch('/api/orders', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(order)
+                });
+                clearInterval(timerInterval);
+                if (response.status === 200) {
+                    Swal.fire({
+                        title: 'Đặt hàng thành công!',
+                        icon: 'success',
+                        confirmButtonText: 'OK'
+                    });
+                    saveCartItems([]);
+                    loadCartItemsIntoTable();
+                    updateCartSummary();
+                } else {
+                    Swal.fire({
+                        title: 'Đặt hàng thất bại. Vui lòng thử lại!',
+                        icon: 'error',
+                        confirmButtonText: 'OK'
+                    });
+                }
             },
-            body: JSON.stringify(order)
+            willClose: () => {
+                clearInterval(timerInterval);
+            }
+        }).then((result) => {
         });
-        if (response.status === 200) {
-            Swal.fire({
-                title: 'Đặt hàng thành công!',
-                icon: 'success',
-                confirmButtonText: 'OK'
-            });
-            saveCartItems([]);
-            loadCartItemsIntoTable();
-            updateCartSummary();
-        } else {
-            Swal.fire({
-                title: 'Đặt hàng thất bại. Vui lòng thử lại!',
-                icon: 'error',
-                confirmButtonText: 'OK'
-            });
-        }
     } catch (error) {
         console.error('Error creating order:', error);
         Swal.fire({
