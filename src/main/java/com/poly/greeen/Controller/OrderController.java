@@ -1,11 +1,17 @@
 package com.poly.greeen.Controller;
 
+import com.poly.greeen.Entity.Customer;
 import com.poly.greeen.Entity.Order;
+import com.poly.greeen.Repository.CustomerRepository;
 import com.poly.greeen.Repository.OrderDetailRepository;
 import com.poly.greeen.Repository.OrderRepository;
 import com.poly.greeen.Security.AuthController;
+import com.poly.greeen.Utils.EmailService;
+import com.poly.greeen.Utils.SystemStorage;
+import groovyjarjarantlr4.v4.runtime.misc.NotNull;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
@@ -21,6 +27,9 @@ import java.util.Optional;
 public class OrderController {
     private final OrderRepository orderRepository;
     private final OrderDetailRepository orderDetailRepository;
+    private final CustomerRepository customerRepository;
+    private final EmailService emailService;
+    private final SystemStorage systemStorage;
 
     // Lấy danh sách tất cả các đơn hàng
     @GetMapping
@@ -43,17 +52,21 @@ public class OrderController {
     public ResponseEntity<Order> createOrder(@RequestBody Order order) {
         var orderDetails = order.getOrderDetails();
         var buyerId = AuthController.getAuthUser().getUniqueId();
+        String orderStatus = "Đang chờ xử lý";
         order.setOrderID(orderRepository.getNextOrderId());
         order.setOrderDate(new Date());
         order.setBuyerId(buyerId);
         order.setOrderDetails(null);
+        order.setOrderStatus(orderStatus);
         Order savedOrder = orderRepository.save(order);
         for (var orderDetail : orderDetails) {
             orderDetail.setOrder(savedOrder);
+            orderDetail.setProduct(systemStorage.findProductById(orderDetail.getProduct().getProductID()).orElseThrow());
             orderDetailRepository.save(orderDetail);
         }
         savedOrder.setOrderDetails(orderDetails);
-        return ResponseEntity.ok(savedOrder);
+
+        return getOrderResponseEntity(orderStatus, savedOrder);
     }
 
     // Cập nhật thông tin đơn hàng
@@ -67,8 +80,38 @@ public class OrderController {
             order.setOrderDate(orderDetails.getOrderDate());
             order.setTotalAmount(orderDetails.getTotalAmount());
             // Lưu lại đơn hàng đã cập nhật
+            return getOrderResponseEntity(orderDetails.getOrderStatus(), order);
+        } else {
+            return ResponseEntity.notFound().build();
+        }
+    }
+
+    @NotNull
+    private ResponseEntity<Order> getOrderResponseEntity(String orderStatus, Order order) {
+        Optional<Customer> optionalCustomer = customerRepository.findByEmailOrPhone(order.getBuyerId(), order.getBuyerId());
+        if (optionalCustomer.isPresent()) {
+            Customer customer = optionalCustomer.get();
+            // Update order status
+            order.setOrderStatus(orderStatus);
             Order updatedOrder = orderRepository.save(order);
+
+            // Send email notification
+            emailService.sendOrderStatusUpdateEmail(customer.getEmail(), order, orderStatus);
             return ResponseEntity.ok(updatedOrder);
+        } else {
+            // Rollback order change
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
+        }
+    }
+
+    @PutMapping("/{orderId}/status")
+    @Transactional
+    public ResponseEntity<Order> updateOrderStatus(@PathVariable Integer orderId, @RequestParam String orderStatus) {
+        Optional<Order> optionalOrder = orderRepository.findById(orderId);
+        if (optionalOrder.isPresent()) {
+            Order order = optionalOrder.get();
+            // Find customer by email or phone
+            return getOrderResponseEntity(orderStatus, order);
         } else {
             return ResponseEntity.notFound().build();
         }

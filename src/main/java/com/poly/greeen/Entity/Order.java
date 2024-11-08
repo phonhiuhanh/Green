@@ -21,6 +21,8 @@ public class Order {
     private Date orderDate; // Ngày đặt hàng
     private BigDecimal totalAmount; // Tổng số tiền
     private String buyerId;
+    @Column(name = "order_status")
+    private String orderStatus;
 
     @OneToMany(mappedBy = "order", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<OrderDetail> orderDetails;

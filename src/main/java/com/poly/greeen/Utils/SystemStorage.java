@@ -1,9 +1,12 @@
 package com.poly.greeen.Utils;
 
+import com.poly.greeen.Entity.Product;
 import org.springframework.stereotype.Component;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 
 @Component
 public class SystemStorage {
@@ -27,5 +30,12 @@ public class SystemStorage {
 
     public void bulkRemoveStartsWith(String prefix) {
         data.keySet().removeIf(key -> key.startsWith(prefix));
+    }
+
+    public Optional<Product> findProductById(Integer id) {
+        List<Product> allProducts = (List<Product>) this.get("all-products");
+        return allProducts.stream()
+                .filter(p -> p.getProductID().equals(id))
+                .findFirst();
     }
 }
