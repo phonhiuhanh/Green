@@ -1,9 +1,19 @@
 // login and register
 $(document).ready(() => {
     if (window.location.href.indexOf('/login?logout') > -1) {
-        alert('Đăng xuất thành công');
+        Swal.fire({
+            title: 'Thành công',
+            text: 'Đăng xuất thành công',
+            icon: 'success',
+            confirmButtonText: 'OK'
+        });
     } else if (window.location.href.indexOf('/login?error') > -1) {
-        alert('Sai tên đăng nhập hoặc mật khẩu');
+        Swal.fire({
+            title: 'Lỗi',
+            text: 'Sai tên đăng nhập hoặc mật khẩu',
+            icon: 'error',
+            confirmButtonText: 'OK'
+        });
     }
 });
 

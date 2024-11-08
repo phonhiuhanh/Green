@@ -1,10 +1,10 @@
 document.getElementById('registerForm').addEventListener('submit', async function (event) {
     event.preventDefault();
 
-    // Clear previous error messages
+    // Xóa các thông báo lỗi trước đó
     document.querySelectorAll('.error-message').forEach(el => el.textContent = '');
 
-    // Validate form fields
+    // Kiểm tra các trường trong form
     const fullName = document.getElementById('fullName').value.trim();
     const phone = document.getElementById('phone').value.trim();
     const address = document.getElementById('address').value.trim();
@@ -48,14 +48,19 @@ document.getElementById('registerForm').addEventListener('submit', async functio
         return;
     }
 
-    // Disable the submit button
+    // Vô hiệu hóa nút submit
     const submitButton = document.querySelector('.btn-submit');
     submitButton.disabled = true;
 
-    // Show waiting message
-    alert('Vui lòng đợi khoảng 5 giây trong khi email xác nhận đang được gửi.');
+    // Hiển thị thông báo ch���
+    Swal.fire({
+        title: 'Vui lòng đợi',
+        text: 'Vui lòng đợi khoảng 5 giây trong khi email xác nhận đang được gửi.',
+        icon: 'info',
+        confirmButtonText: 'OK'
+    });
 
-    // Prepare the request body
+    // Chuẩn bị dữ liệu yêu cầu
     const customer = {
         username: fullName,
         phone: phone,
@@ -66,7 +71,7 @@ document.getElementById('registerForm').addEventListener('submit', async functio
     };
 
     try {
-        // Send the request
+        // Gửi yêu cầu
         const response = await fetch('/api/customers/p/register', {
             method: 'POST',
             headers: {
@@ -75,18 +80,28 @@ document.getElementById('registerForm').addEventListener('submit', async functio
             body: JSON.stringify(customer)
         });
 
-        // Handle success
+        // Xử lý thành công
         if (response.ok) {
             localStorage.setItem('registeredEmail', email);
             window.location.href = '/login';
         } else {
             const errorData = await response.json();
-            alert('Lỗi: ' + errorData.message);
+            Swal.fire({
+                title: 'Lỗi',
+                text: 'Lỗi: ' + errorData.message,
+                icon: 'error',
+                confirmButtonText: 'OK'
+            });
             submitButton.disabled = false;
         }
     } catch (error) {
-        // Handle error
-        alert('Lỗi: ' + error.message);
+        // Xử lý lỗi
+        Swal.fire({
+            title: 'Lỗi',
+            text: 'Lỗi: ' + error.message,
+            icon: 'error',
+            confirmButtonText: 'OK'
+        });
         submitButton.disabled = false;
     }
 });

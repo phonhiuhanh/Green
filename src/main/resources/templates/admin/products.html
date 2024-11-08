@@ -125,8 +125,6 @@ $('.categorySelect').each(function() {
                 categoryID: $('#categorySelect').val() ?? formData.get('category')
             };
 
-            console.log('Product:', product);
-
             // Append the product object as a JSON string
             formData.append('product', new Blob([JSON.stringify(product)], {type: 'application/json'}));
 

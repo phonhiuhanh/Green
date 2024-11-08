@@ -2,25 +2,84 @@ function formatCurrency(number) {
     return number.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
 }
 
+// Load top 10 products
 const loadTop10Products = async (containerId, endpoint, requestParams) => {
-    $(`#${containerId}`).html('Loading...');
+    $(`#${containerId}`).html('Đang tải...');
     await axios.get(endpoint, {
         params: requestParams || {
             page: 0,
             size: 10
         }
     })
-        .then(res => {
-            let products = res.data;
-            let content = '';
-            // console.log(products);
-            products.forEach(product => {
-                let mainImage = product.images.find(image => image.isMain) || {imageURL: '/assets/img/product/discount/default.jpg'};
-                // console.log(mainImage.imageURL);
-                content += `<div class="">
+    .then(res => {
+        let products = res.data;
+        let content = '';
+        products.forEach(product => {
+            let mainImage = product.images.find(image => image.isMain) || {imageURL: '/assets/img/product/discount/default.jpg'};
+            content += `<div class="">
+                        <div class="product__discount__item">
+                            <div class="product__discount__item__pic set-bg" onclick="navigateToProductDetails(${product.productID})"
+                                 data-setbg="${mainImage.imageURL}">
+                            </div>
+                            <div class="product__item__text">
+                                <h6 onclick="navigateToProductDetails(${product.productID})">${product.name}</h6>
+                                <div class="price">
+                                    <span class="current-price">${formatCurrency(product.price)}đ</span>
+                                    ${product.giamgia !== 0 ? `
+                                    <span class="old-price">${formatCurrency(product.giacu)}đ</span>
+                                    <span class="discount">-${product.giamgia}%</span>                                        
+                                    ` : ``}
+                                </div>
+                                <button 
+                                onclick="addToCart(${product.productID}, 1, ${product.price}, '${product.name.trim()}', '${mainImage.imageURL}')" 
+                                class="button-buy">MUA</button>
+                            </div>
+                        </div>
+                    </div>`;
+        });
+        $(`#${containerId}`).html(content);
+
+        $('.set-bg').each(function () {
+            var bg = $(this).data('setbg');
+            $(this).css('background-image', 'url(' + bg + ')');
+        });
+
+        $(`#${containerId}`).owlCarousel('destroy');
+        $(`#${containerId}`).owlCarousel({
+            loop: true,
+            margin: 10,
+            nav: true,
+            items: 4,
+            autoplay: true,
+            autoplayTimeout: 3000,
+            autoplayHoverPause: true
+        });
+    })
+    .catch(err => {
+        Swal.fire({
+            title: 'Lỗi',
+            text: 'Không thể tải sản phẩm. Vui lòng th�� lại sau.',
+            icon: 'error',
+            confirmButtonText: 'OK'
+        });
+    });
+}
+
+// Load search results
+const loadSearchResults = async (containerId, endpoint, requestParams) => {
+    $(`#${containerId}`).html('Đang tải...');
+    await axios.get(endpoint, {
+        params: requestParams
+    })
+    .then(res => {
+        let products = res.data;
+        let content = '';
+        products.forEach(product => {
+            let mainImage = product.images.find(image => image.isMain) || {imageURL: '/assets/img/product/discount/default.jpg'};
+            content += `<div class="col">
                             <div class="product__discount__item">
-                                <div class="product__discount__item__pic set-bg" onclick="navigateToProductDetails(${product.productID})"
-                                     data-setbg="${mainImage.imageURL}">
+                                <div class="product__discount__item__pic d-flex" onclick="navigateToProductDetails(${product.productID})">
+                                     <img src="${mainImage.imageURL}" alt="" class="">
                                 </div>
                                 <div class="product__item__text">
                                     <h6 onclick="navigateToProductDetails(${product.productID})">${product.name}</h6>
@@ -37,70 +96,20 @@ const loadTop10Products = async (containerId, endpoint, requestParams) => {
                                 </div>
                             </div>
                         </div>`;
-            });
-            $(`#${containerId}`).html(content);
-
-            $('.set-bg').each(function () {
-                var bg = $(this).data('setbg');
-                $(this).css('background-image', 'url(' + bg + ')');
-            });
-
-            $(`#${containerId}`).owlCarousel('destroy');
-            $(`#${containerId}`).owlCarousel({
-                loop: true,
-                margin: 10,
-                nav: true,
-                items: 4,
-                autoplay: true,
-                autoplayTimeout: 3000,
-                autoplayHoverPause: true
-            });
-        })
-        .catch(err => {
-            // console.log(err);
         });
-}
-
-const loadSearchResults = async (containerId, endpoint, requestParams) => {
-    $(`#${containerId}`).html('Loading...');
-    await axios.get(endpoint, {
-        params: requestParams
+        $(`#${containerId}`).html(content);
     })
-        .then(res => {
-            let products = res.data;
-            let content = '';
-            // console.log(products);
-            products.forEach(product => {
-                let mainImage = product.images.find(image => image.isMain) || {imageURL: '/assets/img/product/discount/default.jpg'};
-                // console.log(mainImage.imageURL);
-                content += `<div class="col">
-                                <div class="product__discount__item">
-                                    <div class="product__discount__item__pic d-flex" onclick="navigateToProductDetails(${product.productID})">
-                                         <img src="${mainImage.imageURL}" alt="" class="">
-                                    </div>
-                                    <div class="product__item__text">
-                                        <h6 onclick="navigateToProductDetails(${product.productID})">${product.name}</h6>
-                                        <div class="price">
-                                            <span class="current-price">${formatCurrency(product.price)}đ</span>
-                                            ${product.giamgia !== 0 ? `
-                                            <span class="old-price">${formatCurrency(product.giacu)}đ</span>
-                                            <span class="discount">-${product.giamgia}%</span>                                        
-                                            ` : ``}
-                                        </div>
-                                        <button 
-                                        onclick="addToCart(${product.productID}, 1, ${product.price}, '${product.name.trim()}', '${mainImage.imageURL}')" 
-                                        class="button-buy">MUA</button>
-                                    </div>
-                                </div>
-                            </div>`;
-            });
-            $(`#${containerId}`).html(content);
-        })
-        .catch(err => {
-            // console.log(err);
+    .catch(err => {
+        Swal.fire({
+            title: 'Lỗi',
+            text: 'Không thể tải kết quả tìm kiếm. Vui lòng thử lại sau.',
+            icon: 'error',
+            confirmButtonText: 'OK'
         });
+    });
 }
 
+// Initialize search input
 function initializeSearchInput() {
     const searchInput = document.getElementById('search-input');
     searchInput.addEventListener('keypress', function(event) {
@@ -111,18 +120,25 @@ function initializeSearchInput() {
     });
 }
 
+// Search products
 const searchProducts = () => {
     const searchInput = document.getElementById('search-input');
     const searchValue = searchInput.value;
     if (searchValue.trim() === '') {
+        Swal.fire({
+            title: 'Lỗi',
+            text: 'Vui lòng nhập từ khóa tìm kiếm.',
+            icon: 'error',
+            confirmButtonText: 'OK'
+        });
         return;
     }
     const urlParams = new URLSearchParams(window.location.search);
     const categoryID = urlParams.get('categoryID') ?? ``;
-    console.log(`/index/search?keyword=${searchValue}&categoryID=${categoryID}`);
     window.location.href = `/index/search?keyword=${searchValue}&categoryID=${categoryID}`;
 }
 
+// Add item to cart
 const addToCart = (productID, quantity, price, name, thumbnail) => {
     let item = {
         productID: productID,
@@ -132,13 +148,22 @@ const addToCart = (productID, quantity, price, name, thumbnail) => {
         thumbnail: thumbnail
     };
     addItemToCart(item);
-    window.location.href = '/index/order';
+    Swal.fire({
+        title: 'Thành công',
+        text: 'Sản phẩm đã được thêm vào giỏ hàng.',
+        icon: 'success',
+        confirmButtonText: 'OK'
+    }).then(() => {
+        window.location.href = '/index/order';
+    });
 }
 
+// Navigate to product details
 const navigateToProductDetails = (productID) => {
     window.location.href = `/index/details?id=${productID}`;
 }
 
+// Countdown timer for flash sale
 let countdownTime = 2 * 60 * 60;
 
 function startCountdown() {
@@ -164,6 +189,7 @@ function startCountdown() {
     }, 1000);
 }
 
+// Toggle category menu
 document.querySelectorAll('.category-toggle').forEach(item => {
     item.addEventListener('click', event => {
         event.preventDefault();
@@ -179,6 +205,7 @@ document.querySelectorAll('.category-toggle').forEach(item => {
     });
 });
 
+// Initialize search input on window load
 window.onload = () => {
     initializeSearchInput();
 }

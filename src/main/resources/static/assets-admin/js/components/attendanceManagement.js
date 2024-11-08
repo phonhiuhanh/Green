@@ -51,7 +51,6 @@ document.addEventListener('DOMContentLoaded', () => {
         .then(users => {
             const userSelect = document.getElementById('user');
             users.forEach(user => {
-                console.log(user);
                 const option = document.createElement('option');
                 option.value = user.userID;
                 option.text = `${user.userID} - ${user.username}`;

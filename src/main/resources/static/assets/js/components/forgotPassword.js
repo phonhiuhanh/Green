@@ -9,7 +9,12 @@ function sendOtp() {
             sendOtpButton.disabled = false;
         }, 5000);
     }).fail(function () {
-        alert('Gửi mã OTP thất bại. Vui lòng thử lại.');
+        Swal.fire({
+            title: 'Lỗi',
+            text: 'Gửi mã OTP thất bại. Vui lòng thử lại.',
+            icon: 'error',
+            confirmButtonText: 'OK'
+        });
     });
 }
 
@@ -21,8 +26,14 @@ function confirmPasswordReset() {
     const confirmButton = document.getElementById('confirmButton');
     confirmButton.disabled = true;
     $.post(`/api/customers/p/forgot-password/verify?email=${emailOrPhone}&otp=${otp}&newPassword=${newPassword}`, function () {
-        alert('Đặt lại mật khẩu thành công. Đang chuyển đến trang đăng nhập...');
-        window.location.href = '/login';
+        Swal.fire({
+            title: 'Thành công',
+            text: 'Đặt lại mật khẩu thành công. Đang chuyển đến trang đăng nhập...',
+            icon: 'success',
+            confirmButtonText: 'OK'
+        }).then(() => {
+            window.location.href = '/login';
+        });
     }).fail(function () {
         $('#errorMessage').show();
         confirmButton.disabled = false;

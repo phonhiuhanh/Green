@@ -25,11 +25,19 @@ const addItemToCart = (product) => {
 
 // Remove item from cart
 const removeItemFromCart = (productID) => {
-    confirm('Bạn có chắc chắn muốn xóa sản phẩm này khỏi giỏ hàng?') && (() => {
-        let cartItems = getCartItems();
-        cartItems = cartItems.filter(item => item.productID !== productID);
-        saveCartItems(cartItems);
-    })();
+    Swal.fire({
+        title: 'Bạn có chắc chắn muốn xóa sản phẩm này khỏi giỏ hàng?',
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonText: 'Xóa',
+        cancelButtonText: 'Hủy'
+    }).then((result) => {
+        if (result.isConfirmed) {
+            let cartItems = getCartItems();
+            cartItems = cartItems.filter(item => item.productID !== productID);
+            saveCartItems(cartItems);
+        }
+    });
 }
 
 const setQuantityAdjustmentButtons = () => {
@@ -139,16 +147,6 @@ const calc = (cartItems) => {
 const updateCartSummary = () => {
     const cartItems = getCartItems();
     const {subtotal, shippingFee, total} = calc(cartItems);
-    // let subtotal = 0;
-    // let shippingFee = cartItems.length === 0 ? 0 : 30000; // Example shipping fee
-    // let total = 0;
-    //
-    // cartItems.forEach(item => {
-    //     subtotal += item.price * item.quantity;
-    // });
-    //
-    // shippingFee = subtotal / 10 < shippingFee ? subtotal / 10 : shippingFee;
-    // total = subtotal + shippingFee;
 
     // Update the DOM elements
     document.querySelector('.checkout__order__subtotal span').textContent = formatCurrency(subtotal) + '₫';
@@ -159,13 +157,24 @@ const updateCartSummary = () => {
 const checkOut = async () => {
     const cartItems = getCartItems();
     if (cartItems.length === 0) {
-        alert('Giỏ hàng của bạn đang trống!');
+        Swal.fire({
+            title: 'Giỏ hàng của bạn đang trống!',
+            icon: 'info',
+            confirmButtonText: 'OK'
+        });
         return;
     }
-    confirm('Bạn có chắc chắn muốn tiến hành đặt hàng?') &&
-    (() => {
-        createOrder(cartItems);
-    })();
+    Swal.fire({
+        title: 'Bạn có chắc chắn muốn tiến hành đặt hàng?',
+        icon: 'question',
+        showCancelButton: true,
+        confirmButtonText: 'Đặt hàng',
+        cancelButtonText: 'Hủy'
+    }).then((result) => {
+        if (result.isConfirmed) {
+            createOrder(cartItems);
+        }
+    });
 }
 
 const createOrder = async (cartItems) => {
@@ -189,16 +198,28 @@ const createOrder = async (cartItems) => {
             body: JSON.stringify(order)
         });
         if (response.status === 200) {
-            alert('Đặt hàng thành công!');
+            Swal.fire({
+                title: 'Đặt hàng thành công!',
+                icon: 'success',
+                confirmButtonText: 'OK'
+            });
             saveCartItems([]);
             loadCartItemsIntoTable();
             updateCartSummary();
         } else {
-            alert('Đặt hàng thất bại. Vui lòng thử lại!');
+            Swal.fire({
+                title: 'Đặt hàng thất bại. Vui lòng thử lại!',
+                icon: 'error',
+                confirmButtonText: 'OK'
+            });
         }
     } catch (error) {
         console.error('Error creating order:', error);
-        alert('Đặt hàng thất bại. Vui lòng thử lại!');
+        Swal.fire({
+            title: 'Đặt hàng thất bại. Vui lòng thử lại!',
+            icon: 'error',
+            confirmButtonText: 'OK'
+        });
     }
 }
 

@@ -1,5 +1,5 @@
 document.addEventListener('DOMContentLoaded', function () {
-  // Fetch current customer data on modal open
+  // Lấy thông tin khách hàng hiện tại khi mở modal
   $('#profileModal').on('show.bs.modal', function () {
     $.get('/api/customers/get-current-customer', function (data) {
       $('#phone').val(data.phone);
@@ -30,11 +30,21 @@ function saveChanges() {
     contentType: 'application/json',
     data: JSON.stringify(profileData),
     success: function () {
-      alert('Cập nhật thông tin thành công');
+      Swal.fire({
+        title: 'Thành công',
+        text: 'Cập nhật thông tin thành công',
+        icon: 'success',
+        confirmButtonText: 'OK'
+      });
       $('#profileModal').modal('hide');
     },
     error: function () {
-      alert('Cập nhật thông tin thất bại. Vui lòng thử lại sau');
+      Swal.fire({
+        title: 'Lỗi',
+        text: 'Cập nhật thông tin thất bại. Vui lòng thử lại sau',
+        icon: 'error',
+        confirmButtonText: 'OK'
+      });
     }
   });
 }
@@ -45,12 +55,22 @@ function changePassword() {
   const confirmPassword = $('#confirmPassword').val();
 
   if (newPassword !== confirmPassword) {
-    alert('Mật khẩu mới và mật khẩu xác nhận phải giống nhau');
+    Swal.fire({
+      title: 'Lỗi',
+      text: 'Mật khẩu mới và mật khẩu xác nhận phải giống nhau',
+      icon: 'error',
+      confirmButtonText: 'OK'
+    });
     return;
   }
 
   if (newPassword.length < 6) {
-    alert('Mật khẩu phải chứa ít nhất 6 ký tự');
+    Swal.fire({
+      title: 'Lỗi',
+      text: 'Mật khẩu phải chứa ít nhất 6 ký tự',
+      icon: 'error',
+      confirmButtonText: 'OK'
+    });
     return;
   }
 
@@ -60,11 +80,21 @@ function changePassword() {
     url: `/api/customers/update-password?oldPassword=${currentPassword}&newPassword=${newPassword}`,
     type: 'PUT',
     success: function () {
-      alert('Mật khẩu đã được thay đổi thành công');
+      Swal.fire({
+        title: 'Thành công',
+        text: 'Mật khẩu đã được thay đổi thành công',
+        icon: 'success',
+        confirmButtonText: 'OK'
+      });
       $('#changePasswordModal').modal('hide');
     },
     error: function () {
-      alert('Đổi mật khẩu thất bại. Vui lòng kiểm tra lại mật khẩu hiện tại hoặc thử lại sau');
+      Swal.fire({
+        title: 'Lỗi',
+        text: 'Đổi mật khẩu thất bại. Vui lòng kiểm tra lại mật khẩu hiện tại hoặc thử lại sau',
+        icon: 'error',
+        confirmButtonText: 'OK'
+      });
       $('#confirmButton').prop('disabled', false);
     }
   });

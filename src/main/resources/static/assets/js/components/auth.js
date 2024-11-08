@@ -10,5 +10,15 @@ $(document).ready(async () => {
 });
 
 const logout = () => {
-    confirm('Bạn có chắc chắn muốn đăng xuất?') && (window.location.href = '/logout');
+    Swal.fire({
+        title: 'Bạn có chắc chắn muốn đăng xuất?',
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonText: 'Đăng xuất',
+        cancelButtonText: 'Hủy'
+    }).then((result) => {
+        if (result.isConfirmed) {
+            window.location.href = '/logout';
+        }
+    });
 }

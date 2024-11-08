@@ -1,15 +1,18 @@
-
 const init = () => {
     const currentUrl = window.location.href;
 
-// Check if the URL contains "/details/product?id="
+    // Kiểm tra nếu URL chứa "/details/product?id="
     if (currentUrl.includes("/details?id=")) {
         const urlParams = new URLSearchParams(window.location.search);
         const productId = urlParams.get('id');
         loadProductDetails(productId);
-        // console.log("Product ID:", productId);
     } else {
-        // console.log("The URL does not contain '/details?id='");
+        Swal.fire({
+            title: 'Lỗi',
+            text: 'URL không chứa thông tin sản phẩm.',
+            icon: 'error',
+            confirmButtonText: 'OK'
+        });
     }
 }
 
@@ -26,7 +29,12 @@ let currentProduct = {};
 const loadProductDetails = async (productId) => {
     const response = await axios.get(`/api/products/${productId}`)
         .catch(err => {
-            // console.log(err);
+            Swal.fire({
+                title: 'Lỗi',
+                text: 'Không thể tải thông tin sản phẩm.',
+                icon: 'error',
+                confirmButtonText: 'OK'
+            });
         });
     const product = response.data;
     currentProduct = product;
@@ -71,5 +79,12 @@ const addToCartFromDetailPage = () => {
         thumbnail: currentProduct.images.find(image => image.isMain).imageURL
     };
     addItemToCart(item);
-    window.location.href = '/index/order';
+    Swal.fire({
+        title: 'Thành công',
+        text: 'Sản phẩm đã được thêm vào giỏ hàng.',
+        icon: 'success',
+        confirmButtonText: 'OK'
+    }).then(() => {
+        window.location.href = '/index/order';
+    });
 }

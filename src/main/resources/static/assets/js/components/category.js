@@ -2,6 +2,7 @@ const setCategoryName = async (targetId, categoryId) => {
     const response = await axios.get(`/api/categories/${categoryId}`);
     $(`#${targetId}`).text(response.data.name.toUpperCase());
 }
+
 // Hàm kiểm tra và cập nhật danh sách danh mục
 async function loadCategories() {
     // Lấy phần tử ul với class category-menu
@@ -33,7 +34,12 @@ async function loadCategories() {
         })
         .catch(error => {
             // Hiển thị thông báo lỗi nếu gọi API thất bại
-            alert(`Lỗi: ${error.message}`);
+            Swal.fire({
+                title: 'Lỗi',
+                text: `Lỗi: ${error.message}`,
+                icon: 'error',
+                confirmButtonText: 'OK'
+            });
         });
 }
 
