@@ -28,7 +28,7 @@ $(document).ready(function () {
             $.ajax({
                 url: `/api/orders/${orderId}/status`,
                 method: 'PUT',
-                data: { orderStatus: 'Đang giao' },
+                data: { orderStatus: 'Đã giao thành công' },
                 success: function () {
                     Swal.fire({
                         title: 'Thành công',

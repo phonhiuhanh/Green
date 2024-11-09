@@ -34,7 +34,7 @@ document.addEventListener('DOMContentLoaded', function () {
                         <td>${importInfo.date}</td>
                         <td>${importInfo.shipperName}</td>
                         <td>${importInfo.staffName}</td>
-                        <td>${importInfo.totalAmount}</td>
+                        <td>${formatCurrency(importInfo.totalAmount)}</td>
                         <td>
                             <button class="btn btn-sm btn-primary" onclick="editImport(${importInfo.importID})">Sửa</button>
                             <button class="btn btn-sm btn-danger" onclick="deleteImport(${importInfo.importID})">Xóa</button>
