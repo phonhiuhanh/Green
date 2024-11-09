@@ -1,55 +1,69 @@
-Morris.Area({
-    element: 'morris-area-chart2',
-    data: [{
-        period: '2010',
-        SiteA: 0,
-        SiteB: 0,
+function formatCurrency(amount) {
+    return amount.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".") + "₫";
+}
+function updateEntityCounts() {
+    $.ajax({
+        url: '/api/statistics/entity-counts',
+        method: 'GET',
+        success: function (data) {
+            if (data) {
+                // Update Total Products
+                $(".counter.text-danger").text(data.ProductCount);
 
-    }, {
-        period: '2011',
-        SiteA: 130,
-        SiteB: 100,
+                // Update Total Customers
+                $(".counter.text-megna").text(data.CustomerCount);
 
-    }, {
-        period: '2012',
-        SiteA: 80,
-        SiteB: 60,
+                // Update Total Employees
+                $(".counter.text-primary").text(data.UserCount);
+            }
+        },
+        error: function (error) {
+            console.error('Error fetching entity counts:', error);
+        }
+    });
+}
 
-    }, {
-        period: '2013',
-        SiteA: 70,
-        SiteB: 200,
+function updateFinancialStatisticsChart() {
+    $.ajax({
+        url: '/api/statistics/financial-stats',
+        method: 'GET',
+        success: function (data) {
+            const chartData = data.map(item => ({
+                year: item.Year.toString(),
+                TotalOrderAmount: Math.round(item.TotalOrderAmount) || 0,
+                TotalDailyWage: Math.round(item.TotalDailyWage) || 0,
+                TotalImportAmount: Math.round(item.TotalImportAmount) || 0
+            }));
 
-    }, {
-        period: '2014',
-        SiteA: 180,
-        SiteB: 150,
+            Morris.Area({
+                element: 'morris-area-chart2',
+                data: chartData,
+                xkey: 'year',
+                ykeys: ['TotalOrderAmount', 'TotalDailyWage', 'TotalImportAmount'],
+                labels: ['Tổng thu đơn hàng', 'Phí nhân sự', 'Phí nhập hàng'],
+                pointSize: 0,
+                fillOpacity: 0.7,
+                pointStrokeColors: ['rgba(203,174,174,0.95)', 'rgba(180,203,174,0.95)', 'rgba(174,191,203,0.95)'],
+                behaveLikeLine: true,
+                gridLineColor: '#e0e0e0',
+                lineWidth: 0,
+                smooth: false,
+                hideHover: 'auto',
+                lineColors: ['rgba(203,174,174,0.95)', 'rgba(180,203,174,0.95)', 'rgba(174,191,203,0.95)'],
+                resize: true
+            });
+        },
+        error: function (error) {
+            console.error('Error fetching financial statistics:', error);
+        }
+    });
+}
 
-    }, {
-        period: '2015',
-        SiteA: 105,
-        SiteB: 90,
+$(document).ready(function() {
+    updateEntityCounts();
+    updateFinancialStatisticsChart();
 
-    }, {
-        period: '2016',
-        SiteA: 250,
-        SiteB: 150,
-
-    }],
-    xkey: 'period',
-    ykeys: ['SiteA', 'SiteB'],
-    labels: ['Site A', 'Site B'],
-    pointSize: 0,
-    fillOpacity: 0.7,
-    pointStrokeColors: ['#ccc', '#cbb2ae'],
-    behaveLikeLine: true,
-    gridLineColor: '#e0e0e0',
-    lineWidth: 0,
-    smooth: false,
-    hideHover: 'auto',
-    lineColors: ['#ccc', '#cbb2ae'],
-    resize: true
-
+    // setInterval(updateFinancialStatisticsChart, 60000);
 });
 
 $(".counter").counterUp({
