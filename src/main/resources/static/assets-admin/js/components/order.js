@@ -10,7 +10,8 @@ $(document).ready(function () {
                     <td>${order.orderID}</td>
                     <td>${new Date(order.orderDate).toLocaleDateString('vi-VN')}</td>
                     <td>${formattedTotalAmount}</td>
-                    <td>${order.buyerId}</td>
+                    <td>${order.phone} - ${order.username}</td>
+                    <td>${order.address}</td>
                     <td>${order.orderStatus}</td>
                     <td>
                         <button class="btn btn-success btn-approve" data-id="${order.orderID}" ${order.orderStatus !== 'Đang chờ xử lý' ? 'disabled' : ''}>✔</button>
