@@ -82,7 +82,7 @@
                         class="hide-menu">Chấm Lương</span></a>
             </li>
             <li>
-                <a th:href="@{/import/list}" class="waves-effect"><i class="fa fa-table fa-fw"
+                <a th:href="@{/admin/import}" class="waves-effect"><i class="fa fa-table fa-fw"
                                                                      aria-hidden="true"></i><span class="hide-menu">Nhập hàng</span></a>
             </li>
         </ul>
@@ -591,6 +591,138 @@
         </div>
     </div>
 </div>
+
+<!-- Add Import Modal -->
+<div class="modal" id="addImportModal" tabindex="-1" role="dialog" aria-labelledby="addImportModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="addImportModalLabel">Thêm mới nhập hàng</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form id="addImportForm">
+                    <div class="form-group">
+                        <label for="address">Địa chỉ</label>
+                        <input type="text" class="form-control" id="address" name="address" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="shipperName">Người giao</label>
+                        <input type="text" class="form-control" id="shipperName" name="shipperName" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="staffName">Nhân viên</label>
+                        <input type="text" class="form-control" id="staffName" name="staffName" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="totalAmount">Tổng giá trị</label>
+                        <input type="number" class="form-control" id="totalAmount" name="totalAmount" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="picture">Ảnh</label>
+                        <input type="file" class="form-control" id="picture" name="picture" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="importDate">Ngày nhập</label>
+                        <input type="date" class="form-control" id="importDate" name="importDate" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="productSearch">Tìm kiếm sản phẩm</label>
+                        <input type="text" class="form-control" id="productSearch" name="productSearch">
+                        <div id="productSearchResults"></div>
+                    </div>
+                    <div class="form-group">
+                        <label>Thông tin nhập hàng</label>
+                        <table class="table" id="importInfoTable">
+                            <thead>
+                            <tr>
+                                <th>ID sản phẩm</th>
+                                <th>Tên</th>
+                                <th>Giá nhập (₫)</th>
+                                <th>Số lượng</th>
+                                <th>Hành động</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <!-- Dynamic rows will be inserted here by JavaScript -->
+                            </tbody>
+                        </table>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Lưu</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Update Import Modal -->
+<div class="modal" id="updateImportModal" tabindex="-1" role="dialog" aria-labelledby="updateImportModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="updateImportModalLabel">Cập nhật nhập hàng</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form id="updateImportForm">
+                    <input type="hidden" id="updateImportID" name="importID">
+                    <div class="form-group">
+                        <label for="updateAddress">Địa chỉ</label>
+                        <input type="text" class="form-control" id="updateAddress" name="address" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="updateShipperName">Người giao</label>
+                        <input type="text" class="form-control" id="updateShipperName" name="shipperName" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="updateStaffName">Nhân viên</label>
+                        <input type="text" class="form-control" id="updateStaffName" name="staffName" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="updateTotalAmount">Tổng giá trị</label>
+                        <input type="number" class="form-control" id="updateTotalAmount" name="totalAmount" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="updatePicture">Ảnh</label>
+                        <input type="file" class="form-control" id="updatePicture" name="picture">
+                    </div>
+                    <div class="form-group">
+                        <label for="updateImportDate">Ngày nhập</label>
+                        <input type="date" class="form-control" id="updateImportDate" name="importDate" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="productSearch">Tìm kiếm sản phẩm</label>
+                        <input type="text" class="form-control" id="productSearch2" name="productSearch">
+                        <div id="productSearchResults2"></div>
+                    </div>
+                    <div class="form-group">
+                        <label>Thông tin nhập hàng</label>
+                        <table class="table" id="importInfoTable2">
+                            <thead>
+                            <tr>
+                                <th>ID sản phẩm</th>
+                                <th>Tên</th>
+                                <th>Giá nhập (₫)</th>
+                                <th>Số lượng</th>
+                                <th>Hành động</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <!-- Dynamic rows will be inserted here by JavaScript -->
+                            </tbody>
+                        </table>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Lưu</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
 
 <footer class="footer" th:fragment="footer">
     <div class="container">

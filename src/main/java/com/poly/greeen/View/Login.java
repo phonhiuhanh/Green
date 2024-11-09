@@ -1,4 +1,4 @@
-package com.poly.greeen.ViewController;
+package com.poly.greeen.View;
 
 import com.poly.greeen.Repository.CustomerRepository;
 import org.springframework.beans.factory.annotation.Autowired;

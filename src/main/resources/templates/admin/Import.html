@@ -1,123 +1,74 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" >
-
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
 <head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="description" content="">
-    <meta name="author" content="">
-    <title>Admin Green</title>
+    <title>Quản lý nhập hàng</title>
     <th:block th:insert="~{/admin/common/head :: head}"></th:block>
-
 </head>
-
 <body>
-
-<div id="wrapper" >
+<div id="wrapper">
     <nav th:replace="~{admin/commonFragment :: navbar}"></nav>
-    <!-- Left navbar-header -->
-    <div class="navbar-default sidebar" role="navigation">
-        <div class="sidebar-nav navbar-collapse slimscrollsidebar">
-            <ul class="nav" id="side-menu">
-                <li style="padding: 10px 0 0;">
-                    <a th:href="@{/Admin/trangchu}" class="waves-effect"><i class="fa fa-user fa-fw"
-                                                                            aria-hidden="true"></i><span class="hide-menu">Trang Chủ</span></a>
-                </li>
-                <li >
-                    <a th:href="@{/sanpham/products}" class="waves-effect"><i class="fa fa-user fa-fw"
-                                                                           aria-hidden="true"></i><span class="hide-menu">Sản Phẩm</span></a>
-                </li>
-                <li>
-                    <a th:href="@{/customer/list}" class="waves-effect"><i class="fa fa-user fa-fw"
-                                                                           aria-hidden="true"></i><span class="hide-menu">Khách Hành</span></a>
-                </li>
-                <li>
-                    <a th:href="@{/user/list}" class="waves-effect"><i class="fa fa-modx fa-fw"
-                                                                          aria-hidden="true"></i><span class="hide-menu">Chức Vụ</span></a>
-                </li>
-                <li>
-                    <a th:href="@{/order/list}" class="waves-effect"><i class="fa fa-table fa-fw"
-                                                                           aria-hidden="true"></i><span class="hide-menu">Đơn Hàng</span></a>
-                </li>
-                <li>
-                    <a th:href="@{/attendance/list}" class="waves-effect"><i class="fa fa-table fa-fw"
-                                                                            aria-hidden="true"></i><span class="hide-menu">Chấm Luong</span></a>
-                </li>
-                <li>
-                    <a th:href="@{/import/list}" class="waves-effect"><i class="fa fa-table fa-fw"
-                                                                         aria-hidden="true"></i><span class="hide-menu">Nhập hàng</span></a>
-                </li>
-            </ul>
-        </div>
-    </div>
-        <div id="page-wrapper" layout:fragment="admin">
-            <div class="container-fluid">
-                <div class="row bg-title">
-                    <div class="col-lg-3 col-md-4 col-sm-4 col-xs-12">
-                        <h4 class="page-title">Danh sách nhập hàng</h4>
-                    </div>
+    <nav th:replace="~{admin/commonFragment :: sidebar}"></nav>
+    <div id="page-wrapper" layout:fragment="admin">
+        <div class="container-fluid">
+            <div class="row bg-title">
+                <div class="col-lg-3 col-md-4 col-sm-4 col-xs-12">
+                    <h4 class="page-title">Danh sách nhập hàng</h4>
                 </div>
-                <!-- /.row -->
-                <!-- .row -->
-                <div class="row">
-                    <div class="col-sm-12">
-                        <div class="white-box">
-                            <div class="table-responsive">
-                                <table class="table" id="import">
-                                    <thead>
-                                    <tr>
-                                        <th>ID</th>
-                                        <th>Import ID</th>
-                                        <th>Product ID</th>
-                                        <th>Tiền hàng</th>
-                                        <th>Số lượng hàng</th>
-                                        <th>Trạng thái</th>
-                                        <th>Action</th>
-                                    </tr>
-                                    </thead>
-                                    <tbody>
-                                    <tr th:each="importInfo : ${importInfoList}">
-                                        <td th:text="${importInfo.importInfoID}"></td>
-                                        <td th:text="${importInfo.importID}"></td>
-                                        <td th:text="${importInfo.productID}"></td>
-                                        <td th:text="${importInfo.priceImport}"></td>
-                                        <td th:text="${importInfo.quantityImport}"></td>
-                                        <td th:text="${importInfo.status}"></td>
-                                        <td>
-                                            <a href="#" class="btn btn-sm btn-primary">Sửa</a>
-                                            <form th:action="@{/import/delete}" method="post" style="display:inline;">
-                                                <input type="hidden" name="id" th:value="${importInfo.importInfoID}" />
-                                                <button type="submit" class="btn btn-sm btn-danger">Xóa</button>
-                                            </form>
-                                        </td>
-                                    </tr>
-                                    </tbody>
-                                </table>
+                <div class="col-lg-9 col-sm-8 col-md-8 col-xs-12 text-right">
+                    <button type="button" data-toggle="modal" data-target="#addImportModal" class="btn btn-success">Thêm mới</button>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-sm-12">
+                    <div class="white-box">
+                        <div class="table-responsive">
+                            <table class="table" id="import">
+                                <thead>
+                                <tr>
+                                    <th>ID</th>
+                                    <th>Ảnh</th>
+                                    <th>Địa chỉ</th>
+                                    <th>Ngày nhập</th>
+                                    <th>Người giao</th>
+                                    <th>Nhân viên</th>
+                                    <th>Tổng giá trị</th>
+                                    <th>Hành động</th>
+                                </tr>
+                                </thead>
+                                <tbody id="importTableBody">
+                                <!-- Dynamic rows will be inserted here by JavaScript -->
+                                </tbody>
+                            </table>
+                        </div>
+
+                        <div style="display: flex;justify-content: center;">
+                            <div class="pagination-controls">
+                                <button id="firstPage" class="btn btn-sm btn-primary">First</button>
+                                <button id="prevPage" class="btn btn-sm btn-primary">Prev</button>
+                                <span id="currentPage">Trang 1/1</span>
+                                <button id="nextPage" class="btn btn-sm btn-primary">Next</button>
+                                <button id="lastPage" class="btn btn-sm btn-primary">Last</button>
                             </div>
                         </div>
                     </div>
                 </div>
-                <!-- END DANH SÁCH CÔNG VIỆC -->
             </div>
-            <!-- /.container-fluid -->
-            <footer class="footer text-center"> 2018 &copy; myclass.com </footer>
         </div>
-        <!-- /#page-wrapper -->
+        <footer class="footer text-center">Green</footer>
     </div>
-    <!-- /#wrapper -->
-    <!-- jQuery -->
-    <script src="plugins/bower_components/jquery/dist/jquery.min.js"></script>
-    <!-- Bootstrap Core JavaScript -->
-    <script src="bootstrap/dist/js/bootstrap.min.js"></script>
-    <!-- Menu Plugin JavaScript -->
-    <script src="plugins/bower_components/sidebar-nav/dist/sidebar-nav.min.js"></script>
-    <!--slimscroll JavaScript -->
-    <script src="js/jquery.slimscroll.js"></script>
-    <!--Wave Effects -->
-    <script src="js/waves.js"></script>
-    <!-- Custom Theme JavaScript -->
-    <script src="js/custom.min.js"></script>
-</body>
+</div>
 
+<section>
+    <div th:replace="~{admin/commonFragment :: #addImportModal}"></div>
+    <div th:replace="~{admin/commonFragment :: #updateImportModal}"></div>
+</section>
+
+<section>
+    <div th:replace="~{admin/commonFragment :: #changePasswordModal}"></div>
+    <div th:replace="~{admin/commonFragment :: #profileModal}"></div>
+</section>
+
+<th:block th:insert="~{/admin/common/importJS :: commonJS}"></th:block>
+<script src="/assets-admin/js/components/import.js"></script>
+</body>
 </html>

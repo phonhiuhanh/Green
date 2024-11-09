@@ -1,4 +1,4 @@
-package com.poly.greeen.ViewController;
+package com.poly.greeen.View;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;

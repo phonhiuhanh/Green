@@ -6,4 +6,5 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface ImportInfoRepository extends JpaRepository<ImportInfo, Integer> {
+    void deleteByImportDetail_ImportID(Integer id);
 }
