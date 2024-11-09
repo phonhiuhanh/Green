@@ -182,6 +182,9 @@ const createOrder = async (cartItems) => {
 
     const order = {
         totalAmount: total,
+        address: $('#address').val(),
+        phone: $('#phone').val(),
+        username: $('#username').val(),
         orderDetails: cartItems.map(item => ({
             product: {productID: item.productID},
             quantity: item.quantity,
@@ -250,14 +253,30 @@ const loadUserInfoForCheckOut = async () => {
     await axios.get('/api/customers/get-current-customer')
         .then(response => {
             const customer = response.data;
-            $('#address').text(customer.address);
-            $('#username').text(customer.username);
-            $('#phone').text(customer.phone);
+            $('#address').val(customer.address);
+            $('#username').val(customer.username);
+            $('#phone').val(customer.phone);
         })
         .catch(error => {
             console.error('Error fetching customer data:', error);
         });
 }
+
+document.getElementById('edit-button').addEventListener('click', function() {
+    const addressInput = document.getElementById('address');
+    const usernameInput = document.getElementById('username');
+    const phoneInput = document.getElementById('phone');
+
+    const inputs = [addressInput, usernameInput, phoneInput];
+
+    inputs.forEach(input => {
+        if (input.disabled) {
+            input.disabled = false;
+        } else if (input.value.trim() !== '') {
+            input.disabled = true;
+        }
+    });
+});
 
 document.addEventListener('DOMContentLoaded', () => {
     updateCartItemCount();

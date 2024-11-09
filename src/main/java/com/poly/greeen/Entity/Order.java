@@ -23,6 +23,9 @@ public class Order {
     private String buyerId;
     @Column(name = "order_status")
     private String orderStatus;
+    private String address;
+    private String phone;
+    private String username;
 
     @OneToMany(mappedBy = "order", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<OrderDetail> orderDetails;

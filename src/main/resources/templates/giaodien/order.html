@@ -26,6 +26,7 @@
     <link rel="stylesheet" href="/assets/sass/style.css" type="text/css">
     <link rel="stylesheet" href="/assets/css/components/common.css" type="text/css">
     <link rel="stylesheet" href="/assets/css/components/hiddenSidebar.css" type="text/css">
+    <script src="/assets/js/lib/bootstrap.bundle.min.js"></script>
     <style>
         .too-long-text {
             /*white-space: nowrap;*/
@@ -76,9 +77,10 @@
                             <div class="col-lg-6">
                                 <div class="shipping__info">
                                     <h5>Giao đến</h5>
-                                    <p id="address">108 Lê Thị Nho, Phường Trung Mỹ Tây, Quận 12, TP. Hồ Chí Minh</p>
-                                    <p><span id="username">username</span> - <span id="phone">phone</span></p>
-                                    <!--                                    <p>Giao trước 15h hôm nay <a href="#" class="change-link">(Đổi giờ giao)</a></p>-->
+                                    <p><input style="width: 100%;" id="address" name="address" value="address" placeholder="Địa chỉ giao hàng" disabled required></p>
+                                    <p><input id="username" name="username" value="username" placeholder="Họ tên người nhận" disabled required></p>
+                                    <p><input id="phone" name="phone" value="phone" placeholder="Số điện thoại" disabled required></p>
+                                    <button id="edit-button" class="btn-warning rounded-pill">Chỉnh sửa</button>
                                 </div>
                             </div>
                         </div>
@@ -237,6 +239,11 @@
         </div>
     </section>
 </main>
+
+<section>
+    <div th:replace="~{giaodien/commonFragment :: #changePasswordModal}"></div>
+    <div th:replace="~{giaodien/commonFragment :: #profileModal}"></div>
+</section>
 
 <th:block th:insert="~{/giaodien/commonFragment :: commonJS}"></th:block>
 <script src="/assets/js/jquery.nice-select.min.js"></script>

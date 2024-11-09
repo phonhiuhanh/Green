@@ -22,6 +22,7 @@
     <link rel="stylesheet" href="/assets/sass/style.css" type="text/css">
     <link rel="stylesheet" href="/assets/css/components/common.css" type="text/css">
     <link rel="stylesheet" href="/assets/css/components/hiddenSidebar.css" type="text/css">
+    <script src="/assets/js/lib/bootstrap.bundle.min.js"></script>
     <style>
         .product__details__pic__item img {
             width: 100% !important;
@@ -122,6 +123,11 @@
         </div>
     </section>
 </main>
+
+<section>
+    <div th:replace="~{giaodien/commonFragment :: #changePasswordModal}"></div>
+    <div th:replace="~{giaodien/commonFragment :: #profileModal}"></div>
+</section>
 
 <th:block th:insert="~{/giaodien/commonFragment :: commonJS}"></th:block>
 <script src="/assets/js/jquery.nice-select.min.js"></script>

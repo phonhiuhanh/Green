@@ -3581,4 +3581,12 @@ ol {
   }
 }
 
+.dropdown-menu {
+  background-color: white;
+}
+.shipping__info input {
+  width: 100%;
+  border: none;
+  border-radius: 4px;
+}
 /*# sourceMappingURL=style.css.map */
