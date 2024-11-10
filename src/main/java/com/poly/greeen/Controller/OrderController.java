@@ -17,10 +17,15 @@ public class OrderController {
     private final OrderService orderService;
 
     @GetMapping
-    public ResponseEntity<List<Order>> getAllOrders() {
+    public ResponseEntity<List<Order>> getAllOrders(@RequestParam(required = false) List<String> statuses) {
         try {
             log.info("Yêu cầu REST để lấy tất cả đơn hàng");
-            List<Order> orders = orderService.getAllOrders();
+            List<Order> orders;
+            if (statuses == null || statuses.isEmpty()) {
+                orders = orderService.getAllOrders();
+            } else {
+                orders = orderService.getOrdersByStatuses(statuses);
+            }
             return ResponseEntity.ok(orders);
         } catch (Exception e) {
             log.error("Lỗi: ", e);
@@ -46,7 +51,7 @@ public class OrderController {
         try {
             log.info("Yêu cầu REST để tạo đơn hàng");
             Order savedOrder = orderService.createOrder(order);
-            orderService.sendOrderStatusUpdateEmail(savedOrder, "Đang chờ xử lý");
+            orderService.sendOrderStatusUpdateEmail(savedOrder, savedOrder.getOrderStatus());
             return ResponseEntity.ok(savedOrder);
         } catch (Exception e) {
             log.error("Lỗi: ", e);

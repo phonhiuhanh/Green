@@ -13,9 +13,4 @@ public class AuthorizationCodeGenerator {
         int number = 100000 + random.nextInt(900000); // Generates a random number between 100000 and 999999
         return String.valueOf(number);
     }
-
-    public static void main(String[] args) {
-        String authCode = generateAuthorizationCode();
-        System.out.println("Generated Authorization Code: " + authCode);
-    }
 }

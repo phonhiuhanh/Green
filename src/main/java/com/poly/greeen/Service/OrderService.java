@@ -30,6 +30,10 @@ public class OrderService {
         return orderRepository.findAll();
     }
 
+    public List<Order> getOrdersByStatuses(List<String> statuses) {
+        return orderRepository.findByOrderStatusIn(statuses);
+    }
+
     public Optional<Order> getOrderById(Integer id) {
         return orderRepository.findById(id);
     }
@@ -38,12 +42,10 @@ public class OrderService {
     public Order createOrder(Order order) throws Exception {
         var orderDetails = order.getOrderDetails();
         var buyerId = AuthController.getAuthUser().getUniqueId();
-        String orderStatus = "Đang chờ xử lý";
         order.setOrderID(orderRepository.getNextOrderId());
         order.setOrderDate(new Date());
         order.setBuyerId(buyerId);
         order.setOrderDetails(null);
-        order.setOrderStatus(orderStatus);
         Order savedOrder = orderRepository.save(order);
         for (var orderDetail : orderDetails) {
             orderDetail.setOrder(savedOrder);

@@ -7,6 +7,5 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface OrderDetailRepository extends JpaRepository<OrderDetail, Integer> {
-//    @Query("SELECT COALESCE(MAX(o.orderDetailID), 0) + 1 FROM OrderDetail o")
-//    int getNextOrderDetailId();
+
 }

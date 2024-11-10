@@ -185,6 +185,7 @@ const createOrder = async (cartItems) => {
         address: $('#address').val(),
         phone: $('#phone').val(),
         username: $('#username').val(),
+        orderStatus: 'Chờ xác nhận',
         orderDetails: cartItems.map(item => ({
             product: {productID: item.productID},
             quantity: item.quantity,

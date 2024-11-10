@@ -21,6 +21,11 @@ public class AdminViewController {
         return "/admin/order";
     }
 
+    @RequestMapping("/delivery")
+    public String delivery() {
+        return "/admin/delivery";
+    }
+
     @RequestMapping("/customer")
     public String customer() {
         return "/admin/customer";

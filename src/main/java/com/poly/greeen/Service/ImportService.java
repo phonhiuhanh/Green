@@ -62,9 +62,7 @@ public class ImportService {
         for (ImportInfo importInfo : importInfos) {
             importInfo.setImportDetail(savedImport);
             updateProductQuantity(importInfo, true);
-            System.out.println(importInfo);
-            var savedII = importInfoRepository.save(importInfo);
-            System.out.println(savedII);
+            importInfoRepository.save(importInfo);
         }
         savedImport.setImportInfos(importInfos);
         return savedImport;
