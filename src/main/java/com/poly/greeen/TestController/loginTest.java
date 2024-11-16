@@ -10,7 +10,7 @@ import org.openqa.selenium.chrome.ChromeDriver;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-public class LoginSeleniumTest {
+public class loginTest {
 
     private WebDriver driver;
 
@@ -34,7 +34,7 @@ public class LoginSeleniumTest {
         WebElement loginButton = driver.findElement(By.className("btn-login"));
 
         usernameField.sendKeys("khoa33738@gmail.com");
-        passwordField.sendKeys("123");
+        passwordField.sendKeys("123456");
         loginButton.click();
 
         assertEquals("http://localhost:8080/index/shop", driver.getCurrentUrl());
@@ -64,7 +64,7 @@ public class LoginSeleniumTest {
         WebElement loginButton = driver.findElement(By.className("btn-login"));
 
         usernameField.sendKeys("wrongpassusername");
-        passwordField.sendKeys("123");
+        passwordField.sendKeys("123456");
         loginButton.click();
 
         WebElement errorElement = driver.findElement(By.className("error-message"));
