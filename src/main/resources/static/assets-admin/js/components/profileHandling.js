@@ -35,8 +35,7 @@ function saveChanges() {
                 text: 'Cập nhật thông tin thành công',
                 icon: 'success',
                 confirmButtonText: 'OK'
-            });
-            $('#profileModal').modal('hide');
+            }).then(() => handleCloseModal('#profileModal'));
         },
         error: function () {
             Swal.fire({
@@ -47,6 +46,17 @@ function saveChanges() {
             });
         }
     });
+}
+
+function clearChangePasswordModal() {
+    $('#currentPassword').val('');
+    $('#newPassword').val('');
+    $('#confirmPassword').val('');
+}
+
+function handleCloseModal(modalID) {
+    $(modalID).modal('hide');
+    $('.modal-backdrop').remove();
 }
 
 function changePassword() {
@@ -85,8 +95,12 @@ function changePassword() {
                 text: 'Mật khẩu đã được thay đổi thành công',
                 icon: 'success',
                 confirmButtonText: 'OK'
+            }).then(() => {
+            }).then(() => {
+                clearChangePasswordModal();
+                $('#confirmButton').prop('disabled', false);
+                handleCloseModal('#changePasswordModal');
             });
-            $('#changePasswordModal').modal('hide');
         },
         error: function () {
             Swal.fire({
