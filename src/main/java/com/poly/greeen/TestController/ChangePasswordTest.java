@@ -141,5 +141,36 @@ public class ChangePasswordTest {
         assertEquals("Lỗi", alertTitle);
         System.out.println("Test Passed: Mật khẩu mới và xác nhận mật khẩu không khớp!");
     }
+    @Test
+    public void testChangePasswordNull() {
+        driver.get("http://localhost:8080/login");
+        WebElement usernameField = driver.findElement(By.id("username"));
+        WebElement passwordField = driver.findElement(By.id("password"));
+        WebElement loginButton = driver.findElement(By.className("btn-login"));
+        usernameField.sendKeys("khoa33738@gmail.com");
+        passwordField.sendKeys("123456");
+        loginButton.click();
+
+        wait.until(ExpectedConditions.urlContains("/index/shop"));
+        WebElement usernameDropdown = driver.findElement(By.className("username"));
+        usernameDropdown.click();
+        WebElement changePasswordButton = driver.findElement(By.cssSelector("[data-bs-target='#changePasswordModal']"));
+        changePasswordButton.click();
+
+        wait.until(ExpectedConditions.visibilityOfElementLocated(By.id("changePasswordModal")));
+        WebElement currentPassword = driver.findElement(By.id("currentPassword"));
+        WebElement newPassword = driver.findElement(By.id("newPassword"));
+        WebElement confirmPassword = driver.findElement(By.id("confirmPassword"));
+        currentPassword.sendKeys("");
+        newPassword.sendKeys("");
+        confirmPassword.sendKeys("");
+        WebElement confirmButton = driver.findElement(By.id("confirmButton"));
+        confirmButton.click();
+
+        WebElement errorAlert = wait.until(ExpectedConditions.visibilityOfElementLocated(By.className("swal2-popup")));
+        String alertTitle = errorAlert.findElement(By.className("swal2-title")).getText();
+        assertEquals("Lỗi", alertTitle);
+        System.out.println("Test Passed: Mật khẩu mới và xác nhận mật khẩu không khớp!");
+    }
 
 }
