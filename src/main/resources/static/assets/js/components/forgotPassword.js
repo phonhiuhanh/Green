@@ -24,7 +24,22 @@ function confirmPasswordReset() {
     const otp = document.getElementById('otp').value;
     const newPassword = document.getElementById('newPassword').value;
     const confirmButton = document.getElementById('confirmButton');
+
+    // Kiểm tra nếu trường mật khẩu mới bị bỏ trống
+    if (!newPassword.trim()) {
+        Swal.fire({
+            title: 'Lỗi',
+            text: 'Vui lòng nhập mật khẩu mới.',
+            icon: 'error',
+            confirmButtonText: 'OK'
+        });
+        return; // Dừng xử lý nếu mật khẩu mới rỗng
+    }
+
+    // Vô hiệu hóa nút trong khi đang xử lý
     confirmButton.disabled = true;
+
+    // Gửi yêu cầu POST để đặt lại mật khẩu
     $.post(`/api/customers/p/forgot-password/verify?email=${emailOrPhone}&otp=${otp}&newPassword=${newPassword}`, function () {
         Swal.fire({
             title: 'Thành công',

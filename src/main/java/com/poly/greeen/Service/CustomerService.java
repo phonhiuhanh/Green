@@ -9,6 +9,7 @@ import com.poly.greeen.Utils.AuthorizationCodeGenerator;
 import com.poly.greeen.Utils.EmailService;
 import com.poly.greeen.Utils.SystemStorage;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
