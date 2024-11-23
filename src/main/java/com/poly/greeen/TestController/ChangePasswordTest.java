@@ -2,6 +2,7 @@ package com.poly.greeen.TestController;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.Test;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
@@ -30,6 +31,7 @@ public class ChangePasswordTest {
         driver.quit();
     }
     @Test
+    @Order(4)
     public void testChangePasswordAndLoginAgain() throws InterruptedException {
         driver.get("http://localhost:8080/login");
         WebElement usernameField = driver.findElement(By.id("username"));
@@ -77,6 +79,7 @@ public class ChangePasswordTest {
 
 
     @Test
+    @Order(3)
     public void testChangePasswordWrongCurrentPassword() {
         driver.get("http://localhost:8080/login");
         WebElement usernameField = driver.findElement(By.id("username"));
@@ -111,6 +114,7 @@ public class ChangePasswordTest {
     }
 
     @Test
+    @Order(2)
     public void testChangePasswordMismatch() {
         driver.get("http://localhost:8080/login");
         WebElement usernameField = driver.findElement(By.id("username"));
@@ -142,6 +146,7 @@ public class ChangePasswordTest {
         System.out.println("Test Passed: Mật khẩu mới và xác nhận mật khẩu không khớp!");
     }
     @Test
+    @Order(1)
     public void testChangePasswordNull() {
         driver.get("http://localhost:8080/login");
         WebElement usernameField = driver.findElement(By.id("username"));
@@ -170,7 +175,7 @@ public class ChangePasswordTest {
         WebElement errorAlert = wait.until(ExpectedConditions.visibilityOfElementLocated(By.className("swal2-popup")));
         String alertTitle = errorAlert.findElement(By.className("swal2-title")).getText();
         assertEquals("Lỗi", alertTitle);
-        System.out.println("Test Passed: Mật khẩu mới và xác nhận mật khẩu không khớp!");
+        System.out.println("Test Passed: Chưa nhập !");
     }
 
 }

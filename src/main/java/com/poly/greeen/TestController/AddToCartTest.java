@@ -38,7 +38,7 @@ public class AddToCartTest {
         WebElement passwordField = driver.findElement(By.id("password"));
         WebElement loginButton = driver.findElement(By.className("btn-login"));
         usernameField.sendKeys("khoa33738@gmail.com");
-        passwordField.sendKeys("123");
+        passwordField.sendKeys("031124");
         loginButton.click();
 
         WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));

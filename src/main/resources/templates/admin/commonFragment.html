@@ -16,22 +16,10 @@
                 </b>
             </a>
         </div>
-<!--        <ul class="nav navbar-top-links navbar-left m-l-20 hidden-xs">-->
-<!--            <li>-->
-<!--                <form role="search" class="app-search hidden-xs">-->
-<!--                    <input type="text" placeholder="Search..." class="form-control">-->
-<!--                    <a href="/assets-admin/">-->
-<!--                        <i class="fa fa-search"></i>-->
-<!--                    </a>-->
-<!--                </form>-->
-<!--            </li>-->
-<!--        </ul>-->
         <ul class="nav navbar-top-links navbar-right pull-right">
             <li>
                 <div class="dropdown">
                     <div class="profile-pic dropdown-toggle" data-toggle="dropdown">
-                        <img src="/assets-admin/plugins/images/users/varun.jpg" alt="user-img" width="36"
-                             class="img-circle"/>
                         <b class="hidden-xs username">Username</b>
                     </div>
                     <ul class="dropdown-menu">
@@ -110,28 +98,28 @@
                         <div class="form-group">
                             <label class="col-md-12">Tên sản phẩm</label>
                             <div class="col-md-12">
-                                <input class="form-control form-control-line" name="name"
+                                <input class="form-control form-control-line" name="name" id="addProductName"
                                        placeholder="Tên sản phẩm" required type="text"/>
                             </div>
                         </div>
                         <div class="form-group">
                             <label class="col-md-12">Giá niêm yết</label>
                             <div class="col-md-12">
-                                <input class="form-control form-control-line" name="giacu"
+                                <input class="form-control form-control-line" name="giacu" id="addPrice"
                                        placeholder="Giá niêm yết" required type="number" min="0"/>
                             </div>
                         </div>
                         <div class="form-group">
                             <label class="col-md-12">Giảm (%)</label>
                             <div class="col-md-12">
-                                <input class="form-control form-control-line" name="giamgia"
+                                <input class="form-control form-control-line" name="giamgia" id="addDiscount"
                                        placeholder="Giảm (%)" required type="number" min="0" max="100"/>
                             </div>
                         </div>
                         <div class="form-group">
                             <label class="col-md-12">Số lượng</label>
                             <div class="col-md-12">
-                                <input class="form-control form-control-line" name="quantity"
+                                <input class="form-control form-control-line" name="quantity" id="addQuantity"
                                        placeholder="Số lượng" required type="number" min="0"/>
                             </div>
                         </div>
@@ -139,7 +127,7 @@
                             <label class="col-md-12">Danh mục</label>
                             <div class="col-md-12">
                                 <select class="form-control form-control-line categorySelect" name="category" required
-                                >
+                                id="addCategory">
                                     <!-- Options will be populated by jQuery -->
                                 </select>
                             </div>
@@ -147,21 +135,21 @@
                         <div class="form-group">
                             <label class="col-md-12">Mô tả</label>
                             <div class="col-md-12">
-                                    <textarea class="form-control form-control-line" name="description"
+                                    <textarea class="form-control form-control-line" name="description" id="addDescription"
                                               placeholder="Mô tả" required></textarea>
                             </div>
                         </div>
                         <div class="form-group">
                             <label class="col-md-12">Ảnh chính</label>
                             <div class="col-md-12">
-                                <input class="form-control form-control-line" name="mainImage" required
+                                <input class="form-control form-control-line" name="mainImage" required id="addMainImage"
                                        type="file" accept="image/*"/>
                             </div>
                         </div>
                         <div class="form-group">
                             <label class="col-md-12">Ảnh phụ</label>
                             <div class="col-md-12">
-                                <input class="form-control form-control-line" name="additionalImages"
+                                <input class="form-control form-control-line" name="additionalImages" id="addAdditionalImages"
                                        multiple type="file" accept="image/*"/>
                             </div>
                         </div>
